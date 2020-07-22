@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import AlgoVisualizer from './components/AlgoVisualizer';
+import SortingTimeVisualizer from './components/SortingTimeVisualizer';
 
 function App() {
   return (
     <div className="App">
-      <AlgoVisualizer/>
+      <SortingTimeVisualizer/>
     </div>
   );
 }

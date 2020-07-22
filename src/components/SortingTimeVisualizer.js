@@ -1,12 +1,14 @@
 import React from 'react';
-import './AlgoVisualizer.css';
-import {selectionSortAlgo, getSelectionSortAnims} from '../algorithms/SelectionSort';
+import Menu from './Menu';
+import './SortingTimeVisualizer.css';
+import {getSelectionSortAnims} from '../algorithms/SelectionSort';
 
 const purple = "#8a2be2";
 const red = "#dc143c";
 const green = "#24682d";
+const yellow = "#ffff00";
 
-export default class AlgoVisualizer extends React.Component {
+export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,14 +18,17 @@ export default class AlgoVisualizer extends React.Component {
         this.handleExecute = this.handleExecute.bind(this);
 
         this.bars = [];
-        this.animationSpeed = 100
+        this.animationSpeed = 100;
+        this.arrayLength = 25;
+        this.arrayHeight = 400;
+
     }
     
     // initialize array to random values
     componentDidMount() {
         const newArr = []
-        for (let i = 0; i < 50; i++) {
-            newArr.push(Math.floor(Math.random()*400 + 20))
+        for (let i = 0; i < this.arrayLength; i++) {
+            newArr.push(Math.floor(Math.random()*this.arrayHeight + 20))
         }
         // const newArr = [
         //     306, 419,  28, 452, 378, 456,
@@ -37,28 +42,41 @@ export default class AlgoVisualizer extends React.Component {
     }
 
     // get animations and put them on the screen in order
-    animateSort(arr) {
-        const animations = getSelectionSortAnims(arr)
+    animateSort() {
+        const array = this.state.array;
+        const animations = getSelectionSortAnims(array)
         const arrayBars = document.getElementsByClassName("array")
         // console.log(animations)
 
         for (let i = 0; i < animations.length; i++) {
+            if (animations[i][0] === null) {
+                setTimeout(() => {}, (i + 1) * this.animationSpeed)
+                setTimeout(() => {}, (i + 2) * this.animationSpeed)
+            }
             // swapping animations[i][0] and animations[i][1]
-            if (typeof animations[i][1] === "number") {
+            else if (typeof animations[i][1] === "number") {
                 const [index1, index2] = animations[i];
+
+                setTimeout(() => {
+                    arrayBars[index1].style.backgroundColor = yellow;
+                    arrayBars[index2].style.backgroundColor = yellow;
+                }, i * this.animationSpeed)
+
                 setTimeout(() => {
                     const temp = arrayBars[index1].style.height;
                     arrayBars[index1].style.height = arrayBars[index2].style.height;
                     arrayBars[index2].style.height = temp;
-                    arrayBars[index2].style.backgroundColor = green;
-                }, i * this.animationSpeed)
-            }
+                }, (i + 1) * this.animationSpeed)
 
+                setTimeout(() => {
+                    arrayBars[index1].style.backgroundColor = purple;
+                    arrayBars[index2].style.backgroundColor = green;
+                }, (i + 2) * this.animationSpeed)
+            }
             // coloring the bar to represent comparison
             else {
                 const [index, color, type] = animations[i];
                 setTimeout(() => {
-                    // debugger;
                     arrayBars[index].style.backgroundColor = color;
                     arrayBars[index].type = type;
                     if (color === red) {
@@ -75,17 +93,21 @@ export default class AlgoVisualizer extends React.Component {
                                 arrayBars[j].style.backgroundColor = green;
                                 break;
                             }
-                            // if (animations[j].length > 2) {
-                            //     break;
-                            // }
-                            // if (animations[j][1] === purple) {
-                            //     arrayBars[j].style.backgroundColor = green;
-                            //     break;
-                            // }
                         }
                     }
                 }, i * this.animationSpeed);
             }
+        }
+        setTimeout(() => {
+            arrayBars[arrayBars.length - 1].style.backgroundColor = purple;
+        }, this.animationSpeed * animations.length)
+        
+
+        for (let i = 0; i < arrayBars.length; i++) {
+            setTimeout(() => {
+                arrayBars[i].style.backgroundColor = green;
+            }, this.animationSpeed * (0.25 * i + animations.length))
+            
         }
     }
 
@@ -105,17 +127,22 @@ export default class AlgoVisualizer extends React.Component {
         }
     }
 
-    handleExecute() {
-        this.animateSort(this.state.array)
+    handleExecute(e) {
+    console.log("SortingTimeVisualizer -> handleExecute -> e", e)
+        
+        this.animateSort();
     }
 
     // everything rendered on screen is here
     render() {
         return (
-            <div id="bars-container">
-                {this.bars}
-                <button id="execute" onClick={this.handleExecute}>Execute</button>
-                <button id="test-sort" onClick={this.testSort.bind(this, selectionSortAlgo)}>Test Sort</button>
+            <div>
+                <div id="color-strip" />
+                <Menu onClick={this.handleExecute}/>
+                <div id="bars-container">
+                    {this.bars}
+                    {/* <button id="test-sort" onClick={this.testSort.bind(this, selectionSortAlgo)}>Test Sort</button> */}
+                </div>
             </div>
         )
     }

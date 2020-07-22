@@ -1,11 +1,16 @@
 .array {
     background-color: #24682d;
     display: inline-block;
-    width: 10px;
+    width: 13px;
     height: 200px;
     margin: 2.5px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     border-bottom-left-radius: 1px;
     border-bottom-right-radius: 1px;
+}
+
+#color-strip {
+    background-color: #24682d;
+    height: 6px;
 }

@@ -1,0 +1,30 @@
+#menu-container {
+    background-color: #3d8e9c;
+    height: 100px;
+    border-radius: 100px;
+    width: 98%;
+    margin: 10px auto 50px;
+    box-shadow: -1.5px 1.5px 2.5px rgb(12, 94, 97);
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.menu-button {
+    background: none!important;
+    padding: 0!important;
+    cursor: pointer;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    user-select: none;
+    /* height: 3em; */
+    border-radius: 10px;
+    border: none;
+    opacity: 95%;
+}
+
+.menu-button:hover {
+    color: grey;
+}

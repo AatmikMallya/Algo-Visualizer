@@ -38,30 +38,32 @@ export function getSelectionSortAnims(arr) {
             arr[minIdx] = arr[i];
             arr[i] = temp;
             // swap heights a[i], a[minIdx]
-            animations.push([i, minIdx])
+            animations.push([i, minIdx]);
+            animations.push([null]);
+            animations.push([null]);
         }
     }
 
     return animations;
 }
 
-export function selectionSortAlgo(arr) {
-    let minIdx, temp;
+// function selectionSortAlgo(arr) {
+//     let minIdx, temp;
     
-    for (let i = 0; i < arr.length; i++) {
-        minIdx = i;
-        for (let j = i + 1; j < arr.length; j++) {
-            if (arr[j] < arr[minIdx]) {
-                minIdx = j;
-            }
-        }
+//     for (let i = 0; i < arr.length; i++) {
+//         minIdx = i;
+//         for (let j = i + 1; j < arr.length; j++) {
+//             if (arr[j] < arr[minIdx]) {
+//                 minIdx = j;
+//             }
+//         }
 
-        if (minIdx > i) {
-            temp = arr[minIdx];
-            arr[minIdx] = arr[i];
-            arr[i] = temp;
-        }
-    }
+//         if (minIdx > i) {
+//             temp = arr[minIdx];
+//             arr[minIdx] = arr[i];
+//             arr[i] = temp;
+//         }
+//     }
 
-    return arr;
-}
+//     return arr;
+// }

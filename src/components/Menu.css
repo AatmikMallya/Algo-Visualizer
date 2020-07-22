@@ -1,5 +1,5 @@
 #menu-container {
-    background-color: #3d8e9c;
+    background-color: rgb(61, 142, 156);
     height: 100px;
     border-radius: 100px;
     width: 98%;
@@ -11,20 +11,22 @@
     align-items: center;
 }
 
-.menu-button {
+.menu-button, .menu-select {
     background: none!important;
     padding: 0!important;
     cursor: pointer;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(100%, 100%, 100%, 87.5%);
     font-size: 20px;
+    font-weight: 600;
     user-select: none;
-    /* height: 3em; */
     border-radius: 10px;
     border: none;
-    opacity: 95%;
 }
 
 .menu-button:hover {
-    color: grey;
+    color: rgb(190, 190, 190);
+}
+
+#execute {
+    font-weight: 700;
 }

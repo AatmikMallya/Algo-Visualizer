@@ -2,11 +2,17 @@ import React from 'react';
 import Menu from './Menu';
 import './SortingTimeVisualizer.css';
 import {getSelectionSortAnims} from '../algorithms/SelectionSort';
+import UIfx from '../../node_modules/uifx';
+import cardFlipWav from '../resources/card-flip.wav';
+
+
 
 const purple = "#8a2be2";
 const red = "#dc143c";
 const green = "#24682d";
 const yellow = "#ffff00";
+
+const cardFlip = new UIfx(cardFlipWav, { throttleMs: 5 });
 
 export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
@@ -28,13 +34,13 @@ export default class SortingTimeVisualizer extends React.Component {
     componentDidMount() {
         const newArr = []
         for (let i = 0; i < this.arrayLength; i++) {
-            newArr.push(Math.floor(Math.random()*this.arrayHeight + 20))
+            newArr.push(Math.floor(Math.random()*this.arrayHeight + 15))
         }
         // const newArr = [
-        //     306, 419,  28, 452, 378, 456,
+        //     306, 419,  14, 452, 378, 456,
         //     251, 416, 440, 148, 101, 173,
-        //     167, 305, 225, 445, 469, 462,
-        //     107, 156, 276, 506, 189, 137,
+        //     167, 10, 225, 445, 20, 462,
+        //     107, 156, 276, 506, 189, 15,
         //     201
         // ]
         this.setState({ array: newArr})
@@ -42,7 +48,7 @@ export default class SortingTimeVisualizer extends React.Component {
     }
 
     // get animations and put them on the screen in order
-    animateSort() {
+    animateSelectionSort() {
         const array = this.state.array;
         const animations = getSelectionSortAnims(array)
         const arrayBars = document.getElementsByClassName("array")
@@ -58,6 +64,7 @@ export default class SortingTimeVisualizer extends React.Component {
                 const [index1, index2] = animations[i];
 
                 setTimeout(() => {
+                    cardFlip.play();
                     arrayBars[index1].style.backgroundColor = yellow;
                     arrayBars[index2].style.backgroundColor = yellow;
                 }, i * this.animationSpeed)
@@ -111,6 +118,18 @@ export default class SortingTimeVisualizer extends React.Component {
         }
     }
 
+    animateInsertionSort() {
+        console.log("Todo: Insertion sort")
+    }
+
+    animateMergeSort() {
+        console.log("Todo: Merge sort")
+    }
+
+    animateQuickSort() {
+        console.log("Todo: Quicksort")
+    }
+
     // generates many large arrays, logs "true" for each correct sort
     testSort(mySort) {
         for (let i = 0; i < 1000; i++) {
@@ -127,10 +146,25 @@ export default class SortingTimeVisualizer extends React.Component {
         }
     }
 
-    handleExecute(e) {
-    console.log("SortingTimeVisualizer -> handleExecute -> e", e)
+    handleExecute(algorithm) {
+        switch(algorithm) {
+            case 'selection':
+                this.animateSelectionSort();
+                break;
+            case 'insertion':
+                this.animateInsertionSort();
+                break;
+            case 'merge':
+                this.animateMergeSort();
+                break;
+            case 'quick':
+                this.animateQuickSort();
+                break;
+            default:
+                this.animateSelectionSort();
+                break;
+        }
         
-        this.animateSort();
     }
 
     // everything rendered on screen is here
@@ -138,7 +172,7 @@ export default class SortingTimeVisualizer extends React.Component {
         return (
             <div>
                 <div id="color-strip" />
-                <Menu onClick={this.handleExecute}/>
+                <Menu onExecute={this.handleExecute}/>
                 <div id="bars-container">
                     {this.bars}
                     {/* <button id="test-sort" onClick={this.testSort.bind(this, selectionSortAlgo)}>Test Sort</button> */}

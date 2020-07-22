@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Sorting-Time-Visualizer/static/css/main.3d1ecb78.chunk.css",
+    "main.js": "/Sorting-Time-Visualizer/static/js/main.d59dd657.chunk.js",
+    "main.js.map": "/Sorting-Time-Visualizer/static/js/main.d59dd657.chunk.js.map",
+    "runtime-main.js": "/Sorting-Time-Visualizer/static/js/runtime-main.fa383a73.js",
+    "runtime-main.js.map": "/Sorting-Time-Visualizer/static/js/runtime-main.fa383a73.js.map",
+    "static/js/2.1026b29e.chunk.js": "/Sorting-Time-Visualizer/static/js/2.1026b29e.chunk.js",
+    "static/js/2.1026b29e.chunk.js.map": "/Sorting-Time-Visualizer/static/js/2.1026b29e.chunk.js.map",
+    "index.html": "/Sorting-Time-Visualizer/index.html",
+    "precache-manifest.0f83f60c7c88ddbd63589a4ba749b8d9.js": "/Sorting-Time-Visualizer/precache-manifest.0f83f60c7c88ddbd63589a4ba749b8d9.js",
+    "service-worker.js": "/Sorting-Time-Visualizer/service-worker.js",
+    "static/css/main.3d1ecb78.chunk.css.map": "/Sorting-Time-Visualizer/static/css/main.3d1ecb78.chunk.css.map",
+    "static/js/2.1026b29e.chunk.js.LICENSE.txt": "/Sorting-Time-Visualizer/static/js/2.1026b29e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fa383a73.js",
+    "static/js/2.1026b29e.chunk.js",
+    "static/css/main.3d1ecb78.chunk.css",
+    "static/js/main.d59dd657.chunk.js"
+  ]
+}

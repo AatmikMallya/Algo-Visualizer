@@ -10,6 +10,10 @@ export default class Menu extends React.Component {
         }
     }
 
+    handleGenerate() {
+        this.props.onGenerate();
+    }
+
     handleExecute() {
         const selectedAlgorithm = document.getElementById("menu-select").value;
         this.props.onExecute(selectedAlgorithm);
@@ -18,7 +22,7 @@ export default class Menu extends React.Component {
     render() {
         return (
             <div id="menu-container">
-                <div className="menu-button" id="selection-sort" onClick={this.handleExecute}>New Array</div>
+                <div className="menu-button" id="selection-sort" onClick={() => this.handleGenerate()}>New Array</div>
                 <select className="menu-select" id="menu-select" >
                     <option value="selection">Selection Sort</option>
                     <option value="insertion">Insertion Sort</option>

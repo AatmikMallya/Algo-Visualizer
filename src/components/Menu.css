@@ -15,8 +15,9 @@
     background: none!important;
     padding: 0!important;
     cursor: pointer;
-    color: rgba(100%, 100%, 100%, 87.5%);
-    font-size: 20px;
+    /* color: rgba(100%, 100%, 100%, 87.5%); */
+    opacity: 87.5%;
+    font-size: 22px;
     font-weight: 600;
     user-select: none;
     border-radius: 10px;

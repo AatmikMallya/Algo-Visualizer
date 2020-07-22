@@ -12,7 +12,7 @@ const red = "#dc143c";
 const green = "#24682d";
 const yellow = "#ffff00";
 
-const cardFlip = new UIfx(cardFlipWav, { throttleMs: 5 });
+const cardFlip = new UIfx(cardFlipWav, { throttleMs: 10 });
 
 export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
@@ -21,20 +21,24 @@ export default class SortingTimeVisualizer extends React.Component {
             array : [], // holds height values
         };
         
-        this.handleExecute = this.handleExecute.bind(this);
-
         this.bars = [];
-        this.animationSpeed = 100;
+        this.animationSpeed = 5;
         this.arrayLength = 25;
         this.arrayHeight = 400;
 
+        this.generateArray = this.generateArray.bind(this);
+        this.handleExecute = this.handleExecute.bind(this);
     }
     
     // initialize array to random values
     componentDidMount() {
-        const newArr = []
+        this.generateArray();
+    }
+
+    generateArray() {
+        const newArray = [];
         for (let i = 0; i < this.arrayLength; i++) {
-            newArr.push(Math.floor(Math.random()*this.arrayHeight + 15))
+            newArray.push(Math.floor(Math.random()*this.arrayHeight + 15));
         }
         // const newArr = [
         //     306, 419,  14, 452, 378, 456,
@@ -42,9 +46,9 @@ export default class SortingTimeVisualizer extends React.Component {
         //     167, 10, 225, 445, 20, 462,
         //     107, 156, 276, 506, 189, 15,
         //     201
-        // ]
-        this.setState({ array: newArr})
-        this.bars = newArr.map((element, i) => <div className="array" style={{height: element}} key={i} index={i} />)
+        // ];
+        this.setState({ array: newArray});
+        this.bars = newArray.map((element, i) => <div className="array" style={{height: element}} key={i} index={i} />);
     }
 
     // get animations and put them on the screen in order
@@ -108,13 +112,12 @@ export default class SortingTimeVisualizer extends React.Component {
         setTimeout(() => {
             arrayBars[arrayBars.length - 1].style.backgroundColor = purple;
         }, this.animationSpeed * animations.length)
-        
 
         for (let i = 0; i < arrayBars.length; i++) {
             setTimeout(() => {
                 arrayBars[i].style.backgroundColor = green;
+                arrayBars[i].type = undefined;
             }, this.animationSpeed * (0.25 * i + animations.length))
-            
         }
     }
 
@@ -172,7 +175,7 @@ export default class SortingTimeVisualizer extends React.Component {
         return (
             <div>
                 <div id="color-strip" />
-                <Menu onExecute={this.handleExecute}/>
+                <Menu onExecute={this.handleExecute} onGenerate={this.generateArray} />
                 <div id="bars-container">
                     {this.bars}
                     {/* <button id="test-sort" onClick={this.testSort.bind(this, selectionSortAlgo)}>Test Sort</button> */}

@@ -20,7 +20,7 @@ export function getSelectionSortAnims(arr) {
     for (let i = 0; i < arr.length; i++) {
         minIdx = i;
         // arr[i] = purple
-        animations.push([i, purple, "base"])
+        animations.push([i, purple, "sorted"])
         for (let j = i + 1; j < arr.length; j++) {
             if (arr[j] < arr[minIdx]) {
                 minIdx = j;
@@ -39,8 +39,6 @@ export function getSelectionSortAnims(arr) {
             arr[i] = temp;
             // swap heights a[i], a[minIdx]
             animations.push([i, minIdx]);
-            animations.push([null]);
-            animations.push([null]);
         }
     }
 

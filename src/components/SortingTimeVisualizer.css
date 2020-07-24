@@ -1,9 +1,18 @@
+#bars-container {
+    text-align: center;
+    position: absolute;
+    margin: auto;
+    right: 0;
+    bottom: 10%;
+    left: 0;
+}
+
 .array {
     background-color: #24682d;
     display: inline-block;
-    width: 13px;
+    width: 15px;
     height: 200px;
-    margin: 2.5px;
+    margin: auto;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     border-bottom-left-radius: 1px;

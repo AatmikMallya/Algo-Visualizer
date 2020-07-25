@@ -25,6 +25,7 @@ export default class SortingTimeVisualizer extends React.Component {
         this.animationSpeed = 0;
         this.defaultLength = 60;
         this.maxHeight = 550;
+        this.isRunning = false;
 
         this.generateArray = this.generateArray.bind(this);
         this.speedChange = this.speedChange.bind(this);
@@ -44,10 +45,17 @@ export default class SortingTimeVisualizer extends React.Component {
         } else {
             arraySize = this.defaultLength
         }
+        if (this.isRunning) {
+            const bars = document.getElementsByClassName("array");
+            for (let i = 0; i < arraySize; i++) {
+                bars[i].style.backgroundColor = green;
+            }
+            this.isRunning = false;
+        }
 
         const windowWidth = window.innerWidth;
-        const arrayMargin = Math.max((windowWidth) / (10*length), 1.5);
-        const arrayWidth = Math.max((windowWidth - 100) / (1.75*length), 7);
+        const arrayMargin = Math.max((windowWidth) / (10*arraySize), 1.5);
+        const arrayWidth = Math.max((windowWidth - 100) / (1.75*arraySize), 7);
 
         // 85% of the distance between array container and menu
         this.maxHeight = 0.85 * (document.getElementById("bars-container").getBoundingClientRect().bottom - document.getElementById("menu-container").getBoundingClientRect().bottom)
@@ -81,6 +89,7 @@ export default class SortingTimeVisualizer extends React.Component {
         await wait(this.animationSpeed);
 
         for (let i = 1; i < animations.length; i++) {
+            if (!this.isRunning) return;
             // swapping animations[i][0] and animations[i][1]
             if (typeof animations[i][1] === "number") {
                 cardFlip.play();
@@ -125,6 +134,7 @@ export default class SortingTimeVisualizer extends React.Component {
                 await wait(this.animationSpeed);
             }
         }
+        
         arrayBars[arrayBars.length - 1].style.backgroundColor = purple;
         await wait(this.animationSpeed);
 
@@ -133,6 +143,8 @@ export default class SortingTimeVisualizer extends React.Component {
                 arrayBars[i].type = undefined;
                 await wait(0.33 * this.animationSpeed);
         }
+        
+        this.isRunning = false;
     }
 
     animateInsertionSort() {
@@ -164,6 +176,7 @@ export default class SortingTimeVisualizer extends React.Component {
     }
 
     async handleExecute(algorithm) {
+        this.isRunning = true;
         switch(algorithm) {
             case 'selection':
                 this.animateSelectionSort(); break;

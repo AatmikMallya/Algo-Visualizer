@@ -1,5 +1,6 @@
 import React from 'react';
-import InputSlider from './Slider';
+import LengthSlider from './LengthSlider';
+import SpeedSlider from './SpeedSlider';
 import './Menu.css';
 
 export default class Menu extends React.Component {
@@ -9,6 +10,10 @@ export default class Menu extends React.Component {
         this.state = {
             algorithm: "selection"
         }
+    }
+
+    handleSpeedChange(speed) {
+        this.props.onSpeedChange(speed);
     }
 
     handleGenerate(length) {
@@ -24,7 +29,8 @@ export default class Menu extends React.Component {
         return (
             <div id="menu-container">
                 <div className="menu-item" id="selection-sort" onClick={() => this.handleGenerate()}>New Array</div>
-                <InputSlider onSlide={length => this.handleGenerate(length)}/>
+                <SpeedSlider onSlide={speed => this.handleSpeedChange(speed)} />
+                <LengthSlider onSlide={length => this.handleGenerate(length)} />
                 <select className="menu-item" id="menu-select" >
                     <option value="selection">Selection Sort</option>
                     <option value="insertion">Insertion Sort</option>

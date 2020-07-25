@@ -24,10 +24,10 @@ export default class SortingTimeVisualizer extends React.Component {
         this.bars = [];
         this.animationSpeed = 0;
         this.defaultLength = 60;
-        // 90% of the distance between array container and menu
-        this.maxHeight = 550
+        this.maxHeight = 550;
 
         this.generateArray = this.generateArray.bind(this);
+        this.speedChange = this.speedChange.bind(this);
         this.handleExecute = this.handleExecute.bind(this);
     }
     
@@ -58,12 +58,17 @@ export default class SortingTimeVisualizer extends React.Component {
 
         // const newArray = [306,419,14,650,378,456,251,416,440,148,101,173,167,10,225,445,20,462,107,156,276,506,189,15,201];
         this.setState({ array: newArray});
-        this.bars = newArray.map((value, i) => <div className="array" key={i} index={i} style={{
+        this.bars = newArray.map((value, i) => <div className="array" key={i} index={i} color={green} type={undefined} style={{
             height: value,
             width: arrayWidth,
             margin: arrayMargin}}
         />);
 
+    }
+
+    speedChange(speed) {
+        speed = 3 * (100 - speed);
+        this.animationSpeed = speed;
     }
 
     async animateSelectionSort() {
@@ -161,20 +166,15 @@ export default class SortingTimeVisualizer extends React.Component {
     async handleExecute(algorithm) {
         switch(algorithm) {
             case 'selection':
-                this.animateSelectionSort();
-                break;
+                this.animateSelectionSort(); break;
             case 'insertion':
-                this.animateInsertionSort();
-                break;
+                this.animateInsertionSort(); break;
             case 'merge':
-                this.animateMergeSort();
-                break;
+                this.animateMergeSort(); break;
             case 'quick':
-                this.animateQuickSort();
-                break;
+                this.animateQuickSort(); break;
             default:
-                this.animateSelectionSort();
-                break;
+                this.animateSelectionSort(); break;
         }
     }
 
@@ -183,7 +183,7 @@ export default class SortingTimeVisualizer extends React.Component {
         return (
             <div>
                 <div id="color-strip" />
-                <Menu onExecute={this.handleExecute} onGenerate={this.generateArray} />
+                <Menu onExecute={this.handleExecute} onGenerate={this.generateArray} onSpeedChange={this.speedChange} />
                     <div id="bars-container">
                         {this.bars}
                         {/* <button id="test-sort" onClick={this.testSort.bind(this, selectionSortAlgo)}>Test Sort</button> */}

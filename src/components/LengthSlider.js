@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { makeStyles, withTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -18,15 +18,20 @@ const useStyles = makeStyles({
   },
 });
 
-export default function InputSlider(props) {
+export default function LengthSlider(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(50);
 
-  useEffect(
-    () => props.onSlide(value),
+  useEffect(() => {
+    if (value < 5) {
+      props.onSlide(5);
+    } else if (value > 150) {
+      props.onSlide(150);
+    } else {
+      props.onSlide(value);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [value],
-  );
+  }, [value]);
 
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
@@ -46,12 +51,10 @@ export default function InputSlider(props) {
 
   return (
     <div className={classes.root}>
-      <Typography className="slider-label" id="input-slider" style={{fontSize: "20px"}} gutterBottom >
+      <Typography className="slider-label" id="input-slider" gutterBottom >
         Array Length
       </Typography >
       <Grid container spacing={2} alignItems="center">
-        <Grid item>
-        </Grid>
         <Grid item xs>
           <Slider
             min={5}

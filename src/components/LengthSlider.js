@@ -20,13 +20,13 @@ const useStyles = makeStyles({
 
 export default function LengthSlider(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(50);
+  const [value, setValue] = React.useState(25);
 
   useEffect(() => {
     if (value < 5) {
       props.onSlide(5);
-    } else if (value > 150) {
-      props.onSlide(150);
+    } else if (value > 125) {
+      props.onSlide(125);
     } else {
       props.onSlide(value);
     }
@@ -44,8 +44,8 @@ export default function LengthSlider(props) {
   const handleBlur = () => {
     if (value < 5) {
       setValue(5);
-    } else if (value > 150) {
-      setValue(150);
+    } else if (value > 125) {
+      setValue(125);
     }
   };
 
@@ -58,7 +58,7 @@ export default function LengthSlider(props) {
         <Grid item xs>
           <Slider
             min={5}
-            max={150}
+            max={125}
             style={{color: "rgba(100%, 100%, 100%, 82.5%)"}}
             value={typeof value === 'number' ? value : 0}
             onChange={handleSliderChange}
@@ -75,7 +75,7 @@ export default function LengthSlider(props) {
             inputProps={{
               step: 10,
               min: 5,
-              max: 150,
+              max: 125,
               type: 'number',
               'aria-labelledby': 'input-slider',
               style: {textAlign: "center"},

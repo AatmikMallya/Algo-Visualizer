@@ -13,7 +13,7 @@ const useStyles = makeStyles({
 
 export default function SpeedSlider(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(30);
+  const [value, setValue] = React.useState(10);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => props.onSlide(value), [value]);

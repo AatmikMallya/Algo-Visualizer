@@ -1,19 +1,7 @@
-
 const purple = "#8a2be2";
 const red = "#dc143c";
 
-// export function getAnimations(arr) {
-//     const animations = []
-//     for (let i = 0; i < arr.length; i+=3) {
-//         animations.push([i, purple]);
-//     }
-//     for (let i = 0; i < arr.length; i+=5) {
-//         animations.push([i, red]);
-//     }
-//     return animations;
-// }
-
-export function getSelectionSortAnims(arr) {
+export function getSelectionAnimations(arr) {
     let minIdx, temp;
     const animations = [];
     
@@ -45,7 +33,7 @@ export function getSelectionSortAnims(arr) {
     return animations;
 }
 
-// function selectionSortAlgo(arr) {
+// function selectionAlgo(arr) {
 //     let minIdx, temp;
     
 //     for (let i = 0; i < arr.length; i++) {

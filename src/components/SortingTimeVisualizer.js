@@ -1,7 +1,9 @@
 import React from 'react';
 import Menu from './Menu';
 import './SortingTimeVisualizer.css';
-import {getSelectionSortAnims} from '../algorithms/SelectionSort';
+import { getSelectionAnimations } from '../algorithms/Selection';
+import { getInsertionAnimations, insertionAlgo } from '../algorithms/Insertion';
+
 import UIfx from '../../node_modules/uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
 
@@ -22,7 +24,7 @@ export default class SortingTimeVisualizer extends React.Component {
         };
         
         this.bars = [];
-        this.animationSpeed = 0;
+        this.animationInterval = 0;
         this.defaultLength = 60;
         this.maxHeight = 550;
         this.isRunning = false;
@@ -74,19 +76,18 @@ export default class SortingTimeVisualizer extends React.Component {
 
     }
 
-    speedChange(speed) {
-        speed = 3 * (100 - speed);
-        this.animationSpeed = speed;
+    speedChange(interval) {
+        // compute reciprocal of interval to make the slider feel linear
+        this.animationInterval = interval < 5 ? 300 : 1500/interval - 15;        
     }
 
     async animateSelectionSort() {
-        const array = this.state.array;
-        const animations = getSelectionSortAnims(array)
+        const animations = getSelectionAnimations(this.state.array)
         const arrayBars = document.getElementsByClassName("array")
         
         // first bar will be purple (current min)
         arrayBars[0].style.backgroundColor = purple;
-        await wait(this.animationSpeed);
+        await wait(this.animationInterval);
 
         for (let i = 1; i < animations.length; i++) {
             if (!this.isRunning) return;
@@ -99,16 +100,16 @@ export default class SortingTimeVisualizer extends React.Component {
 
                 arrayBars[index1].style.backgroundColor = yellow;
                 arrayBars[index2].style.backgroundColor = yellow;
-                await wait(this.animationSpeed);
+                await wait(this.animationInterval);
 
                 const temp = arrayBars[index1].style.height;
                 arrayBars[index1].style.height = arrayBars[index2].style.height;
                 arrayBars[index2].style.height = temp;
-                await wait(this.animationSpeed);
+                await wait(this.animationInterval);
 
                 arrayBars[index1].style.backgroundColor = purple;
                 arrayBars[index2].style.backgroundColor = green;
-                await wait(this.animationSpeed);
+                await wait(this.animationInterval);
             }
             // coloring a bar red or purple to indicate comparison
             else {
@@ -131,31 +132,80 @@ export default class SortingTimeVisualizer extends React.Component {
                         }
                     }
                 }
-                await wait(this.animationSpeed);
+                await wait(this.animationInterval);
             }
         }
         
         arrayBars[arrayBars.length - 1].style.backgroundColor = purple;
-        await wait(this.animationSpeed);
+        await wait(this.animationInterval);
 
         for (let i = 0; i < arrayBars.length; i++) {
                 arrayBars[i].style.backgroundColor = green;
                 arrayBars[i].type = undefined;
-                await wait(0.33 * this.animationSpeed);
+                await wait(0.33 * this.animationInterval);
         }
         
         this.isRunning = false;
     }
 
-    animateInsertionSort() {
-        console.log("Todo: Insertion sort")
+    async animateInsertionSort() {
+        const animations = getInsertionAnimations(this.state.array)
+        const arrayBars = document.getElementsByClassName("array")
+
+        // first bar will be purple (current min)
+        arrayBars[0].style.backgroundColor = purple;
+        await wait(this.animationInterval);
+
+        for (let i = 0; i < animations.length; i++) {
+            if (!this.isRunning) {
+                for (let i = 0; i < arrayBars.length; i++) {
+                    arrayBars[i].style.backgroundColor = green;
+                }
+                return;
+            }
+
+            // swapping
+            if (typeof animations[i][1] === "number") {
+                const [index1, index2] = animations[i];
+                
+                arrayBars[index1].style.backgroundColor = yellow;
+                arrayBars[index2].style.backgroundColor = yellow;
+                await wait(this.animationInterval);
+
+                const temp = arrayBars[index1].style.height;
+                arrayBars[index1].style.height = arrayBars[index2].style.height;
+                arrayBars[index2].style.height = temp;
+                await wait(this.animationInterval);
+
+                arrayBars[index2].style.backgroundColor = purple;
+                if (i === animations.length - 1 || typeof animations[i + 1][1] !== "number") {
+                    cardFlip.play();
+                    arrayBars[index1].style.backgroundColor = purple;
+                }
+            }
+            // coloring
+            else {
+                const [index, color] = animations[i];
+                arrayBars[index].style.backgroundColor = color;
+                await wait(this.animationInterval);
+            }
+        }
+
+        await wait(this.animationInterval);
+
+        for (let i = 0; i < arrayBars.length; i++) {
+                arrayBars[i].style.backgroundColor = green;
+                await wait(0.33 * this.animationInterval);
+        }
+        
+        this.isRunning = false;
     }
 
-    animateMergeSort() {
+    async animateMergeSort() {
         console.log("Todo: Merge sort")
     }
 
-    animateQuickSort() {
+    async animateQuickSort() {
         console.log("Todo: Quicksort")
     }
 
@@ -199,7 +249,7 @@ export default class SortingTimeVisualizer extends React.Component {
                 <Menu onExecute={this.handleExecute} onGenerate={this.generateArray} onSpeedChange={this.speedChange} />
                     <div id="bars-container">
                         {this.bars}
-                        {/* <button id="test-sort" onClick={this.testSort.bind(this, selectionSortAlgo)}>Test Sort</button> */}
+                        {/* <button id="test-sort" onClick={this.testSort.bind(this, **algo**)}>Test Sort</button> */}
                     </div>
             </div>
         )

@@ -12,8 +12,8 @@ export default class Menu extends React.Component {
         }
     }
 
-    handleSpeedChange(speed) {
-        this.props.onSpeedChange(speed);
+    handleSpeedChange(interval) {
+        this.props.onSpeedChange(interval);
     }
 
     handleGenerate(length) {
@@ -29,11 +29,11 @@ export default class Menu extends React.Component {
         return (
             <div id="menu-container">
                 <div className="menu-item" id="selection-sort" onClick={() => this.handleGenerate()}>New Array</div>
-                <SpeedSlider onSlide={speed => this.handleSpeedChange(speed)} />
+                <SpeedSlider onSlide={interval => this.handleSpeedChange(interval)} />
                 <LengthSlider onSlide={length => this.handleGenerate(length)} />
                 <select className="menu-item" id="menu-select" >
-                    <option value="selection">Selection Sort</option>
-                    <option value="insertion">Insertion Sort</option>
+                    <option value="insertion">Selection Sort</option>
+                    <option value="selecton">Insertion Sort</option>
                     <option value="merge">Merge Sort</option>
                     <option value="quick">Quicksort</option>
                 </select>

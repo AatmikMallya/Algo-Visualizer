@@ -1,6 +1,4 @@
-const purple = "#8a2be2";
-const red = "#dc143c";
-const yellow = "#ffff00";
+const purple = '#8a2be2';
 
 export function getInsertionAnimations(arr) {
     const animations = [];

@@ -8,7 +8,7 @@ export default class Menu extends React.Component {
         super(props);
 
         this.state = {
-            algorithm: "selection"
+            algorithm: 'selection'
         }
     }
 
@@ -19,25 +19,30 @@ export default class Menu extends React.Component {
     handleGenerate(length) {
         this.props.onGenerate(length);
     }
+    
+    handleReset() {
+        this.props.onReset();
+    }
 
     handleExecute() {
-        const selectedAlgorithm = document.getElementById("menu-select").value;
+        const selectedAlgorithm = document.getElementById('menu-select').value;
         this.props.onExecute(selectedAlgorithm);
     }
 
     render() {
         return (
-            <div id="menu-container">
-                <div className="menu-item" id="selection-sort" onClick={() => this.handleGenerate()}>New Array</div>
+            <div id='menu-container'>
+                <div className='menu-item' id='selection-sort' onClick={() => this.handleGenerate()}>New Array</div>
+                <div className='menu-item' id='selection-sort' onClick={() => this.handleReset()}>Reset Array</div>
                 <SpeedSlider onSlide={interval => this.handleSpeedChange(interval)} />
                 <LengthSlider onSlide={length => this.handleGenerate(length)} />
-                <select className="menu-item" id="menu-select" >
-                    <option value="insertion">Selection Sort</option>
-                    <option value="selecton">Insertion Sort</option>
-                    <option value="merge">Merge Sort</option>
-                    <option value="quick">Quicksort</option>
+                <select className='menu-item' id='menu-select' >
+                    <option value='selection'>Selection Sort</option>
+                    <option value='insertion'>Insertion Sort</option>
+                    <option value='merge'>Merge Sort</option>
+                    <option value='quick'>Quicksort</option>
                 </select>
-                <div className="menu-item" id="execute" onClick={() => this.handleExecute()}>Execute</div>
+                <div className='menu-item' id='execute' onClick={() => this.handleExecute()}>Execute</div>
             </div>
         );
     }

@@ -7,7 +7,7 @@ import Slider from '@material-ui/core/Slider';
 const useStyles = makeStyles({
   root: {
     width: 200,
-    color: "rgba(100%, 100%, 100%, 82.5%)"
+    color: 'rgba(100%, 100%, 100%, 82.5%)'
   },
 });
 
@@ -24,14 +24,14 @@ export default function SpeedSlider(props) {
 
   return (
     <div className={classes.root}>
-      <Typography className="slider-label" id="continuous-slider" gutterBottom>
+      <Typography className='slider-label' id='continuous-slider' gutterBottom>
         Sorting Speed
       </Typography>
       <Grid container spacing={2}>
         <Grid item>
         </Grid>
         <Grid item xs>
-          <Slider value={value} onChange={handleChange} style={{color: "rgba(100%, 100%, 100%, 82.5%)"}} aria-labelledby="continuous-slider" />
+          <Slider value={value} onChange={handleChange} style={{color: 'rgba(100%, 100%, 100%, 82.5%)'}} aria-labelledby='continuous-slider' />
         </Grid>
         <Grid item>
         </Grid>

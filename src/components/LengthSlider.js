@@ -8,13 +8,13 @@ import Input from '@material-ui/core/Input';
 const useStyles = makeStyles({
   root: {
     width: 250,
-    color: "rgba(100%, 100%, 100%, 82.5%)",
+    color: 'rgba(100%, 100%, 100%, 82.5%)',
   },
   input: {
     width: 50,
-    color: "rgba(100%, 100%, 100%, 82.5%)",
-    backgroundColor: "rgba(100%, 100%, 100%, 20%)",
-    borderRadius: "10px",
+    color: 'rgba(100%, 100%, 100%, 82.5%)',
+    backgroundColor: 'rgba(100%, 100%, 100%, 20%)',
+    borderRadius: '10px',
   },
 });
 
@@ -51,25 +51,25 @@ export default function LengthSlider(props) {
 
   return (
     <div className={classes.root}>
-      <Typography className="slider-label" id="input-slider" gutterBottom >
+      <Typography className='slider-label' id='input-slider' gutterBottom >
         Array Length
       </Typography >
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2} alignItems='center'>
         <Grid item xs>
           <Slider
             min={5}
             max={125}
-            style={{color: "rgba(100%, 100%, 100%, 82.5%)"}}
+            style={{color: 'rgba(100%, 100%, 100%, 82.5%)'}}
             value={typeof value === 'number' ? value : 0}
             onChange={handleSliderChange}
-            aria-labelledby="input-slider"
+            aria-labelledby='input-slider'
           />
         </Grid>
         <Grid item>
           <Input
             className={classes.input}
             value={value}
-            margin="dense"
+            margin='dense'
             onChange={handleInputChange}
             onBlur={handleBlur}
             inputProps={{
@@ -78,7 +78,7 @@ export default function LengthSlider(props) {
               max: 125,
               type: 'number',
               'aria-labelledby': 'input-slider',
-              style: {textAlign: "center"},
+              style: {textAlign: 'center'},
             }}
           />
         </Grid>

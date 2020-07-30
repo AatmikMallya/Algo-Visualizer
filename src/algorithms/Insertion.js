@@ -19,6 +19,8 @@ export function getInsertionAnimations(arr) {
     return animations;
 }
 
+
+
 // Algo w/ more swapping for better visual
 export function insertionAlgo(arr) {
     for (let i = 1; i < arr.length; i++) {

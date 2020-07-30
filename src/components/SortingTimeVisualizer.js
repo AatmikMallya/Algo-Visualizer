@@ -3,6 +3,8 @@ import Menu from './Menu';
 import './SortingTimeVisualizer.css';
 import { getSelectionAnimations } from '../algorithms/Selection';
 import { getInsertionAnimations } from '../algorithms/Insertion';
+import { getMergeAnimations } from '../algorithms/Merge';
+import { getQuickAnimations } from '../algorithms/Quick';
 
 import UIfx from '../../node_modules/uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
@@ -12,7 +14,7 @@ const red = '#dc143c';
 const green = '#24682d';
 const yellow = '#ffff00';
 
-const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 50 });
+const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60 });
 
 export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
@@ -41,19 +43,18 @@ export default class SortingTimeVisualizer extends React.Component {
     }
 
     generateArray(length) {
+        const array = document.getElementsByClassName('array');
+        for (let i = 0; i < array.length; i++) {
+            array[i].style.backgroundColor = green;
+        }
+        this.isRunning = false;
+
         let arraySize;
         if (length) {
             arraySize = length;
             this.defaultLength = length;
         } else {
             arraySize = this.defaultLength
-        }
-        if (this.isRunning) {
-            const array = document.getElementsByClassName('array');
-            for (let i = 0; i < arraySize; i++) {
-                array[i].style.backgroundColor = green;
-            }
-            this.isRunning = false;
         }
 
         const windowWidth = window.innerWidth;
@@ -69,7 +70,7 @@ export default class SortingTimeVisualizer extends React.Component {
             newArray.push(Math.floor(Math.random()*this.maxHeight + 15));
         }
 
-        // const newArray = [306,419,14,650,378,456,251,416,440,148,101,173,167,10,225,445,20,462,107,156,276,506,189,15,201];
+        // const newArray = [ 250, 350, 100, 50, 550, 300, 175, 450 ];
         this.setState({
             array: newArray,
             bars: newArray.map((value, i) => <div className='array' key={i} idx={i} color={green} type={undefined} style={{
@@ -77,7 +78,7 @@ export default class SortingTimeVisualizer extends React.Component {
                 margin: margin,
                 width: width,
                 borderTopLeftRadius: topRadius, borderTopRightRadius: topRadius,
-                borderBottomLeftRadius: bottomRadius, borderBottomRightRadius: bottomRadius
+                borderBottomLeftRadius: bottomRadius, borderBottomRightRadius: bottomRadius,
             }} />)
         });
 
@@ -91,12 +92,10 @@ export default class SortingTimeVisualizer extends React.Component {
         const array = document.getElementsByClassName('array');
         const arraySize = array.length;
 
-        if (this.isRunning) {
-            for (let i = 0; i < arraySize; i++) {
-                array[i].style.backgroundColor = green;
-            }
-            this.isRunning = false;
+        for (let i = 0; i < arraySize; i++) {
+            array[i].style.backgroundColor = green;
         }
+        this.isRunning = false;
 
         const oldArray = []
         for (let i = 0; i < arraySize; i++) {
@@ -110,7 +109,8 @@ export default class SortingTimeVisualizer extends React.Component {
 
     speedChange(interval) {
         // compute reciprocal of interval to make the slider feel linear
-        this.animationInterval = interval < 5 ? 300 : 1500/interval - 15;        
+        this.animationInterval = interval < 5 ? 300 : 1500/interval - 15;      
+        // this.animationInterval = 800;  
     }
 
     async animateSelectionSort() {
@@ -171,18 +171,20 @@ export default class SortingTimeVisualizer extends React.Component {
         arr[arr.length - 1].style.backgroundColor = purple;
         await wait(this.animationInterval);
 
-        for (let i = 0; i < arr.length; i++) {
-                arr[i].style.backgroundColor = green;
-                arr[i].type = undefined;
-                await wait(0.33 * this.animationInterval);
+        for (let i = 0; i < arr.length / 2; i++) {
+            arr[i].style.backgroundColor = green;
+            arr[i].type = undefined;
+            arr[arr.length - i - 1].style.backgroundColor = green;
+            arr[arr.length - i - 1].type = undefined
+            await wait(0.5 * this.animationInterval);
         }
         
         this.isRunning = false;
     }
 
     async animateInsertionSort() {
-        const animations = getInsertionAnimations(this.state.array)
-        const arr = document.getElementsByClassName('array')
+        const animations = getInsertionAnimations(this.state.array);
+        const arr = document.getElementsByClassName('array');
 
         // first bar will be purple (current min)
         arr[0].style.backgroundColor = purple;
@@ -228,28 +230,74 @@ export default class SortingTimeVisualizer extends React.Component {
 
         await wait(this.animationInterval);
 
-        for (let i = 0; i < arr.length; i++) {
-                arr[i].style.backgroundColor = green;
-                await wait(0.33 * this.animationInterval);
+        for (let i = 0; i < arr.length / 2; i++) {
+            arr[i].style.backgroundColor = green;
+            arr[arr.length - i - 1].style.backgroundColor = green;
+            await wait(0.5 * this.animationInterval);
         }
         
         this.isRunning = false;
     }
 
     async animateMergeSort() {
-        console.log('Todo: Merge sort')
+        const animations = getMergeAnimations(this.state.array);
+        const arr = document.getElementsByClassName('array');
+
+        for (let i = 0; i < animations.length; i++) {
+            if (!this.isRunning) return;
+
+            const color = animations[i][0]
+            if (animations[i].length === 3) {
+                const [, idx1, idx2] = animations[i];
+
+                arr[idx2].style.backgroundColor = yellow;
+                await wait(this.animationInterval);
+
+                const temp = arr[idx2].style.height;
+                for (let i = idx2; i > idx1; i--) {
+                    arr[i].style.height = arr[i - 1].style.height;
+                }
+                arr[idx1].style.height = temp;
+                arr[idx1].style.backgroundColor = yellow;
+                arr[idx2].style.backgroundColor = color;
+                await wait(this.animationInterval);
+
+                arr[idx1].style.backgroundColor = color;
+                await wait(this.animationInterval);
+            }
+            else {
+                const [, idx] = animations[i];
+                arr[idx].style.backgroundColor = yellow;
+                await wait(this.animationInterval);
+
+                arr[idx].style.backgroundColor = color;
+                await wait(this.animationInterval);
+            }
+        }
+
+        for (let i = 0; i < arr.length / 2; i++) {
+            arr[i].style.backgroundColor = green;
+            arr[arr.length - i - 1].style.backgroundColor = green;
+            await wait(0.5 * this.animationInterval);
+        }
+
+        this.isRunning = false;
     }
 
     async animateQuickSort() {
         console.log('Todo: Quicksort')
+        // eslint-disable-next-line no-unused-vars
+        const animations = getQuickAnimations(this.state.array);
     }
 
     // generates many large arrays, logs 'true' for each correct sort
     testSort(mySort) {
-        for (let i = 0; i < 1000; i++) {
+        const startTime = new Date();
+        for (let i = 0; i < 100; i++) {
             const testArr = [];
-            for (let j = 0; j < 1000; j++) {
-                testArr.push(Math.floor(Math.random()*500 + 20))
+            const length = Math.floor(Math.random()*1000)
+            for (let j = 0; j < length; j++) {
+                testArr.push(Math.floor(Math.random()*500))
             }
             const testArr2 = [...testArr];
     
@@ -258,10 +306,15 @@ export default class SortingTimeVisualizer extends React.Component {
     
             console.log(arrayEquality(testArr, testArr2));
         }
+        const elapsedTime = new Date() - startTime;
+        console.log("Elapsed time: ", elapsedTime, " ms");
     }
 
     async handleExecute(algorithm) {
+        if (this.isRunning) return;
+        
         this.isRunning = true;
+
         if (algorithm === 'selection')
             this.animateSelectionSort();
         else if (algorithm === 'insertion')
@@ -280,7 +333,7 @@ export default class SortingTimeVisualizer extends React.Component {
                 <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} />
                     <div id='bars-container'>
                         {this.state.bars}
-                        {/* <button id='test-sort' onClick={this.testSort.bind(this, **algo**)}>Test Sort</button> */}
+                        {/* <button id='test-sort' onClick={this.testSort.bind(this, mergeAlgo)}>Test Sort</button> */}
                     </div>
             </div>
         )

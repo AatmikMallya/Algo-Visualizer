@@ -33,23 +33,25 @@ export function getSelectionAnimations(arr) {
     return animations;
 }
 
-// function selectionAlgo(arr) {
-//     let minIdx, temp;
+
+
+export function selectionAlgo(arr) {
+    let minIdx, temp;
     
-//     for (let i = 0; i < arr.length; i++) {
-//         minIdx = i;
-//         for (let j = i + 1; j < arr.length; j++) {
-//             if (arr[j] < arr[minIdx]) {
-//                 minIdx = j;
-//             }
-//         }
+    for (let i = 0; i < arr.length; i++) {
+        minIdx = i;
+        for (let j = i + 1; j < arr.length; j++) {
+            if (arr[j] < arr[minIdx]) {
+                minIdx = j;
+            }
+        }
 
-//         if (minIdx > i) {
-//             temp = arr[minIdx];
-//             arr[minIdx] = arr[i];
-//             arr[i] = temp;
-//         }
-//     }
+        if (minIdx > i) {
+            temp = arr[minIdx];
+            arr[minIdx] = arr[i];
+            arr[i] = temp;
+        }
+    }
 
-//     return arr;
-// }
+    return arr;
+}

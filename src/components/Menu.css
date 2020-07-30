@@ -43,3 +43,9 @@
     font-weight: 700;
     font-size: 26px;
 }
+
+select {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}

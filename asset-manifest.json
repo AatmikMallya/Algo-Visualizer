@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/Sorting-Time-Visualizer/static/css/main.ccb51bc2.chunk.css",
-    "main.js": "/Sorting-Time-Visualizer/static/js/main.1e7b8b08.chunk.js",
-    "main.js.map": "/Sorting-Time-Visualizer/static/js/main.1e7b8b08.chunk.js.map",
+    "main.css": "/Sorting-Time-Visualizer/static/css/main.17345232.chunk.css",
+    "main.js": "/Sorting-Time-Visualizer/static/js/main.506c4598.chunk.js",
+    "main.js.map": "/Sorting-Time-Visualizer/static/js/main.506c4598.chunk.js.map",
     "runtime-main.js": "/Sorting-Time-Visualizer/static/js/runtime-main.fa383a73.js",
     "runtime-main.js.map": "/Sorting-Time-Visualizer/static/js/runtime-main.fa383a73.js.map",
-    "static/js/2.00132c14.chunk.js": "/Sorting-Time-Visualizer/static/js/2.00132c14.chunk.js",
-    "static/js/2.00132c14.chunk.js.map": "/Sorting-Time-Visualizer/static/js/2.00132c14.chunk.js.map",
+    "static/js/2.03065194.chunk.js": "/Sorting-Time-Visualizer/static/js/2.03065194.chunk.js",
+    "static/js/2.03065194.chunk.js.map": "/Sorting-Time-Visualizer/static/js/2.03065194.chunk.js.map",
     "index.html": "/Sorting-Time-Visualizer/index.html",
-    "precache-manifest.cdf0a83ab02b2a6ca7133e28b20732d3.js": "/Sorting-Time-Visualizer/precache-manifest.cdf0a83ab02b2a6ca7133e28b20732d3.js",
+    "precache-manifest.40ff83398f2b34c863a13c942ff77635.js": "/Sorting-Time-Visualizer/precache-manifest.40ff83398f2b34c863a13c942ff77635.js",
     "service-worker.js": "/Sorting-Time-Visualizer/service-worker.js",
-    "static/css/main.ccb51bc2.chunk.css.map": "/Sorting-Time-Visualizer/static/css/main.ccb51bc2.chunk.css.map",
-    "static/js/2.00132c14.chunk.js.LICENSE.txt": "/Sorting-Time-Visualizer/static/js/2.00132c14.chunk.js.LICENSE.txt",
+    "static/css/main.17345232.chunk.css.map": "/Sorting-Time-Visualizer/static/css/main.17345232.chunk.css.map",
+    "static/js/2.03065194.chunk.js.LICENSE.txt": "/Sorting-Time-Visualizer/static/js/2.03065194.chunk.js.LICENSE.txt",
     "static/media/card-flip.mp3": "/Sorting-Time-Visualizer/static/media/card-flip.2317ec81.mp3"
   },
   "entrypoints": [
     "static/js/runtime-main.fa383a73.js",
-    "static/js/2.00132c14.chunk.js",
-    "static/css/main.ccb51bc2.chunk.css",
-    "static/js/main.1e7b8b08.chunk.js"
+    "static/js/2.03065194.chunk.js",
+    "static/css/main.17345232.chunk.css",
+    "static/js/main.506c4598.chunk.js"
   ]
 }

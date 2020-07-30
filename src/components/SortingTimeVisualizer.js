@@ -1,10 +1,13 @@
 import React from 'react';
 import Menu from './Menu';
 import './SortingTimeVisualizer.css';
-import { getSelectionAnimations } from '../algorithms/Selection';
+
+// import { getBubbleAnimations, bubbleAlgo } from '../algorithms/Bubble';
+// import { getHeapAnimations, heapAlgo } from '../algoritHeap';
 import { getInsertionAnimations } from '../algorithms/Insertion';
 import { getMergeAnimations } from '../algorithms/Merge';
-import { getQuickAnimations } from '../algorithms/Quick';
+import { getQuickAnimations, quickAlgo } from '../algorithms/Quick';
+import { getSelectionAnimations } from '../algorithms/Selection';
 
 import UIfx from '../../node_modules/uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
@@ -19,12 +22,9 @@ const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60 });
 export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            array : [], // holds height values
-            bars : [],
-        };
+        // array holds height values, bars holds the actual divs
+        this.state = { array: [], bars: [], };
         
-        // this.bars = [];
         this.cachedArray = [];
         this.animationInterval = 0;
         this.defaultLength = 60;
@@ -286,9 +286,18 @@ export default class SortingTimeVisualizer extends React.Component {
 
     async animateQuickSort() {
         console.log('Todo: Quicksort')
-        // eslint-disable-next-line no-unused-vars
-        const animations = getQuickAnimations(this.state.array);
+        // const animations = getQuickAnimations(this.state.array);
     }
+
+    // async animateBubbleSort() {
+    //     console.log('Todo: Bubble sort')
+    //     const animations = getBubbleAnimations(this.state.array);
+    // }
+
+    // async animateHeapSort() {
+    //     console.log('Todo: Heapsort')
+    //     const animations = getHeapAnimations(this.state.array);
+    // }
 
     // generates many large arrays, logs 'true' for each correct sort
     testSort(mySort) {
@@ -312,7 +321,6 @@ export default class SortingTimeVisualizer extends React.Component {
 
     async handleExecute(algorithm) {
         if (this.isRunning) return;
-        
         this.isRunning = true;
 
         if (algorithm === 'selection')
@@ -323,6 +331,10 @@ export default class SortingTimeVisualizer extends React.Component {
             this.animateMergeSort();
         else if (algorithm === 'quick')
             this.animateQuickSort();
+        // else if (algorithm === 'bubble')
+        //     this.animateBubbleSort();
+        // else
+        //     this.animateHeapSort();
     }
 
     // everything rendered on screen is here
@@ -333,7 +345,7 @@ export default class SortingTimeVisualizer extends React.Component {
                 <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} />
                     <div id='bars-container'>
                         {this.state.bars}
-                        {/* <button id='test-sort' onClick={this.testSort.bind(this, mergeAlgo)}>Test Sort</button> */}
+                        <button id='test-sort' onClick={this.testSort.bind(this, quickAlgo)}>Test Sort</button>
                     </div>
             </div>
         )

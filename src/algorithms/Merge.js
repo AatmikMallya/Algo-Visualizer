@@ -41,30 +41,30 @@ function mergeAnimate(a, left, right, end, b, animations, color) {
 
 
 
-export function mergeAlgo(a) {
-  const b = [];
+// export function mergeAlgo(a) {
+//   const b = [];
 
-  for (let width = 1; width < a.length; width *= 2) {
-    for (let i = 0; i < a.length; i += 2 * width) {
-      merge(a, i, Math.min(i + width, a.length), Math.min(i + 2*width, a.length), b);
-    }
-    for (let i = 0; i < a.length; i++) {
-      a[i] = b[i];
-    }
-  }
+//   for (let width = 1; width < a.length; width *= 2) {
+//     for (let i = 0; i < a.length; i += 2 * width) {
+//       merge(a, i, Math.min(i + width, a.length), Math.min(i + 2*width, a.length), b);
+//     }
+//     for (let i = 0; i < a.length; i++) {
+//       a[i] = b[i];
+//     }
+//   }
 
-  return a
-}
+//   return a
+// }
 
-function merge(a, left, right, end, b) {
-  let i = left, j = right;
+// function merge(a, left, right, end, b) {
+//   let i = left, j = right;
   
-  for (let k = left; k < end; k++) {
-    if (i < right && (j >= end || a[i] <= a[j])) {
-      b[k] = a[i++];
-    }
-    else {
-      b[k] = a[j++];
-    }
-  }
-}
+//   for (let k = left; k < end; k++) {
+//     if (i < right && (j >= end || a[i] <= a[j])) {
+//       b[k] = a[i++];
+//     }
+//     else {
+//       b[k] = a[j++];
+//     }
+//   }
+// }

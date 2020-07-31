@@ -16,6 +16,7 @@ const purple = '#8a2be2';
 const red = '#dc143c';
 const green = '#24682d';
 const yellow = '#ffff00';
+const blue = '#0076b8';
 
 const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60 });
 
@@ -285,8 +286,47 @@ export default class SortingTimeVisualizer extends React.Component {
     }
 
     async animateQuickSort() {
-        console.log('Todo: Quicksort')
-        // const animations = getQuickAnimations(this.state.array);
+        const animations = getQuickAnimations(this.state.array, 0, this.state.array.length - 1, []);
+        const arr = document.getElementsByClassName('array');
+        this.state.array.sort((a, b) => a - b);
+
+        for (let i = 0; i < animations.length; i++) {
+            if (!this.isRunning) return;
+
+            if (animations[i].length === 1) {
+                cardFlip.play();
+                const [idx] = animations[i];
+                
+                arr[idx].style.backgroundColor = red;
+                await wait(this.animationInterval);
+            }
+            else {
+                const [idx1, idx2] = animations[i];
+
+                arr[idx1].style.backgroundColor = yellow;
+                arr[idx2].style.backgroundColor = yellow;
+                await wait(this.animationInterval);
+
+                const temp = arr[idx1].style.height;
+                arr[idx1].style.height = arr[idx2].style.height;
+                arr[idx2].style.height = temp;
+                await wait(this.animationInterval);
+
+                const value1 = parseInt(arr[idx1].style.height.slice(0, -2));
+                const value2 = parseInt(arr[idx2].style.height.slice(0, -2));
+                arr[idx1].style.backgroundColor = value1 === this.state.array[idx1] ? purple : blue;
+                arr[idx2].style.backgroundColor = value2 === this.state.array[idx2] ? purple : blue;
+                await wait(this.animationInterval);
+            }
+        }
+        
+        for (let i = 0; i < arr.length / 2; i++) {
+            arr[i].style.backgroundColor = green;
+            arr[arr.length - i - 1].style.backgroundColor = green;
+            await wait(0.5 * this.animationInterval);
+        }
+
+        this.isRunning = false;
     }
 
     // async animateBubbleSort() {
@@ -304,13 +344,13 @@ export default class SortingTimeVisualizer extends React.Component {
         const startTime = new Date();
         for (let i = 0; i < 100; i++) {
             const testArr = [];
-            const length = Math.floor(Math.random()*1000)
+            const length = Math.floor(Math.random()*1001)
             for (let j = 0; j < length; j++) {
-                testArr.push(Math.floor(Math.random()*500))
+                testArr.push(Math.floor(Math.random()*501))
             }
             const testArr2 = [...testArr];
     
-            mySort(testArr);
+            mySort(testArr, 0, testArr.length - 1);
             correctSort(testArr2);
     
             console.log(arrayEquality(testArr, testArr2));
@@ -345,7 +385,7 @@ export default class SortingTimeVisualizer extends React.Component {
                 <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} />
                     <div id='bars-container'>
                         {this.state.bars}
-                        <button id='test-sort' onClick={this.testSort.bind(this, quickAlgo)}>Test Sort</button>
+                        {/* <button id='test-sort' onClick={this.testSort.bind(this, quickAlgo)}>Test Sort</button> */}
                     </div>
             </div>
         )

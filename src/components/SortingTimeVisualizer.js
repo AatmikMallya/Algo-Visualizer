@@ -247,7 +247,12 @@ export default class SortingTimeVisualizer extends React.Component {
         for (let i = 0; i < animations.length; i++) {
             if (!this.isRunning) return;
 
-            const color = animations[i][0]
+            if (!animations[i]) {
+                cardFlip.play();
+                continue;
+            }
+
+            const color = animations[i][0];
             if (animations[i].length === 3) {
                 const [, idx1, idx2] = animations[i];
 
@@ -296,7 +301,7 @@ export default class SortingTimeVisualizer extends React.Component {
             if (animations[i].length === 1) {
                 cardFlip.play();
                 const [idx] = animations[i];
-                
+
                 arr[idx].style.backgroundColor = red;
                 await wait(this.animationInterval);
             }

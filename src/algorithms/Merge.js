@@ -14,6 +14,7 @@ export function getMergeAnimations(a) {
 
   for (let width = 1; width < a.length; width *= 2) {
     const color = gradients[level][width];
+    animations.push(null);
     
     for (let i = 0; i < a.length; i += 2 * width) {
       mergeAnimate(a, i, Math.min(i + width, a.length), Math.min(i + 2*width, a.length), b, animations, color);

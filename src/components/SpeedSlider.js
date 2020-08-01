@@ -11,6 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
+// sets the time interval between animation frames
 export default function SpeedSlider(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(10);

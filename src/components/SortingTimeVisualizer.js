@@ -10,7 +10,7 @@ import animateInsertionSort from '../animations/InsertionAnimation';
 import animateMergeSort from '../animations/MergeAnimation';
 
 
-// Not very React-y, but these are only imported by animation/algorithm scripts to execute the sort
+// not very React-y, but these are only imported by animation/algorithm scripts to execute the sort
 export let isRunning = false;
 export let animationInterval = 0;
 export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60 });
@@ -23,7 +23,7 @@ export const colors = {
 }
 
 
-// Main component of application
+// main component of application
 export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
         super(props);
@@ -35,13 +35,16 @@ export default class SortingTimeVisualizer extends React.Component {
         this.maxHeight = 550;
     }
     
-    setIsRunning = bool => isRunning = bool;
+    // true if algorithm is currently running, false otherwise
+    setRunning = bool => isRunning = bool;
 
-    setAnimationInterval = interval => animationInterval = interval;
+    // compute reciprocal of interval to make the slider feel linear
+    speedChange = interval => animationInterval = interval < 5 ? 300 : 1500/interval - 15;
 
+    // display a new randomized array, possibly with a new length
     generateArray = length => {
         const array = document.getElementsByClassName('array');
-        this.setIsRunning(false);
+        this.setRunning(false);
         
         let arraySize;
         if (length) {
@@ -52,18 +55,19 @@ export default class SortingTimeVisualizer extends React.Component {
         }
 
         const windowWidth = window.innerWidth;
-        const margin = Math.max((windowWidth) / (10*arraySize), 1.5);
-        const width = Math.max((windowWidth - 100) / (1.75*arraySize), 7);
+        const margin = Math.max((windowWidth) / (10 * arraySize), 1.5);
+        const width = Math.max((windowWidth - 100) / (1.75 * arraySize), 7);
         const topRadius = Math.max(width / 10, 3);
         const bottomRadius = topRadius / 3;
 
         // 85% of the distance between array container and menu
-        this.maxHeight = 0.85 * (document.getElementById('bars-container').getBoundingClientRect().bottom - document.getElementById('menu-container').getBoundingClientRect().bottom)
+        this.maxHeight = 0.85 * (document.getElementById('bars-container').getBoundingClientRect().bottom -
+                                 document.getElementById('menu-container').getBoundingClientRect().bottom);
+        
         const newArray = [];
         for (let i = 0; i < arraySize; i++) {
             newArray.push(Math.floor(Math.random()*this.maxHeight + 15));
         }
-
         // const newArray = [ 250, 350, 100, 50, 550, 300, 175, 450 ];
         this.setState({
             array: newArray,
@@ -76,22 +80,25 @@ export default class SortingTimeVisualizer extends React.Component {
             }} />)
         });
 
+        // deep copy to allow resetting to original state
         this.cachedArray = [];
         for (let i = 0; i < newArray.length; i++) {
             this.cachedArray.push(newArray[i]);
         }
 
+        // in case we are currently in execution
         for (let i = 0; i < array.length; i++) {
             array[i].style.backgroundColor = colors.green;
         }
     }
 
+    // return bar heights and colors to pre-sorted state
     resetArray = async () => {
         for (let repeat = 0; repeat < 1; repeat++) {
             const array = document.getElementsByClassName('array');
             const arraySize = array.length;
 
-            this.setIsRunning(false);
+            this.setRunning(false);
 
             const oldArray = []
             for (let i = 0; i < arraySize; i++) {
@@ -108,9 +115,6 @@ export default class SortingTimeVisualizer extends React.Component {
             await wait(animationInterval + 0.1);
         }
     }
-
-    // compute reciprocal of interval to make the slider feel linear
-    speedChange = interval => this.setAnimationInterval(interval < 5 ? 300 : 1500/interval - 15)
 
 
     // generates many large arrays, logs 'true' for each correct sort
@@ -133,9 +137,10 @@ export default class SortingTimeVisualizer extends React.Component {
         console.log("Elapsed time: ", elapsedTime, " ms");
     }
 
+    // runs selected algorithm from dropdown
     handleExecute = async algorithm => {
         if (isRunning) return;
-        this.setIsRunning(true);
+        this.setRunning(true);
 
         if (algorithm === 'selection')
             await animateSelectionSort(this.state.array);
@@ -150,10 +155,10 @@ export default class SortingTimeVisualizer extends React.Component {
         // else
         //     this.animateHeapSort();
 
-        this.setIsRunning(false);
+        this.setRunning(false);
     }
 
-    // everything rendered on screen is here
+    // everything on screen is rendered here
     render() {
         return (
             <div>
@@ -168,6 +173,7 @@ export default class SortingTimeVisualizer extends React.Component {
     }
 }
 
+
 // effectively a synchronous sleep function
 export function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -178,13 +184,13 @@ function correctSort(arr) {
     return arr.sort((a, b) => a - b);
 }
 
-// checks if two arrays are equal (for testing)
-function arrayEquality(arr1, arr2) {
-	if (arr1.length !== arr2.length) {
+// also for testing purposes
+function arrayEquality(a, b) {
+	if (a.length !== b.length) {
         return false;
     }
-	for (let i = 0; i < arr1.length; i++) {
-		if (arr1[i] !== arr2[i]) {
+	for (let i = 0; i < a.length; i++) {
+		if (a[i] !== b[i]) {
             return false;
         }
     }

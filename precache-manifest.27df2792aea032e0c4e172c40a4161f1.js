@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "8783e5f255dc093a6d83d36898b88179",
+    "revision": "360056875f73591247b875b041410950",
     "url": "/Sorting-Time-Visualizer/index.html"
   },
   {
-    "revision": "e9132ad77f3ec84ca0bd",
+    "revision": "590eaa82766d2276b381",
     "url": "/Sorting-Time-Visualizer/static/css/main.17345232.chunk.css"
   },
   {
-    "revision": "773a36dc8af841f756b3",
-    "url": "/Sorting-Time-Visualizer/static/js/2.0d1b2251.chunk.js"
+    "revision": "33b91222fb9eeaeec7c8",
+    "url": "/Sorting-Time-Visualizer/static/js/2.84b86c87.chunk.js"
   },
   {
     "revision": "0749163b59fbee32225059cb60c18af6",
-    "url": "/Sorting-Time-Visualizer/static/js/2.0d1b2251.chunk.js.LICENSE.txt"
+    "url": "/Sorting-Time-Visualizer/static/js/2.84b86c87.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "e9132ad77f3ec84ca0bd",
-    "url": "/Sorting-Time-Visualizer/static/js/main.a68c5ccd.chunk.js"
+    "revision": "590eaa82766d2276b381",
+    "url": "/Sorting-Time-Visualizer/static/js/main.4fcd4b9b.chunk.js"
   },
   {
     "revision": "922ea9d18f6a6f827534",

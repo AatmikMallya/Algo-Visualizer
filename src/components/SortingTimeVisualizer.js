@@ -12,13 +12,15 @@ import { getSelectionAnimations } from '../algorithms/Selection';
 import UIfx from '../../node_modules/uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
 
-const purple = '#8a2be2';
-const red = '#dc143c';
-const green = '#24682d';
-const yellow = '#ffff00';
-const blue = '#0076b8';
+export const colors = {
+    purple: '#8a2be2',
+    red: '#dc143c',
+    green: '#24682d',
+    yellow: '#ffff00',
+    blue: '#0076b8'
+}
 
-const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60 });
+export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60 });
 
 export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
@@ -46,7 +48,7 @@ export default class SortingTimeVisualizer extends React.Component {
     generateArray(length) {
         const array = document.getElementsByClassName('array');
         for (let i = 0; i < array.length; i++) {
-            array[i].style.backgroundColor = green;
+            array[i].style.backgroundColor = colors.green;
         }
         this.isRunning = false;
 
@@ -74,7 +76,7 @@ export default class SortingTimeVisualizer extends React.Component {
         // const newArray = [ 250, 350, 100, 50, 550, 300, 175, 450 ];
         this.setState({
             array: newArray,
-            bars: newArray.map((value, i) => <div className='array' key={i} idx={i} color={green} type={undefined} style={{
+            bars: newArray.map((value, i) => <div className='array' key={i} idx={i} color={colors.green} type={undefined} style={{
                 height: value,
                 margin: margin,
                 width: width,
@@ -94,7 +96,7 @@ export default class SortingTimeVisualizer extends React.Component {
         const arraySize = array.length;
 
         for (let i = 0; i < arraySize; i++) {
-            array[i].style.backgroundColor = green;
+            array[i].style.backgroundColor = colors.green;
         }
         this.isRunning = false;
 
@@ -119,7 +121,7 @@ export default class SortingTimeVisualizer extends React.Component {
         const arr = document.getElementsByClassName('array')
         
         // first bar will be purple (current min)
-        arr[0].style.backgroundColor = purple;
+        arr[0].style.backgroundColor = colors.purple;
         await wait(this.animationInterval);
         
         for (let i = 1; i < animations.length; i++) {
@@ -127,12 +129,12 @@ export default class SortingTimeVisualizer extends React.Component {
             // swapping animations[i][0] and animations[i][1]
             if (typeof animations[i][1] === 'number') {
                 cardFlip.play();
-                // the last arraybar is currently red, change it back
-                arr[animations[i - 1][0]].style.backgroundColor = green;
+                // the last arraybar is currently colors.red, change it back
+                arr[animations[i - 1][0]].style.backgroundColor = colors.green;
                 const [idx1, idx2] = animations[i];
 
-                arr[idx1].style.backgroundColor = yellow;
-                arr[idx2].style.backgroundColor = yellow;
+                arr[idx1].style.backgroundColor = colors.yellow;
+                arr[idx2].style.backgroundColor = colors.yellow;
                 await wait(this.animationInterval);
 
                 const temp = arr[idx1].style.height;
@@ -140,8 +142,8 @@ export default class SortingTimeVisualizer extends React.Component {
                 arr[idx2].style.height = temp;
                 await wait(this.animationInterval);
 
-                arr[idx1].style.backgroundColor = purple;
-                arr[idx2].style.backgroundColor = green;
+                arr[idx1].style.backgroundColor = colors.purple;
+                arr[idx2].style.backgroundColor = colors.green;
                 await wait(this.animationInterval);
             }
             // coloring a bar red or purple to indicate comparison
@@ -150,17 +152,17 @@ export default class SortingTimeVisualizer extends React.Component {
                 arr[idx].style.backgroundColor = color;
                 arr[idx].type = type;
 
-                if (animations[i - 1][1] === red) {
-                    arr[animations[i - 1][0]].style.backgroundColor = green;
+                if (animations[i - 1][1] === colors.red) {
+                    arr[animations[i - 1][0]].style.backgroundColor = colors.green;
                 }
                 // if this is the new min, reset the last min
-                if (color === purple) {
+                if (color === colors.purple) {
                     for (let j = idx - 1; j > 0; j--) {
                         if (arr[j].type === 'sorted') {
                             break;
                         }
                         if (arr[j].style.backgroundColor === 'rgb(138, 43, 226)') { //purple
-                            arr[j].style.backgroundColor = green;
+                            arr[j].style.backgroundColor = colors.green;
                             break;
                         }
                     }
@@ -169,13 +171,13 @@ export default class SortingTimeVisualizer extends React.Component {
             }
         }
         
-        arr[arr.length - 1].style.backgroundColor = purple;
+        arr[arr.length - 1].style.backgroundColor = colors.purple;
         await wait(this.animationInterval);
 
         for (let i = 0; i < arr.length / 2; i++) {
-            arr[i].style.backgroundColor = green;
+            arr[i].style.backgroundColor = colors.green;
             arr[i].type = undefined;
-            arr[arr.length - i - 1].style.backgroundColor = green;
+            arr[arr.length - i - 1].style.backgroundColor = colors.green;
             arr[arr.length - i - 1].type = undefined
             await wait(0.5 * this.animationInterval);
         }
@@ -188,13 +190,13 @@ export default class SortingTimeVisualizer extends React.Component {
         const arr = document.getElementsByClassName('array');
 
         // first bar will be purple (current min)
-        arr[0].style.backgroundColor = purple;
+        arr[0].style.backgroundColor = colors.purple;
         await wait(this.animationInterval);
         
         for (let i = 0; i < animations.length; i++) {
             if (!this.isRunning) {
                 for (let i = 0; i < arr.length; i++) {
-                    arr[i].style.backgroundColor = green;
+                    arr[i].style.backgroundColor = colors.green;
                 }
                 return;
             }
@@ -203,22 +205,22 @@ export default class SortingTimeVisualizer extends React.Component {
             if (typeof animations[i][1] === 'number') {
                 const [idx1, idx2] = animations[i];
                 
-                arr[idx1].style.backgroundColor = yellow;
-                arr[idx2].style.backgroundColor = red;
+                arr[idx1].style.backgroundColor = colors.yellow;
+                arr[idx2].style.backgroundColor = colors.red;
                 await wait(this.animationInterval);
 
                 const temp = arr[idx1].style.height;
                 arr[idx1].style.height = arr[idx2].style.height;
                 arr[idx2].style.height = temp;
-                arr[idx1].style.backgroundColor = red;
-                arr[idx2].style.backgroundColor = yellow;
+                arr[idx1].style.backgroundColor = colors.red;
+                arr[idx2].style.backgroundColor = colors.yellow;
                 await wait(this.animationInterval);
 
-                arr[idx2].style.backgroundColor = purple;
+                arr[idx2].style.backgroundColor = colors.purple;
                 if (i === animations.length - 1 || typeof animations[i + 1][1] !== 'number') {
                     cardFlip.play();
                     await wait(this.animationInterval);
-                    arr[idx1].style.backgroundColor = purple;
+                    arr[idx1].style.backgroundColor = colors.purple;
                 }
             }
             // coloring
@@ -232,8 +234,8 @@ export default class SortingTimeVisualizer extends React.Component {
         await wait(this.animationInterval);
 
         for (let i = 0; i < arr.length / 2; i++) {
-            arr[i].style.backgroundColor = green;
-            arr[arr.length - i - 1].style.backgroundColor = green;
+            arr[i].style.backgroundColor = colors.green;
+            arr[arr.length - i - 1].style.backgroundColor = colors.green;
             await wait(0.5 * this.animationInterval);
         }
         
@@ -256,7 +258,7 @@ export default class SortingTimeVisualizer extends React.Component {
             if (animations[i].length === 3) {
                 const [, idx1, idx2] = animations[i];
 
-                arr[idx2].style.backgroundColor = yellow;
+                arr[idx2].style.backgroundColor = colors.yellow;
                 await wait(this.animationInterval);
 
                 const temp = arr[idx2].style.height;
@@ -264,7 +266,7 @@ export default class SortingTimeVisualizer extends React.Component {
                     arr[i].style.height = arr[i - 1].style.height;
                 }
                 arr[idx1].style.height = temp;
-                arr[idx1].style.backgroundColor = yellow;
+                arr[idx1].style.backgroundColor = colors.yellow;
                 arr[idx2].style.backgroundColor = color;
                 await wait(this.animationInterval);
 
@@ -273,7 +275,7 @@ export default class SortingTimeVisualizer extends React.Component {
             }
             else {
                 const [, idx] = animations[i];
-                arr[idx].style.backgroundColor = yellow;
+                arr[idx].style.backgroundColor = colors.yellow;
                 await wait(this.animationInterval);
 
                 arr[idx].style.backgroundColor = color;
@@ -282,8 +284,8 @@ export default class SortingTimeVisualizer extends React.Component {
         }
 
         for (let i = 0; i < arr.length / 2; i++) {
-            arr[i].style.backgroundColor = green;
-            arr[arr.length - i - 1].style.backgroundColor = green;
+            arr[i].style.backgroundColor = colors.green;
+            arr[arr.length - i - 1].style.backgroundColor = colors.green;
             await wait(0.5 * this.animationInterval);
         }
 
@@ -302,14 +304,14 @@ export default class SortingTimeVisualizer extends React.Component {
                 cardFlip.play();
                 const [idx] = animations[i];
 
-                arr[idx].style.backgroundColor = red;
+                arr[idx].style.backgroundColor = colors.red;
                 await wait(this.animationInterval);
             }
             else {
                 const [idx1, idx2] = animations[i];
 
-                arr[idx1].style.backgroundColor = yellow;
-                arr[idx2].style.backgroundColor = yellow;
+                arr[idx1].style.backgroundColor = colors.yellow;
+                arr[idx2].style.backgroundColor = colors.yellow;
                 await wait(this.animationInterval);
 
                 const temp = arr[idx1].style.height;
@@ -319,15 +321,15 @@ export default class SortingTimeVisualizer extends React.Component {
 
                 const value1 = parseInt(arr[idx1].style.height.slice(0, -2));
                 const value2 = parseInt(arr[idx2].style.height.slice(0, -2));
-                arr[idx1].style.backgroundColor = value1 === this.state.array[idx1] ? purple : blue;
-                arr[idx2].style.backgroundColor = value2 === this.state.array[idx2] ? purple : blue;
+                arr[idx1].style.backgroundColor = value1 === this.state.array[idx1] ? colors.purple : colors.blue;
+                arr[idx2].style.backgroundColor = value2 === this.state.array[idx2] ? colors.purple : colors.blue;
                 await wait(this.animationInterval);
             }
         }
         
         for (let i = 0; i < arr.length / 2; i++) {
-            arr[i].style.backgroundColor = green;
-            arr[arr.length - i - 1].style.backgroundColor = green;
+            arr[i].style.backgroundColor = colors.green;
+            arr[arr.length - i - 1].style.backgroundColor = colors.green;
             await wait(0.5 * this.animationInterval);
         }
 

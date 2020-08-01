@@ -1,4 +1,4 @@
-export function getQuickAnimations(arr, left, right, animations) {
+export default function getQuickAnimations(arr, left, right, animations) {
     let index;
     if (arr.length > 1) {
         index = partitionAnimate(arr, left, right, animations);

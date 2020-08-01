@@ -4,7 +4,7 @@
 // const yellow = '#ffff00';
 
 
-export function getBubbleAnimations(arr) {
+export default function getBubbleAnimations(arr) {
     
 }
 

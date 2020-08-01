@@ -1,7 +1,7 @@
 const purple = '#8a2be2';
 const red = '#dc143c';
 
-export function getSelectionAnimations(arr) {
+export default function getSelectionAnimations(arr) {
     let minIdx, temp;
     const animations = [];
     

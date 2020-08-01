@@ -1,17 +1,19 @@
 import React from 'react';
 import Menu from './Menu';
-import './SortingTimeVisualizer.css';
-
-// import { getBubbleAnimations, bubbleAlgo } from '../algorithms/Bubble';
-// import { getHeapAnimations, heapAlgo } from '../algoritHeap';
-import { getInsertionAnimations } from '../algorithms/Insertion';
-import { getMergeAnimations } from '../algorithms/Merge';
-import { getQuickAnimations, quickAlgo } from '../algorithms/Quick';
-import { getSelectionAnimations } from '../algorithms/Selection';
-
 import UIfx from '../../node_modules/uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
+import './SortingTimeVisualizer.css';
 
+import animateQuickSort from '../animations/QuickAnimation';
+import animateSelectionSort from '../animations/SelectionAnimation';
+import animateInsertionSort from '../animations/InsertionAnimation';
+import animateMergeSort from '../animations/MergeAnimation';
+
+
+// Not very React-y, but these are only imported by animation/algorithm scripts to execute the sort
+export let isRunning = false;
+export let animationInterval = 0;
+export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60 });
 export const colors = {
     purple: '#8a2be2',
     red: '#dc143c',
@@ -20,8 +22,8 @@ export const colors = {
     blue: '#0076b8'
 }
 
-export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60 });
 
+// Main component of application
 export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
         super(props);
@@ -29,29 +31,18 @@ export default class SortingTimeVisualizer extends React.Component {
         this.state = { array: [], bars: [], };
         
         this.cachedArray = [];
-        this.animationInterval = 0;
         this.defaultLength = 60;
         this.maxHeight = 550;
-        this.isRunning = false;
-
-        this.generateArray = this.generateArray.bind(this);
-        this.resetArray = this.resetArray.bind(this);
-        this.speedChange = this.speedChange.bind(this);
-        this.handleExecute = this.handleExecute.bind(this);
     }
     
-    // initialize array to random values
-    componentDidMount() {
-        this.generateArray();
-    }
+    setIsRunning = bool => isRunning = bool;
 
-    generateArray(length) {
+    setAnimationInterval = interval => animationInterval = interval;
+
+    generateArray = length => {
         const array = document.getElementsByClassName('array');
-        for (let i = 0; i < array.length; i++) {
-            array[i].style.backgroundColor = colors.green;
-        }
-        this.isRunning = false;
-
+        this.setIsRunning(false);
+        
         let arraySize;
         if (length) {
             arraySize = length;
@@ -89,265 +80,41 @@ export default class SortingTimeVisualizer extends React.Component {
         for (let i = 0; i < newArray.length; i++) {
             this.cachedArray.push(newArray[i]);
         }
-    }
 
-    resetArray() {
-        const array = document.getElementsByClassName('array');
-        const arraySize = array.length;
-
-        for (let i = 0; i < arraySize; i++) {
+        for (let i = 0; i < array.length; i++) {
             array[i].style.backgroundColor = colors.green;
         }
-        this.isRunning = false;
-
-        const oldArray = []
-        for (let i = 0; i < arraySize; i++) {
-            array[i].style.height = this.cachedArray[i] + "px";
-            array[i].type = undefined;
-            oldArray.push(this.cachedArray[i])
-        }
-
-        this.setState({array: oldArray});
     }
 
-    speedChange(interval) {
-        // compute reciprocal of interval to make the slider feel linear
-        this.animationInterval = interval < 5 ? 300 : 1500/interval - 15;      
-        // this.animationInterval = 800;  
+    resetArray = async () => {
+        for (let repeat = 0; repeat < 1; repeat++) {
+            const array = document.getElementsByClassName('array');
+            const arraySize = array.length;
+
+            this.setIsRunning(false);
+
+            const oldArray = []
+            for (let i = 0; i < arraySize; i++) {
+                array[i].style.height = this.cachedArray[i] + "px";
+                array[i].type = undefined;
+                oldArray.push(this.cachedArray[i])
+            }
+
+            this.setState({array: oldArray});
+            
+            for (let i = 0; i < arraySize; i++) {
+                array[i].style.backgroundColor = colors.green;
+            }
+            await wait(animationInterval + 0.1);
+        }
     }
 
-    async animateSelectionSort() {
-        const animations = getSelectionAnimations(this.state.array)
-        const arr = document.getElementsByClassName('array')
-        
-        // first bar will be purple (current min)
-        arr[0].style.backgroundColor = colors.purple;
-        await wait(this.animationInterval);
-        
-        for (let i = 1; i < animations.length; i++) {
-            if (!this.isRunning) return;
-            // swapping animations[i][0] and animations[i][1]
-            if (typeof animations[i][1] === 'number') {
-                cardFlip.play();
-                // the last arraybar is currently colors.red, change it back
-                arr[animations[i - 1][0]].style.backgroundColor = colors.green;
-                const [idx1, idx2] = animations[i];
+    // compute reciprocal of interval to make the slider feel linear
+    speedChange = interval => this.setAnimationInterval(interval < 5 ? 300 : 1500/interval - 15)
 
-                arr[idx1].style.backgroundColor = colors.yellow;
-                arr[idx2].style.backgroundColor = colors.yellow;
-                await wait(this.animationInterval);
-
-                const temp = arr[idx1].style.height;
-                arr[idx1].style.height = arr[idx2].style.height;
-                arr[idx2].style.height = temp;
-                await wait(this.animationInterval);
-
-                arr[idx1].style.backgroundColor = colors.purple;
-                arr[idx2].style.backgroundColor = colors.green;
-                await wait(this.animationInterval);
-            }
-            // coloring a bar red or purple to indicate comparison
-            else {
-                const [idx, color, type] = animations[i];
-                arr[idx].style.backgroundColor = color;
-                arr[idx].type = type;
-
-                if (animations[i - 1][1] === colors.red) {
-                    arr[animations[i - 1][0]].style.backgroundColor = colors.green;
-                }
-                // if this is the new min, reset the last min
-                if (color === colors.purple) {
-                    for (let j = idx - 1; j > 0; j--) {
-                        if (arr[j].type === 'sorted') {
-                            break;
-                        }
-                        if (arr[j].style.backgroundColor === 'rgb(138, 43, 226)') { //purple
-                            arr[j].style.backgroundColor = colors.green;
-                            break;
-                        }
-                    }
-                }
-                await wait(this.animationInterval);
-            }
-        }
-        
-        arr[arr.length - 1].style.backgroundColor = colors.purple;
-        await wait(this.animationInterval);
-
-        for (let i = 0; i < arr.length / 2; i++) {
-            arr[i].style.backgroundColor = colors.green;
-            arr[i].type = undefined;
-            arr[arr.length - i - 1].style.backgroundColor = colors.green;
-            arr[arr.length - i - 1].type = undefined
-            await wait(0.5 * this.animationInterval);
-        }
-        
-        this.isRunning = false;
-    }
-
-    async animateInsertionSort() {
-        const animations = getInsertionAnimations(this.state.array);
-        const arr = document.getElementsByClassName('array');
-
-        // first bar will be purple (current min)
-        arr[0].style.backgroundColor = colors.purple;
-        await wait(this.animationInterval);
-        
-        for (let i = 0; i < animations.length; i++) {
-            if (!this.isRunning) {
-                for (let i = 0; i < arr.length; i++) {
-                    arr[i].style.backgroundColor = colors.green;
-                }
-                return;
-            }
-
-            // swapping
-            if (typeof animations[i][1] === 'number') {
-                const [idx1, idx2] = animations[i];
-                
-                arr[idx1].style.backgroundColor = colors.yellow;
-                arr[idx2].style.backgroundColor = colors.red;
-                await wait(this.animationInterval);
-
-                const temp = arr[idx1].style.height;
-                arr[idx1].style.height = arr[idx2].style.height;
-                arr[idx2].style.height = temp;
-                arr[idx1].style.backgroundColor = colors.red;
-                arr[idx2].style.backgroundColor = colors.yellow;
-                await wait(this.animationInterval);
-
-                arr[idx2].style.backgroundColor = colors.purple;
-                if (i === animations.length - 1 || typeof animations[i + 1][1] !== 'number') {
-                    cardFlip.play();
-                    await wait(this.animationInterval);
-                    arr[idx1].style.backgroundColor = colors.purple;
-                }
-            }
-            // coloring
-            else {
-                const [idx, color] = animations[i];
-                arr[idx].style.backgroundColor = color;
-                await wait(this.animationInterval);
-            }
-        }
-
-        await wait(this.animationInterval);
-
-        for (let i = 0; i < arr.length / 2; i++) {
-            arr[i].style.backgroundColor = colors.green;
-            arr[arr.length - i - 1].style.backgroundColor = colors.green;
-            await wait(0.5 * this.animationInterval);
-        }
-        
-        this.isRunning = false;
-    }
-
-    async animateMergeSort() {
-        const animations = getMergeAnimations(this.state.array);
-        const arr = document.getElementsByClassName('array');
-
-        for (let i = 0; i < animations.length; i++) {
-            if (!this.isRunning) return;
-
-            if (!animations[i]) {
-                cardFlip.play();
-                continue;
-            }
-
-            const color = animations[i][0];
-            if (animations[i].length === 3) {
-                const [, idx1, idx2] = animations[i];
-
-                arr[idx2].style.backgroundColor = colors.yellow;
-                await wait(this.animationInterval);
-
-                const temp = arr[idx2].style.height;
-                for (let i = idx2; i > idx1; i--) {
-                    arr[i].style.height = arr[i - 1].style.height;
-                }
-                arr[idx1].style.height = temp;
-                arr[idx1].style.backgroundColor = colors.yellow;
-                arr[idx2].style.backgroundColor = color;
-                await wait(this.animationInterval);
-
-                arr[idx1].style.backgroundColor = color;
-                await wait(this.animationInterval);
-            }
-            else {
-                const [, idx] = animations[i];
-                arr[idx].style.backgroundColor = colors.yellow;
-                await wait(this.animationInterval);
-
-                arr[idx].style.backgroundColor = color;
-                await wait(this.animationInterval);
-            }
-        }
-
-        for (let i = 0; i < arr.length / 2; i++) {
-            arr[i].style.backgroundColor = colors.green;
-            arr[arr.length - i - 1].style.backgroundColor = colors.green;
-            await wait(0.5 * this.animationInterval);
-        }
-
-        this.isRunning = false;
-    }
-
-    async animateQuickSort() {
-        const animations = getQuickAnimations(this.state.array, 0, this.state.array.length - 1, []);
-        const arr = document.getElementsByClassName('array');
-        this.state.array.sort((a, b) => a - b);
-
-        for (let i = 0; i < animations.length; i++) {
-            if (!this.isRunning) return;
-
-            if (animations[i].length === 1) {
-                cardFlip.play();
-                const [idx] = animations[i];
-
-                arr[idx].style.backgroundColor = colors.red;
-                await wait(this.animationInterval);
-            }
-            else {
-                const [idx1, idx2] = animations[i];
-
-                arr[idx1].style.backgroundColor = colors.yellow;
-                arr[idx2].style.backgroundColor = colors.yellow;
-                await wait(this.animationInterval);
-
-                const temp = arr[idx1].style.height;
-                arr[idx1].style.height = arr[idx2].style.height;
-                arr[idx2].style.height = temp;
-                await wait(this.animationInterval);
-
-                const value1 = parseInt(arr[idx1].style.height.slice(0, -2));
-                const value2 = parseInt(arr[idx2].style.height.slice(0, -2));
-                arr[idx1].style.backgroundColor = value1 === this.state.array[idx1] ? colors.purple : colors.blue;
-                arr[idx2].style.backgroundColor = value2 === this.state.array[idx2] ? colors.purple : colors.blue;
-                await wait(this.animationInterval);
-            }
-        }
-        
-        for (let i = 0; i < arr.length / 2; i++) {
-            arr[i].style.backgroundColor = colors.green;
-            arr[arr.length - i - 1].style.backgroundColor = colors.green;
-            await wait(0.5 * this.animationInterval);
-        }
-
-        this.isRunning = false;
-    }
-
-    // async animateBubbleSort() {
-    //     console.log('Todo: Bubble sort')
-    //     const animations = getBubbleAnimations(this.state.array);
-    // }
-
-    // async animateHeapSort() {
-    //     console.log('Todo: Heapsort')
-    //     const animations = getHeapAnimations(this.state.array);
-    // }
 
     // generates many large arrays, logs 'true' for each correct sort
-    testSort(mySort) {
+    testSort = mySort => {
         const startTime = new Date();
         for (let i = 0; i < 100; i++) {
             const testArr = [];
@@ -366,22 +133,24 @@ export default class SortingTimeVisualizer extends React.Component {
         console.log("Elapsed time: ", elapsedTime, " ms");
     }
 
-    async handleExecute(algorithm) {
-        if (this.isRunning) return;
-        this.isRunning = true;
+    handleExecute = async algorithm => {
+        if (isRunning) return;
+        this.setIsRunning(true);
 
         if (algorithm === 'selection')
-            this.animateSelectionSort();
+            await animateSelectionSort(this.state.array);
         else if (algorithm === 'insertion')
-            this.animateInsertionSort();
+            await animateInsertionSort(this.state.array);
         else if (algorithm === 'merge')
-            this.animateMergeSort();
+            await animateMergeSort(this.state.array);
         else if (algorithm === 'quick')
-            this.animateQuickSort();
+            await animateQuickSort(this.state.array);
         // else if (algorithm === 'bubble')
         //     this.animateBubbleSort();
         // else
         //     this.animateHeapSort();
+
+        this.setIsRunning(false);
     }
 
     // everything rendered on screen is here
@@ -400,7 +169,7 @@ export default class SortingTimeVisualizer extends React.Component {
 }
 
 // effectively a synchronous sleep function
-function wait(ms) {
+export function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 

@@ -8,7 +8,7 @@ const gradients = {
   7: { 1: '#006e47', 2: '#00736f', 4: '#0076a0', 8: '#0076cf', 16: '#0070f0', 32: '#005df9', 64: purple }
 };
 
-export function getMergeAnimations(a) {
+export default function getMergeAnimations(a) {
   const animations = [], b = [];
   const level = Math.ceil(Math.log2(a.length))
 

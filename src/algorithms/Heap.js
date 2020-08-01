@@ -4,7 +4,7 @@
 // const yellow = '#ffff00';
 
 
-export function getHeapAnimations(arr) {
+export default function getHeapAnimations(arr) {
     
 }
 

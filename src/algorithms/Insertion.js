@@ -1,6 +1,6 @@
 const purple = '#8a2be2';
 
-export function getInsertionAnimations(arr) {
+export default function getInsertionAnimations(arr) {
     const animations = [];
 
     for (let i = 1; i < arr.length; i++) {

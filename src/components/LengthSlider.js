@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
+import './Menu.css';
 
 const useStyles = makeStyles({
   root: {
@@ -78,8 +79,9 @@ export default function LengthSlider(props) {
               max: 125,
               type: 'number',
               'aria-labelledby': 'input-slider',
-              style: {textAlign: 'center'},
+              style: {textAlign: 'center', color: 'white'},
             }}
+            disableUnderline
           />
         </Grid>
       </Grid>

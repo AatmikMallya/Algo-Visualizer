@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from './Menu';
+import Timer from './Timer';
 import UIfx from '../../node_modules/uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
 import './SortingTimeVisualizer.css';
@@ -10,7 +11,7 @@ import animateInsertionSort from '../animations/InsertionAnimation';
 import animateMergeSort from '../animations/MergeAnimation';
 
 
-// not very React-y, but these are only imported by animation/algorithm scripts to execute the sort
+// not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
 export let isRunning = false;
 export let animationInterval = 0;
 export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60 });
@@ -20,7 +21,7 @@ export const colors = {
     green: '#24682d',
     yellow: '#ffff00',
     blue: '#0076b8'
-}
+};
 
 
 // main component of application
@@ -33,13 +34,19 @@ export default class SortingTimeVisualizer extends React.Component {
         this.cachedArray = [];
         this.defaultLength = 60;
         this.maxHeight = 550;
+        this.timerElement = React.createRef();
     }
     
     // true if algorithm is currently running, false otherwise
-    setRunning = bool => isRunning = bool;
+    setRunning = bool => {
+        isRunning = bool;
+        this.timerElement.current.setStatus(bool);
+    }
 
     // compute reciprocal of interval to make the slider feel linear
-    speedChange = interval => animationInterval = interval < 5 ? 300 : 1500/interval - 15;
+    speedChange = interval => {
+        animationInterval = interval < 5 ? 300 : 1500/interval - 15;
+    }
 
     // display a new randomized array, possibly with a new length
     generateArray = length => {
@@ -51,7 +58,7 @@ export default class SortingTimeVisualizer extends React.Component {
             arraySize = length;
             this.defaultLength = length;
         } else {
-            arraySize = this.defaultLength
+            arraySize = this.defaultLength;
         }
 
         const windowWidth = window.innerWidth;
@@ -104,7 +111,7 @@ export default class SortingTimeVisualizer extends React.Component {
             for (let i = 0; i < arraySize; i++) {
                 array[i].style.height = this.cachedArray[i] + "px";
                 array[i].type = undefined;
-                oldArray.push(this.cachedArray[i])
+                oldArray.push(this.cachedArray[i]);
             }
 
             this.setState({array: oldArray});
@@ -116,15 +123,14 @@ export default class SortingTimeVisualizer extends React.Component {
         }
     }
 
-
     // generates many large arrays, logs 'true' for each correct sort
     testSort = mySort => {
         const startTime = new Date();
         for (let i = 0; i < 100; i++) {
             const testArr = [];
-            const length = Math.floor(Math.random()*1001)
+            const length = Math.floor(Math.random()*1001);
             for (let j = 0; j < length; j++) {
-                testArr.push(Math.floor(Math.random()*501))
+                testArr.push(Math.floor(Math.random()*501));
             }
             const testArr2 = [...testArr];
     
@@ -159,15 +165,16 @@ export default class SortingTimeVisualizer extends React.Component {
     }
 
     // everything on screen is rendered here
-    render() {
+    render = () => {
         return (
             <div>
                 <div id='color-strip' />
                 <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} />
-                    <div id='bars-container'>
-                        {this.state.bars}
-                        {/* <button id='test-sort' onClick={this.testSort.bind(this, quickAlgo)}>Test Sort</button> */}
-                    </div>
+                <Timer status={isRunning} ref={this.timerElement}/>
+                <div id='bars-container'>
+                    {this.state.bars}
+                    {/* <button id='test-sort' onClick={this.testSort.bind(this, quickAlgo)}>Test Sort</button> */}
+                </div>
             </div>
         )
     }
@@ -175,17 +182,13 @@ export default class SortingTimeVisualizer extends React.Component {
 
 
 // effectively a synchronous sleep function
-export function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+export const wait = ms => new Promise(res => setTimeout(res, ms));
 
 // for testing purposes
-function correctSort(arr) {
-    return arr.sort((a, b) => a - b);
-}
+const correctSort = arr => arr.sort((a, b) => a - b);
 
 // also for testing purposes
-function arrayEquality(a, b) {
+const arrayEquality = (a, b) => {
 	if (a.length !== b.length) {
         return false;
     }

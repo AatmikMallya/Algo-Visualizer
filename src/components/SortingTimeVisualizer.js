@@ -52,7 +52,6 @@ export default class SortingTimeVisualizer extends React.Component {
     generateArray = length => {
         const array = document.getElementsByClassName('array');
         this.setRunning(false);
-        
         let arraySize;
         if (length) {
             arraySize = length;
@@ -64,8 +63,7 @@ export default class SortingTimeVisualizer extends React.Component {
         const windowWidth = window.innerWidth;
         const margin = Math.max((windowWidth) / (10 * arraySize), 1.5);
         const width = Math.max((windowWidth - 100) / (1.75 * arraySize), 7);
-        const topRadius = Math.max(width / 10, 3);
-        const bottomRadius = topRadius / 3;
+        const radius = Math.max(width / 10, 3);
 
         // 85% of the distance between array container and menu
         this.maxHeight = 0.85 * (document.getElementById('bars-container').getBoundingClientRect().bottom -
@@ -73,17 +71,18 @@ export default class SortingTimeVisualizer extends React.Component {
         
         const newArray = [];
         for (let i = 0; i < arraySize; i++) {
-            newArray.push(Math.floor(Math.random()*this.maxHeight + 15));
+            newArray.push(Math.floor(Math.random()*this.maxHeight + 25));
         }
-        // const newArray = [ 250, 350, 100, 50, 550, 300, 175, 450 ];
+        // const newArray = [ 15, 200, 150, 25, 300 ];
         this.setState({
             array: newArray,
             bars: newArray.map((value, i) => <div className='array' key={i} idx={i} color={colors.green} type={undefined} style={{
                 height: value,
                 margin: margin,
                 width: width,
-                borderTopLeftRadius: topRadius, borderTopRightRadius: topRadius,
-                borderBottomLeftRadius: bottomRadius, borderBottomRightRadius: bottomRadius,
+                borderRadius: radius,
+                // borderTopLeftRadius: topRadius, borderTopRightRadius: topRadius,
+                // borderBottomLeftRadius: bottomRadius, borderBottomRightRadius: bottomRadius,
             }} />)
         });
 
@@ -101,25 +100,26 @@ export default class SortingTimeVisualizer extends React.Component {
 
     // return bar heights and colors to pre-sorted state
     resetArray = async () => {
-        for (let repeat = 0; repeat < 1; repeat++) {
-            const array = document.getElementsByClassName('array');
-            const arraySize = array.length;
+        const array = document.getElementsByClassName('array');
+        const arraySize = array.length;
 
-            this.setRunning(false);
+        this.setRunning(false);
 
-            const oldArray = []
-            for (let i = 0; i < arraySize; i++) {
-                array[i].style.height = this.cachedArray[i] + "px";
-                array[i].type = undefined;
-                oldArray.push(this.cachedArray[i]);
-            }
+        const oldArray = []
+        for (let i = 0; i < arraySize; i++) {
+            array[i].style.height = this.cachedArray[i] + "px";
+            array[i].type = undefined;
+            oldArray.push(this.cachedArray[i]);
+        }
 
-            this.setState({array: oldArray});
-            
-            for (let i = 0; i < arraySize; i++) {
-                array[i].style.backgroundColor = colors.green;
-            }
-            await wait(animationInterval + 0.1);
+        this.setState({array: oldArray});
+        
+        for (let i = 0; i < arraySize; i++) {
+            array[i].style.backgroundColor = "#07ad1d";
+        }
+        await wait(333);
+        for (let i = 0; i < arraySize; i++) {
+            array[i].style.backgroundColor = colors.green;
         }
     }
 
@@ -170,11 +170,11 @@ export default class SortingTimeVisualizer extends React.Component {
             <div>
                 <div id='color-strip' />
                 <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} />
-                <Timer status={isRunning} ref={this.timerElement}/>
                 <div id='bars-container'>
                     {this.state.bars}
                     {/* <button id='test-sort' onClick={this.testSort.bind(this, quickAlgo)}>Test Sort</button> */}
                 </div>
+                <Timer status={isRunning} ref={this.timerElement}/>
             </div>
         )
     }

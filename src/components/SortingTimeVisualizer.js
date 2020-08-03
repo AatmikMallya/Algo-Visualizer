@@ -5,10 +5,13 @@ import UIfx from '../../node_modules/uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
 import './SortingTimeVisualizer.css';
 
-import animateQuickSort from '../animations/QuickAnimation';
-import animateSelectionSort from '../animations/SelectionAnimation';
 import animateInsertionSort from '../animations/InsertionAnimation';
 import animateMergeSort from '../animations/MergeAnimation';
+import animateQuickSort from '../animations/QuickAnimation';
+import animateSelectionSort from '../animations/SelectionAnimation';
+import animateBubbleSort from '../animations/BubbleAnimation';
+
+import {bubbleAlgo} from '../algorithms/Bubble';
 
 
 // not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
@@ -156,8 +159,8 @@ export default class SortingTimeVisualizer extends React.Component {
             await animateMergeSort(this.state.array);
         else if (algorithm === 'quick')
             await animateQuickSort(this.state.array);
-        // else if (algorithm === 'bubble')
-        //     this.animateBubbleSort();
+        else if (algorithm === 'bubble')
+            await animateBubbleSort(this.state.array);
         // else
         //     this.animateHeapSort();
 
@@ -172,7 +175,7 @@ export default class SortingTimeVisualizer extends React.Component {
                 <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} />
                 <div id='bars-container'>
                     {this.state.bars}
-                    {/* <button id='test-sort' onClick={this.testSort.bind(this, quickAlgo)}>Test Sort</button> */}
+                    {/* <button id='test-sort' onClick={this.testSort.bind(this, bubbleAlgo)}>Test Sort</button> */}
                 </div>
                 <Timer status={isRunning} ref={this.timerElement}/>
             </div>

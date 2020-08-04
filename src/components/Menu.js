@@ -4,36 +4,17 @@ import SpeedSlider from './SpeedSlider';
 import './Menu.css';
 
 export default class Menu extends React.Component {
-    constructor(props) {
-        super(props);
+    // Event handlers for menu items
+    handleSpeedChange = interval => this.props.onSpeedChange(interval);
+    handleGenerate = length => this.props.onGenerate(length);
+    handleReset = () => this.props.onReset();
+    handleExecute = () => this.props.onExecute(document.getElementById('menu-select').value);
 
-        this.state = {
-            algorithm: 'selection'
-        }
-    }
-
-    handleSpeedChange(interval) {
-        this.props.onSpeedChange(interval);
-    }
-
-    handleGenerate(length) {
-        this.props.onGenerate(length);
-    }
-    
-    handleReset() {
-        this.props.onReset();
-    }
-
-    handleExecute() {
-        const selectedAlgorithm = document.getElementById('menu-select').value;
-        this.props.onExecute(selectedAlgorithm);
-    }
-
-    render() {
+    render = () => {
         return (
             <div id='menu-container'>
-                <div className='menu-item' id='selection-sort' onClick={() => this.handleGenerate()}>New Array</div>
-                <div className='menu-item' id='selection-sort' onClick={() => this.handleReset()}>Reset Array</div>
+                <div className='menu-item' id='generate' onClick={() => this.handleGenerate()}>New Array</div>
+                <div className='menu-item' id='reset' onClick={() => this.handleReset()}>Reset Array</div>
                 <SpeedSlider onSlide={interval => this.handleSpeedChange(interval)} />
                 <LengthSlider onSlide={length => this.handleGenerate(length)} />
                 <select className='menu-item' id='menu-select' >
@@ -42,7 +23,8 @@ export default class Menu extends React.Component {
                     <option value='merge'>Merge Sort</option>
                     <option value='quick'>Quicksort</option>
                     <option value='bubble'>Bubble Sort</option>
-                    {/* <option value='heap'>Heapsort</option> */}
+                    <option value='counting'>Counting Sort</option>
+                    {/* <option value=''></option> */}
                 </select>
                 <div className='menu-item' id='execute' onClick={() => this.handleExecute()}>Execute</div>
             </div>

@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-// sets the time interval between animation frames
+// Sets the time interval between animation frames
 export default function SpeedSlider(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(10);
@@ -19,9 +19,7 @@ export default function SpeedSlider(props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => props.onSlide(value), [value]);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const handleChange = (event, newValue) => setValue(newValue);
 
   return (
     <div className={classes.root}>

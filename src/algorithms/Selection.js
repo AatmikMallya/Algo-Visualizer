@@ -25,7 +25,7 @@ export default function getSelectionAnimations(arr) {
             temp = arr[minIdx];
             arr[minIdx] = arr[i];
             arr[i] = temp;
-            // swap heights a[i], a[minIdx]
+            // Swap a[i], a[minIdx]
             animations.push([i, minIdx]);
         }
     }
@@ -34,7 +34,7 @@ export default function getSelectionAnimations(arr) {
 }
 
 
-
+// Original selection sort algorithm
 // export function selectionAlgo(arr) {
 //     let minIdx, temp;
     

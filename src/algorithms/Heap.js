@@ -8,8 +8,7 @@ export default function getHeapAnimations(arr) {
     
 }
 
-
-
+// Original heap sort algorithm
 export function heapAlgo(arr) {
 
 }

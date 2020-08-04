@@ -15,6 +15,7 @@ export default function getQuickAnimations(arr, left, right, animations) {
 function partitionAnimate(arr, left, right, animations) {
     const pivotIdx = Math.floor((right + left) / 2)
     const pivot = arr[pivotIdx];
+    // Color the pivot element red
     animations.push([pivotIdx])
     
     let i = left;
@@ -31,6 +32,7 @@ function partitionAnimate(arr, left, right, animations) {
             const temp = arr[i];
             arr[i] = arr[j];
             arr[j] = temp;
+            // Swap arr[i], arr[j]
             animations.push([i, j])
             i++;
             j--;
@@ -40,6 +42,7 @@ function partitionAnimate(arr, left, right, animations) {
 }
 
 
+// Original quicksort algorithm
 // export function quickAlgo(arr, left, right) {
 //     let index;
 //     if (arr.length > 1) {

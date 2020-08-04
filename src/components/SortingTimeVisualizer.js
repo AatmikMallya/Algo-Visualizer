@@ -14,10 +14,13 @@ import animateBubbleSort from '../animations/BubbleAnimation';
 import {bubbleAlgo} from '../algorithms/Bubble';
 
 
-// not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
+// Not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
 export let isRunning = false;
 export let animationInterval = 0;
-export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60 });
+export const cardFlip = new UIfx(cardFlipMp3, {
+    throttleMs: 60,
+    volume: 0.7
+});
 export const colors = {
     purple: '#8a2be2',
     red: '#dc143c',
@@ -27,7 +30,7 @@ export const colors = {
 };
 
 
-// main component of application
+// Main component of application
 export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
         super(props);
@@ -40,18 +43,18 @@ export default class SortingTimeVisualizer extends React.Component {
         this.timerElement = React.createRef();
     }
     
-    // true if algorithm is currently running, false otherwise
+    // True if algorithm is currently running, false otherwise
     setRunning = bool => {
         isRunning = bool;
         this.timerElement.current.setStatus(bool);
     }
 
-    // compute reciprocal of interval to make the slider feel linear
+    // Compute reciprocal of interval to make the slider feel linear
     speedChange = interval => {
         animationInterval = interval < 5 ? 300 : 1500/interval - 15;
     }
 
-    // display a new randomized array, possibly with a new length
+    // Display a new randomized array, possibly with a new length
     generateArray = length => {
         const array = document.getElementsByClassName('array');
         this.setRunning(false);
@@ -76,7 +79,7 @@ export default class SortingTimeVisualizer extends React.Component {
         for (let i = 0; i < arraySize; i++) {
             newArray.push(Math.floor(Math.random()*this.maxHeight + 25));
         }
-        // const newArray = [ 15, 200, 150, 25, 300 ];
+        //const newArray = [ 15, 200, 150, 25, 300 ];
         this.setState({
             array: newArray,
             bars: newArray.map((value, i) => <div className='array' key={i} idx={i} color={colors.green} type={undefined} style={{
@@ -84,24 +87,22 @@ export default class SortingTimeVisualizer extends React.Component {
                 margin: margin,
                 width: width,
                 borderRadius: radius,
-                // borderTopLeftRadius: topRadius, borderTopRightRadius: topRadius,
-                // borderBottomLeftRadius: bottomRadius, borderBottomRightRadius: bottomRadius,
             }} />)
         });
 
-        // deep copy to allow resetting to original state
+        // Deep copy to allow resetting to original state
         this.cachedArray = [];
         for (let i = 0; i < newArray.length; i++) {
             this.cachedArray.push(newArray[i]);
         }
 
-        // in case we are currently in execution
+        // In case we are currently in execution
         for (let i = 0; i < array.length; i++) {
             array[i].style.backgroundColor = colors.green;
         }
     }
 
-    // return bar heights and colors to pre-sorted state
+    // Return bar heights and colors to pre-sorted state
     resetArray = async () => {
         const array = document.getElementsByClassName('array');
         const arraySize = array.length;
@@ -126,7 +127,7 @@ export default class SortingTimeVisualizer extends React.Component {
         }
     }
 
-    // generates many large arrays, logs 'true' for each correct sort
+    // Generates many large arrays, logs 'true' for each correct sort
     testSort = mySort => {
         const startTime = new Date();
         for (let i = 0; i < 100; i++) {
@@ -146,28 +147,36 @@ export default class SortingTimeVisualizer extends React.Component {
         console.log("Elapsed time: ", elapsedTime, " ms");
     }
 
-    // runs selected algorithm from dropdown
+    // Runs selected algorithm from dropdown
     handleExecute = async algorithm => {
         if (isRunning) return;
         this.setRunning(true);
+        const array = this.state.array;
 
-        if (algorithm === 'selection')
-            await animateSelectionSort(this.state.array);
-        else if (algorithm === 'insertion')
-            await animateInsertionSort(this.state.array);
-        else if (algorithm === 'merge')
-            await animateMergeSort(this.state.array);
-        else if (algorithm === 'quick')
-            await animateQuickSort(this.state.array);
-        else if (algorithm === 'bubble')
-            await animateBubbleSort(this.state.array);
-        // else
-        //     this.animateHeapSort();
+        switch(algorithm) {
+            case 'selection': await animateSelectionSort(array); break;
+            case 'insertion': await animateInsertionSort(array); break;
+            case 'merge': await animateMergeSort(array); break;
+            case 'quick': await animateQuickSort(array); break;
+            case 'bubble': await animateBubbleSort(array); break;
+            default: await animateSelectionSort(array);
+        }
+        
+        // if (algorithm === 'selection')
+        //     await animateSelectionSort(this.state.array);
+        // else if (algorithm === 'insertion')
+        //     await animateInsertionSort(this.state.array);
+        // else if (algorithm === 'merge')
+        //     await animateMergeSort(this.state.array);
+        // else if (algorithm === 'quick')
+        //     await animateQuickSort(this.state.array);
+        // else if (algorithm === 'bubble')
+        //     await animateBubbleSort(this.state.array);
 
         this.setRunning(false);
     }
 
-    // everything on screen is rendered here
+    // Everything on screen is rendered here
     render = () => {
         return (
             <div>
@@ -184,13 +193,13 @@ export default class SortingTimeVisualizer extends React.Component {
 }
 
 
-// effectively a synchronous sleep function
+// Effectively a synchronous sleep function
 export const wait = ms => new Promise(res => setTimeout(res, ms));
 
-// for testing purposes
+// For testing purposes
 const correctSort = arr => arr.sort((a, b) => a - b);
 
-// also for testing purposes
+// Also for testing purposes
 const arrayEquality = (a, b) => {
 	if (a.length !== b.length) {
         return false;

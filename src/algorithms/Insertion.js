@@ -6,11 +6,13 @@ export default function getInsertionAnimations(arr) {
     for (let i = 1; i < arr.length; i++) {
         let j = i - 1;
         const temp = arr[i];
+        // arr[i] = purple
         animations.push([i, purple])
         while (j >= 0 && arr[j] > temp) {
             const temp2 = arr[j+1]
             arr[j+1] = arr[j];
             arr[j] = temp2;
+            // Swap arr[j], arr[j + 1]
             animations.push([j, j + 1])
             j--;
         }
@@ -21,7 +23,7 @@ export default function getInsertionAnimations(arr) {
 
 
 
-// // Algo w/ more swapping for better visual
+// Original insertion algo w/ more swapping for better visual
 // export function insertionAlgo(arr) {
 //     for (let i = 1; i < arr.length; i++) {
 //         let j = i - 1;
@@ -36,7 +38,7 @@ export default function getInsertionAnimations(arr) {
 //     return arr;
 // }
 
-// // More efficient version - less swapping
+// More efficient version - less swapping
 // export function insertionAlgo2(arr) {
 //     for (let i = 1; i < arr.length; i++) {
 //         let j = i - 1;

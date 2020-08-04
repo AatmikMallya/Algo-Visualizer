@@ -1,5 +1,5 @@
 const purple = '#8a2be2';
-
+// Based on array size
 const gradients = {
   3: { 1: '#00747f', 2: '#0073e7', 4: purple },
   4: { 1: '#007264', 2: '#0076b8', 4: '#006cf5', 8: purple },
@@ -14,6 +14,7 @@ export default function getMergeAnimations(a) {
 
   for (let width = 1; width < a.length; width *= 2) {
     const color = gradients[level][width];
+    // Play card flip sound effect
     animations.push(null);
     
     for (let i = 0; i < a.length; i += 2 * width) {
@@ -30,10 +31,12 @@ function mergeAnimate(a, left, right, end, b, animations, color) {
   let i = left, j = right;
   for (let k = left; k < end; k++) {
     if (i < right && (j >= end || a[i] <= a[j])) {
+      // arr[i] = color
       animations.push([color, i]);
       b[k] = a[i++];
     }
     else {
+      // arr[k] = color, arr[j] = color
       animations.push([color, k, j]);
       b[k] = a[j++];
     }
@@ -41,7 +44,7 @@ function mergeAnimate(a, left, right, end, b, animations, color) {
 }
 
 
-
+// Original merge sort algorithm
 // export function mergeAlgo(a) {
 //   const b = [];
 

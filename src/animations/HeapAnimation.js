@@ -1,6 +1,7 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
 import getHeapAnimations from '../algorithms/Heap';
 
+// Render computed animations to screen
 export default async function animateHeapSort(stateArray) {
     const animations = getHeapAnimations(stateArray);
     const arr = document.getElementsByClassName('array');

@@ -29,9 +29,7 @@ function partitionAnimate(arr, left, right, animations) {
             j--;
         }
         if (i <= j) {
-            const temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
+            [arr[i], arr[j]] = [arr[j], arr[i]];
             // Swap arr[i], arr[j]
             animations.push([i, j])
             i++;
@@ -71,9 +69,7 @@ function partitionAnimate(arr, left, right, animations) {
 //             j--;
 //         }
 //         if (i <= j) {
-//             const temp = arr[i];
-//             arr[i] = arr[j];
-//             arr[j] = temp;
+//             [arr[i], arr[j]] = [arr[j], arr[i]];
 //             i++;
 //             j--;
 //         }

@@ -1,21 +1,20 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
 import getMergeAnimations from '../algorithms/Merge';
 
+// Render merge sort animations
 export default async function animateMergeSort(stateArray) {
     const animations = getMergeAnimations(stateArray);
     const arr = document.getElementsByClassName('array');
 
     for (let i = 0; i < animations.length; i++) {
         if (!isRunning) return;
-
+        // New merge iteration
         if (!animations[i]) {
             cardFlip.play();
-            continue;
         }
-
-        const color = animations[i][0];
-        if (animations[i].length === 3) {
-            const [, idx1, idx2] = animations[i];
+        // Swap two elements
+        else if (animations[i].length === 3) {
+            const [color, idx1, idx2] = animations[i];
 
             arr[idx2].style.backgroundColor = colors.yellow;
             await wait(animationInterval);
@@ -32,8 +31,9 @@ export default async function animateMergeSort(stateArray) {
             arr[idx1].style.backgroundColor = color;
             await wait(animationInterval);
         }
+        // Color one element
         else {
-            const [, idx] = animations[i];
+            const [color, idx] = animations[i];
             arr[idx].style.backgroundColor = colors.yellow;
             await wait(animationInterval);
 

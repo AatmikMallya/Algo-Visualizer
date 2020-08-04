@@ -10,8 +10,9 @@ import animateMergeSort from '../animations/MergeAnimation';
 import animateQuickSort from '../animations/QuickAnimation';
 import animateSelectionSort from '../animations/SelectionAnimation';
 import animateBubbleSort from '../animations/BubbleAnimation';
+import animateHeapSort from '../animations/HeapAnimation';
 
-import {bubbleAlgo} from '../algorithms/Bubble';
+import {heapAlgo} from '../algorithms/Heap';
 
 
 // Not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
@@ -35,7 +36,7 @@ export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
         super(props);
         // array holds height values, bars holds the actual divs
-        this.state = { array: [], bars: [], };
+        this.state = { array: [], bars: [] };
         
         this.cachedArray = [];
         this.defaultLength = 60;
@@ -47,6 +48,11 @@ export default class SortingTimeVisualizer extends React.Component {
     setRunning = bool => {
         isRunning = bool;
         this.timerElement.current.setStatus(bool);
+        if (bool) {
+            document.getElementById('execute').classList.add('running');
+        } else {
+            document.getElementById('execute').classList.remove('running');
+        }            
     }
 
     // Compute reciprocal of interval to make the slider feel linear
@@ -153,12 +159,13 @@ export default class SortingTimeVisualizer extends React.Component {
         this.setRunning(true);
         const array = this.state.array;
 
-        switch(algorithm) {
-            case 'selection': await animateSelectionSort(array); break;
+        switch (algorithm) {
+            case 'heap': await animateSelectionSort(array); break;
             case 'insertion': await animateInsertionSort(array); break;
             case 'merge': await animateMergeSort(array); break;
             case 'quick': await animateQuickSort(array); break;
             case 'bubble': await animateBubbleSort(array); break;
+            case 'selection': await animateHeapSort(array); break;
             default: await animateSelectionSort(array);
         }
         
@@ -184,7 +191,8 @@ export default class SortingTimeVisualizer extends React.Component {
                 <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} />
                 <div id='bars-container'>
                     {this.state.bars}
-                    {/* <button id='test-sort' onClick={this.testSort.bind(this, bubbleAlgo)}>Test Sort</button> */}
+                    {/* Used for testing algorithms */}
+                    <button id='test-sort' onClick={this.testSort.bind(this, heapAlgo)}>Test Sort</button>
                 </div>
                 <Timer status={isRunning} ref={this.timerElement}/>
             </div>

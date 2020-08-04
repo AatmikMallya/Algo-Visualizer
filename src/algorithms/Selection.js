@@ -2,11 +2,10 @@ const purple = '#8a2be2';
 const red = '#dc143c';
 
 export default function getSelectionAnimations(arr) {
-    let minIdx, temp;
     const animations = [];
     
     for (let i = 0; i < arr.length; i++) {
-        minIdx = i;
+        let minIdx = i;
         // arr[i] = purple
         animations.push([i, purple, 'sorted'])
         for (let j = i + 1; j < arr.length; j++) {
@@ -22,9 +21,7 @@ export default function getSelectionAnimations(arr) {
         }
 
         if (minIdx > i) {
-            temp = arr[minIdx];
-            arr[minIdx] = arr[i];
-            arr[i] = temp;
+            [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
             // Swap a[i], a[minIdx]
             animations.push([i, minIdx]);
         }
@@ -36,7 +33,7 @@ export default function getSelectionAnimations(arr) {
 
 // Original selection sort algorithm
 // export function selectionAlgo(arr) {
-//     let minIdx, temp;
+//     let minIdx;
     
 //     for (let i = 0; i < arr.length; i++) {
 //         minIdx = i;
@@ -47,9 +44,7 @@ export default function getSelectionAnimations(arr) {
 //         }
 
 //         if (minIdx > i) {
-//             temp = arr[minIdx];
-//             arr[minIdx] = arr[i];
-//             arr[i] = temp;
+//             [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
 //         }
 //     }
 

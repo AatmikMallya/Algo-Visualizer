@@ -1,23 +1,18 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
 import getInsertionAnimations from '../algorithms/Insertion';
 
+// Render insertion sort animations
 export default async function animateInsertionSort(stateArray) {
     const animations = getInsertionAnimations(stateArray);
     const arr = document.getElementsByClassName('array');
 
-    // first bar will be purple (current min)
+    // First bar will be purple (current min)
     arr[0].style.backgroundColor = colors.purple;
     await wait(animationInterval);
     
     for (let i = 0; i < animations.length; i++) {
-        if (!isRunning) {
-            for (let i = 0; i < arr.length; i++) {
-                arr[i].style.backgroundColor = colors.green;
-            }
-            return;
-        }
-
-        // swapping
+        if (!isRunning) return;
+        // Swap two elements
         if (typeof animations[i][1] === 'number') {
             const [idx1, idx2] = animations[i];
             
@@ -25,9 +20,7 @@ export default async function animateInsertionSort(stateArray) {
             arr[idx2].style.backgroundColor = colors.red;
             await wait(animationInterval);
 
-            const temp = arr[idx1].style.height;
-            arr[idx1].style.height = arr[idx2].style.height;
-            arr[idx2].style.height = temp;
+            [arr[idx1].style.height, arr[idx2].style.height] = [arr[idx2].style.height, arr[idx1].style.height];
             arr[idx1].style.backgroundColor = colors.red;
             arr[idx2].style.backgroundColor = colors.yellow;
             await wait(animationInterval);
@@ -39,7 +32,7 @@ export default async function animateInsertionSort(stateArray) {
                 arr[idx1].style.backgroundColor = colors.purple;
             }
         }
-        // coloring
+        // Color an element
         else {
             const [idx, color] = animations[i];
             arr[idx].style.backgroundColor = color;

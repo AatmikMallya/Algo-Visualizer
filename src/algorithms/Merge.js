@@ -36,7 +36,7 @@ function mergeAnimate(a, left, right, end, b, animations, color) {
       b[k] = a[i++];
     }
     else {
-      // arr[k] = color, arr[j] = color
+      // Swap two elements
       animations.push([color, k, j]);
       b[k] = a[j++];
     }

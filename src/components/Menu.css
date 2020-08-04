@@ -30,6 +30,11 @@
     color: rgba(175, 175, 175, 0.75);
 }
 
+.running {
+    color: rgba(175, 175, 175, 0.75)!important;
+    cursor: auto;
+}
+
 .slider-label {
     color: rgba(100%, 100%, 100%, 82.5%);
     font-size: 22px!important;

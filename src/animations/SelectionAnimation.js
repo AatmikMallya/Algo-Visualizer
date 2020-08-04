@@ -1,20 +1,21 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
 import getSelectionAnimations from '../algorithms/Selection';
 
+// Render selection sort animations
 export default async function animateSelectionSort(stateArray) {
     const animations = getSelectionAnimations(stateArray);
     const arr = document.getElementsByClassName('array');
     
-    // first bar will be purple (current min)
+    // First bar will be purple (current min)
     arr[0].style.backgroundColor = colors.purple;
     await wait(animationInterval);
     
     for (let i = 1; i < animations.length; i++) {
         if (!isRunning) return;
-        // swapping animations[i][0] and animations[i][1]
+        // Swap two elements
         if (typeof animations[i][1] === 'number') {
             cardFlip.play();
-            // the last arraybar is currently colors.red, change it back
+            // Last element is still red
             arr[animations[i - 1][0]].style.backgroundColor = colors.green;
             const [idx1, idx2] = animations[i];
 
@@ -22,16 +23,14 @@ export default async function animateSelectionSort(stateArray) {
             arr[idx2].style.backgroundColor = colors.yellow;
             await wait(animationInterval);
 
-            const temp = arr[idx1].style.height;
-            arr[idx1].style.height = arr[idx2].style.height;
-            arr[idx2].style.height = temp;
+            [arr[idx1].style.height, arr[idx2].style.height] = [arr[idx2].style.height, arr[idx1].style.height];
             await wait(animationInterval);
 
             arr[idx1].style.backgroundColor = colors.purple;
             arr[idx2].style.backgroundColor = colors.green;
             await wait(animationInterval);
         }
-        // coloring a bar red or purple to indicate comparison
+        // Color a bar red/purple to indicate result of comparison
         else {
             const [idx, color, type] = animations[i];
             arr[idx].style.backgroundColor = color;
@@ -40,15 +39,11 @@ export default async function animateSelectionSort(stateArray) {
             if (animations[i - 1][1] === colors.red) {
                 arr[animations[i - 1][0]].style.backgroundColor = colors.green;
             }
-            // if is the new min, reset the last min
+            // Reset the previous min to green
             if (color === colors.purple) {
                 for (let j = idx - 1; j > 0; j--) {
-                    if (arr[j].type === 'sorted') {
-                        break;
-                    }
-                    if (arr[j].style.backgroundColor === 'rgb(138, 43, 226)') { //purple
+                    if (arr[j].type !== 'sorted' && arr[j].style.backgroundColor === 'rgb(138, 43, 226)') { //purple
                         arr[j].style.backgroundColor = colors.green;
-                        break;
                     }
                 }
             }

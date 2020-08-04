@@ -22,8 +22,9 @@ export default class Menu extends React.Component {
                     <option value='insertion'>Insertion Sort</option>
                     <option value='merge'>Merge Sort</option>
                     <option value='quick'>Quicksort</option>
+                    <option value='heap'>Heapsort</option>
                     <option value='bubble'>Bubble Sort</option>
-                    <option value='counting'>Counting Sort</option>
+                    {/* <option value='counting'>Counting Sort</option> */}
                     {/* <option value=''></option> */}
                 </select>
                 <div className='menu-item' id='execute' onClick={() => this.handleExecute()}>Execute</div>

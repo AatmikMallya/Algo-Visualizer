@@ -9,9 +9,7 @@ export default function getInsertionAnimations(arr) {
         // arr[i] = purple
         animations.push([i, purple])
         while (j >= 0 && arr[j] > temp) {
-            const temp2 = arr[j+1]
-            arr[j+1] = arr[j];
-            arr[j] = temp2;
+            [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
             // Swap arr[j], arr[j + 1]
             animations.push([j, j + 1])
             j--;
@@ -29,9 +27,7 @@ export default function getInsertionAnimations(arr) {
 //         let j = i - 1;
 //         const temp = arr[i];
 //         while (j >= 0 && arr[j] > temp) {
-//             const temp2 = arr[j+1]
-//             arr[j+1] = arr[j];
-//             arr[j] = temp2;
+//             [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
 //             j--;
 //         }
 //     }

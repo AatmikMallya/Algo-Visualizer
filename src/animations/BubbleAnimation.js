@@ -1,22 +1,22 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
 import getBubbleAnimations from '../algorithms/Bubble';
 
-// Render computed bubble sort animations to screen
+// Render bubble sort animations
 export default async function animateBubbleSort(stateArray) {
     const animations = getBubbleAnimations(stateArray);
     const arr = document.getElementsByClassName('array');
-    console.log("test")
 
     for (let i = 0; i < animations.length; i++) {
         if (!isRunning) break;
+        // Only operation is swapping
         const [idx1, idx2] = animations[i];
         arr[idx1].style.backgroundColor = colors.yellow;
         arr[idx2].style.backgroundColor = colors.yellow;
         await wait(animationInterval + 10);
-        const temp = arr[idx1].style.height;
-        arr[idx1].style.height = arr[idx2].style.height;
-        arr[idx2].style.height = temp;
+
+        [arr[idx1].style.height, arr[idx2].style.height] = [arr[idx2].style.height, arr[idx1].style.height];
         await wait(animationInterval + 10);
+        
         const value1 = parseInt(arr[idx1].style.height.slice(0, -2));
         const value2 = parseInt(arr[idx2].style.height.slice(0, -2));
         arr[idx1].style.backgroundColor = value1 === stateArray[idx1] ? colors.purple : colors.green;

@@ -24,8 +24,12 @@ export default class Menu extends React.Component {
                     <option value='quick'>Quicksort</option>
                     <option value='heap'>Heapsort</option>
                     <option value='bubble'>Bubble Sort</option>
-                    {/* <option value='counting'>Counting Sort</option> */}
-                    {/* <option value=''></option> */}
+                    <option value='counting'>Counting Sort</option>
+                    {/* <option value='shell'>Shell sort</option> */}
+                    {/* <option value='comb'>Comb sort</option> */}
+                    {/* <option value='bucket'>Bucket sort</option> */}
+                    {/* <option value='radix'>Radix sort</option> */}
+                    {/* <option value='thanos'>Thanos sort</option> */}
                 </select>
                 <div className='menu-item' id='execute' onClick={() => this.handleExecute()}>Execute</div>
             </div>

@@ -11,8 +11,9 @@ import animateQuickSort from '../animations/QuickAnimation';
 import animateSelectionSort from '../animations/SelectionAnimation';
 import animateBubbleSort from '../animations/BubbleAnimation';
 import animateHeapSort from '../animations/HeapAnimation';
+import animateCountingSort from '../animations/CountingAnimation';
 
-// import {heapAlgo} from '../algorithms/Heap';
+// import { countingAlgo } from '../algorithms/Counting';
 
 
 // Not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
@@ -43,6 +44,12 @@ export default class SortingTimeVisualizer extends React.Component {
         this.maxHeight = 550;
         this.timerElement = React.createRef();
     }
+
+    componentDidMount = () => {
+        // 85% of the distance between array container and menu
+        this.maxHeight = Math.floor(0.85 * (document.getElementById('bars-container').getBoundingClientRect().bottom -
+                                            document.getElementById('menu-container').getBoundingClientRect().bottom));
+    }
     
     // True if algorithm is currently running, false otherwise
     setRunning = bool => {
@@ -72,18 +79,15 @@ export default class SortingTimeVisualizer extends React.Component {
             arraySize = this.defaultLength;
         }
 
+        // The constant values are arbitrary and were chosen because they look nice
         const windowWidth = window.innerWidth;
         const margin = Math.max((windowWidth) / (10 * arraySize), 1.5);
         const width = Math.max((windowWidth - 100) / (1.75 * arraySize), 7);
         const radius = Math.max(width / 10, 3);
-
-        // 85% of the distance between array container and menu
-        this.maxHeight = 0.85 * (document.getElementById('bars-container').getBoundingClientRect().bottom -
-                                 document.getElementById('menu-container').getBoundingClientRect().bottom);
         
         const newArray = [];
         for (let i = 0; i < arraySize; i++) {
-            newArray.push(Math.floor(Math.random()*this.maxHeight + 25));
+            newArray.push(Math.floor(Math.random() * this.maxHeight + 25));
         }
         //const newArray = [ 15, 200, 150, 25, 300 ];
         this.setState({
@@ -166,6 +170,7 @@ export default class SortingTimeVisualizer extends React.Component {
             case 'quick': await animateQuickSort(array); break;
             case 'bubble': await animateBubbleSort(array); break;
             case 'heap': await animateHeapSort(array); break;
+            case 'counting': await animateCountingSort(array); break;
             default: await animateSelectionSort(array);
         }
 
@@ -181,7 +186,7 @@ export default class SortingTimeVisualizer extends React.Component {
                 <div id='bars-container'>
                     {this.state.bars}
                     {/* Used for testing algorithms */}
-                    {/* <button id='test-sort' onClick={this.testSort.bind(this, heapAlgo)}>Test Sort</button> */}
+                    {/* <button id='test-sort' onClick={this.testSort.bind(this, countingAlgo)}>Test Sort</button> */}
                 </div>
                 <Timer status={isRunning} ref={this.timerElement}/>
             </div>

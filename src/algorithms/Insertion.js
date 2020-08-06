@@ -1,5 +1,6 @@
 const purple = '#8a2be2';
 
+// Executes sorting algorithm and determines the sequence of animations
 export default function getInsertionAnimations(arr) {
     const animations = [];
 

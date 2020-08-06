@@ -8,7 +8,24 @@ export default async function animateHeapSort(stateArray) {
 
     for (let i = 0; i < animations.length; i++) {
         if (!isRunning) break;
+        // Only procedure is swapping
+        const [idx1, idx2, isGreen] = animations[i];
+        arr[idx1].style.backgroundColor = colors.yellow;
+        arr[idx2].style.backgroundColor = colors.yellow;
+        await wait(animationInterval);
 
+        [arr[idx1].style.height, arr[idx2].style.height] = [arr[idx2].style.height, arr[idx1].style.height];
+        await wait(animationInterval);
+        
+        arr[idx1].style.backgroundColor = colors.green;
+        if (isGreen) {
+            arr[idx2].style.backgroundColor = colors.green;
+        }
+        else {
+            cardFlip.play();
+            arr[idx2].style.backgroundColor = colors.purple;
+        }
+        await wait(animationInterval);
     }
 
     for (let i = 0; i < arr.length / 2; i++) {

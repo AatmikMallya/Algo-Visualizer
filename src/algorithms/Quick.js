@@ -1,3 +1,4 @@
+// Executes sorting algorithm and determines the sequence of animations
 export default function getQuickAnimations(arr, left, right, animations) {
     let index;
     if (arr.length > 1) {

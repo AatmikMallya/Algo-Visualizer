@@ -1,6 +1,7 @@
 const purple = '#8a2be2';
 const red = '#dc143c';
 
+// Executes sorting algorithm and determines the sequence of animations
 export default function getSelectionAnimations(arr) {
     const animations = [];
     

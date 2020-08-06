@@ -12,7 +12,7 @@ import animateSelectionSort from '../animations/SelectionAnimation';
 import animateBubbleSort from '../animations/BubbleAnimation';
 import animateHeapSort from '../animations/HeapAnimation';
 
-import {heapAlgo} from '../algorithms/Heap';
+// import {heapAlgo} from '../algorithms/Heap';
 
 
 // Not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
@@ -192,7 +192,7 @@ export default class SortingTimeVisualizer extends React.Component {
                 <div id='bars-container'>
                     {this.state.bars}
                     {/* Used for testing algorithms */}
-                    <button id='test-sort' onClick={this.testSort.bind(this, heapAlgo)}>Test Sort</button>
+                    {/* <button id='test-sort' onClick={this.testSort.bind(this, heapAlgo)}>Test Sort</button> */}
                 </div>
                 <Timer status={isRunning} ref={this.timerElement}/>
             </div>

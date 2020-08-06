@@ -1,3 +1,4 @@
+// Executes sorting algorithm and determines the sequence of animations
 export default function getBubbleAnimations(arr) {
     const animations = [];
     for (let i = 0; i < arr.length; i++) {

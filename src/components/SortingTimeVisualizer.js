@@ -160,25 +160,14 @@ export default class SortingTimeVisualizer extends React.Component {
         const array = this.state.array;
 
         switch (algorithm) {
-            case 'heap': await animateSelectionSort(array); break;
+            case 'selection': await animateSelectionSort(array); break;
             case 'insertion': await animateInsertionSort(array); break;
             case 'merge': await animateMergeSort(array); break;
             case 'quick': await animateQuickSort(array); break;
             case 'bubble': await animateBubbleSort(array); break;
-            case 'selection': await animateHeapSort(array); break;
+            case 'heap': await animateHeapSort(array); break;
             default: await animateSelectionSort(array);
         }
-        
-        // if (algorithm === 'selection')
-        //     await animateSelectionSort(this.state.array);
-        // else if (algorithm === 'insertion')
-        //     await animateInsertionSort(this.state.array);
-        // else if (algorithm === 'merge')
-        //     await animateMergeSort(this.state.array);
-        // else if (algorithm === 'quick')
-        //     await animateQuickSort(this.state.array);
-        // else if (algorithm === 'bubble')
-        //     await animateBubbleSort(this.state.array);
 
         this.setRunning(false);
     }

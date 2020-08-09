@@ -36,6 +36,7 @@ export default async function animateQuickSort(stateArray) {
         }
     }
     
+    await wait(500);
     for (let i = 0; i < arr.length / 2; i++) {
         arr[i].style.backgroundColor = colors.green;
         arr[arr.length - i - 1].style.backgroundColor = colors.green;

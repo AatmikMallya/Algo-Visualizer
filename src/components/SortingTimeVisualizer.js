@@ -3,6 +3,7 @@ import Menu from './Menu';
 import Timer from './Timer';
 import UIfx from '../../node_modules/uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
+import cardFlip2Mp3 from '../resources/card-flip-2.mp3';
 import './SortingTimeVisualizer.css';
 
 import animateInsertionSort from '../animations/InsertionAnimation';
@@ -21,6 +22,10 @@ export let animationInterval = 0;
 export const cardFlip = new UIfx(cardFlipMp3, {
     throttleMs: 60,
     volume: 0.7
+});
+export const cardFlip2 = new UIfx(cardFlip2Mp3, {
+    throttleMs: 120,
+    volume: 0.6
 });
 export const colors = {
     purple: '#8a2be2',

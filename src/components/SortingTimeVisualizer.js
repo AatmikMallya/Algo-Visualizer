@@ -15,7 +15,6 @@ import animateCountingSort from '../animations/CountingAnimation';
 
 // import { countingAlgo } from '../algorithms/Counting';
 
-
 // Not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
 export let isRunning = false;
 export let animationInterval = 0;
@@ -114,6 +113,7 @@ export default class SortingTimeVisualizer extends React.Component {
 
     // Return bar heights and colors to pre-sorted state
     resetArray = async () => {
+        cardFlip.play()
         const array = document.getElementsByClassName('array');
         const arraySize = array.length;
 
@@ -160,6 +160,7 @@ export default class SortingTimeVisualizer extends React.Component {
     // Runs selected algorithm from dropdown
     handleExecute = async algorithm => {
         if (isRunning) return;
+        cardFlip.play(0);
         this.setRunning(true);
         const array = this.state.array;
 

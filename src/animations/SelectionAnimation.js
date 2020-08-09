@@ -59,6 +59,6 @@ export default async function animateSelectionSort(stateArray) {
         arr[i].type = undefined;
         arr[arr.length - i - 1].style.backgroundColor = colors.green;
         arr[arr.length - i - 1].type = undefined;
-        await wait(0.5 * animationInterval);
+        await wait(1000 / arr.length);
     }
 }

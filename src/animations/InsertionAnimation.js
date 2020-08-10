@@ -40,8 +40,6 @@ export default async function animateInsertionSort(stateArray) {
         }
     }
 
-    await wait(animationInterval);
-
     await wait(500);
     for (let i = 0; i < arr.length / 2; i++) {
         arr[i].style.backgroundColor = colors.green;

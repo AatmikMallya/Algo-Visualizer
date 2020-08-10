@@ -27,7 +27,7 @@ export default class Menu extends React.Component {
                     <option value='heap'>Heapsort</option>
                     <option value='bubble'>Bubble Sort</option>
                     <option value='counting'>Counting Sort</option>
-                    {/* <option value='shell'>Shell sort</option> */}
+                    <option value='shell'>Shell sort</option>
                     {/* <option value='comb'>Comb sort</option> */}
                     {/* <option value='bucket'>Bucket sort</option> */}
                     {/* <option value='radix'>Radix sort</option> */}

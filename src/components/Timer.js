@@ -54,7 +54,7 @@ export default class Timer extends React.Component {
         const seconds = ("0" + (Math.floor(time / 1000) % 60)).slice(-2);
         const minutes = ("0" + (Math.floor(time / 60000) % 60)).slice(-2);
         return (
-            <span id="timer-container">
+            <span id="timer-container" className="noselect">
                 <span className="timer timer-icon">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296.228 296.228" enableBackground="new 0 0 296.228 296.228">
                         <g>

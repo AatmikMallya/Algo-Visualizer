@@ -1,7 +1,7 @@
 import React from 'react';
 import Menu from './Menu';
 import Timer from './Timer';
-import UIfx from '../../node_modules/uifx';
+import UIfx from 'uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
 import cardFlip2Mp3 from '../resources/card-flip-2.mp3';
 import './SortingTimeVisualizer.css';
@@ -19,14 +19,8 @@ import animateCountingSort from '../animations/CountingAnimation';
 // Not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
 export let isRunning = false;
 export let animationInterval = 0;
-export const cardFlip = new UIfx(cardFlipMp3, {
-    throttleMs: 60,
-    volume: 0.7
-});
-export const cardFlip2 = new UIfx(cardFlip2Mp3, {
-    throttleMs: 120,
-    volume: 0.6
-});
+export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60, volume: 0.7 });
+export const cardFlip2= new UIfx(cardFlip2Mp3,{ throttleMs: 120,volume: 0.6 });
 export const colors = {
     purple: '#8a2be2',
     red: '#dc143c',
@@ -36,12 +30,16 @@ export const colors = {
 };
 
 
-// Main component of application
+//* Main component of application *//
 export default class SortingTimeVisualizer extends React.Component {
     constructor(props) {
         super(props);
         // array holds height values, bars holds the actual divs
-        this.state = { array: [], bars: [] };
+        this.state = {
+            array: [],
+            bars: [],
+            algorithm: 'selection'
+        };
         
         this.cachedArray = [];
         this.defaultLength = 60;
@@ -56,13 +54,24 @@ export default class SortingTimeVisualizer extends React.Component {
     }
     
     // True if algorithm is currently running, false otherwise
-    setRunning = bool => {
+    setRunning = async bool => {
         isRunning = bool;
         this.timerElement.current.setStatus(bool);
         if (bool) {
             document.getElementById('execute').classList.add('running');
         } else {
             document.getElementById('execute').classList.remove('running');
+
+            // Fade back menu color
+            const menu = document.getElementById('menu-container');
+            const oldHue = getMenuHue();
+            if (oldHue === menuColors.blue.hue) {
+                return;
+            }
+            await wait(1000);
+            await fade(oldHue, menuColors.blue.hue);
+            const r = menuColors.blue.shadow.r, g = menuColors.blue.shadow.g, b = menuColors.blue.shadow.b
+            menu.style.setProperty('box-shadow', `-1.5px 1.5px 2.5px rgb(${r},${g},${b})`);
         }            
     }
 
@@ -74,7 +83,9 @@ export default class SortingTimeVisualizer extends React.Component {
     // Display a new randomized array, possibly with a new length
     generateArray = length => {
         const array = document.getElementsByClassName('array');
-        this.setRunning(false);
+        if (isRunning) {
+            this.setRunning(false);
+        }
         let arraySize;
         if (length) {
             arraySize = length;
@@ -162,14 +173,27 @@ export default class SortingTimeVisualizer extends React.Component {
         console.log("Elapsed time: ", elapsedTime, " ms");
     }
 
-    // Runs selected algorithm from dropdown
-    handleExecute = async algorithm => {
+    // Response to selecting algorithm from dropdown
+    selectAlgorithm = async selection => {
+        this.setState({ algorithm: selection });
+        if (!isRunning) {
+            const menu = document.getElementById('menu-container');
+            const oldHue = getMenuHue();
+            const newColor = algoColors[selection];
+            const r = newColor.shadow.r, g = newColor.shadow.g, b = newColor.shadow.b;
+            menu.style.setProperty('box-shadow', `-1.5px 1.5px 2.5px rgb(${r},${g},${b})`);
+            await fade(oldHue, newColor.hue);
+        }
+    }
+
+    // Runs selected algorithm
+    handleExecute = async () => {
         if (isRunning) return;
         cardFlip.play(0);
         this.setRunning(true);
-        const array = this.state.array;
 
-        switch (algorithm) {
+        const array = this.state.array;
+        switch (this.state.algorithm) {
             case 'selection': await animateSelectionSort(array); break;
             case 'insertion': await animateInsertionSort(array); break;
             case 'merge': await animateMergeSort(array); break;
@@ -188,7 +212,7 @@ export default class SortingTimeVisualizer extends React.Component {
         return (
             <div>
                 <div id='color-strip' />
-                <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} />
+                <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} onSelect={this.selectAlgorithm}/>
                 <div id='bars-container'>
                     {this.state.bars}
                     {/* Used for testing algorithms */}
@@ -201,6 +225,7 @@ export default class SortingTimeVisualizer extends React.Component {
 }
 
 
+//* Helpers *//
 // Effectively a synchronous sleep function
 export const wait = ms => new Promise(res => setTimeout(res, ms));
 
@@ -219,3 +244,75 @@ const arrayEquality = (a, b) => {
     }
     return true;
 }
+
+// For menu color fading
+const menuColors = {
+    blue:   { hue: 210, shadow: {r:9,   g:55, b:97} },
+    red:    { hue: 5,   shadow: {r:83,  g:7,  b:7} },
+    orange: { hue: 25,  shadow: {r:83,  g:37, b:6} },
+    yellow: { hue: 45,  shadow: {r:109, g:82, b:9} }
+};
+
+const algoColors = {
+    'selection': menuColors.red,
+    'insertion': menuColors.red,
+    'merge': menuColors.orange,
+    'quick': menuColors.orange,
+    'bubble': menuColors.red,
+    'heap': menuColors.orange,
+    'counting': menuColors.yellow
+};
+
+// Linear interpolation
+const lerp = (a,b,u) => (1-u) * a + u * b;
+
+const fade = async (start, end) => {
+    const duration = 1000;
+    const interval = 10;
+    const step_u = 10 / duration;
+    const menu = document.getElementById('menu-container').style;
+    for (let u = 0.0; u < 1.0; u += step_u) {
+      const hue = parseInt(lerp(start, end, u));
+      menu.setProperty('background-color', `hsl(${hue}, 95%, 35%)`);
+      await wait(interval);
+    }
+};
+
+const getMenuHue = () => {
+    const menu = document.getElementById('menu-container');
+    const currentColor = menu.style.backgroundColor.match(/\d+/g)?.map(Number);
+    if (!currentColor) return menuColors.blue.hue;
+    const [r, g, b] = [currentColor[0]/255, currentColor[1]/255, currentColor[2]/255];
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let hue = 0;
+    if (max !== min) {
+        const d = max - min;
+        switch (max) {
+            case r: hue = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: hue = (b - r) / d + 2; break;
+            case b: hue = (r - g) / d + 4; break;
+            default: break;
+        }
+    }
+    return hue * 60;
+};
+
+// RGB Version
+// const fade = async (element, property, start, end, duration) => {
+//   const interval = 10;
+//   const step_u = interval / duration;
+//   console.log(step_u)
+//   for (let u = 0.0; u < 1.0; u += step_u) {
+//     const r = parseInt(lerp(start.r, end.r, u));
+//     const g = parseInt(lerp(start.g, end.g, u));
+//     const b = parseInt(lerp(start.b, end.b, u));
+//     element.style.setProperty(property, `rgb(${r},${g},${b})`);
+//     await wait(interval);
+//   }
+// };
+// const menuColors = {
+//     blue: { r:22, g:94, b:161, shadow:{r:12, g:65, b:116} },
+//     red: { r:170, g:8, b:8, shadow:{r:80, g:0, b:0} },
+//     orange: {r:194, g:108, b:11, shadow:{r:97, g:63, b:0} },
+//     yellow: {r:202, g:165, b:0, shadow:{r:73, g:66, b:0} }
+// };

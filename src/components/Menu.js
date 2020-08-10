@@ -7,8 +7,10 @@ export default class Menu extends React.Component {
     // Event handlers for menu items
     handleSpeedChange = interval => this.props.onSpeedChange(interval);
     handleGenerate = length => this.props.onGenerate(length);
+    handleExecute = () => this.props.onExecute();
     handleReset = () => this.props.onReset();
-    handleExecute = () => this.props.onExecute(document.getElementById('menu-select').value);
+
+    handleSelect = () => this.props.onSelect(document.getElementById('menu-select').value);
 
     render = () => {
         return (
@@ -17,7 +19,7 @@ export default class Menu extends React.Component {
                 <div className='menu-item' id='reset' onClick={() => this.handleReset()}>Reset Array</div>
                 <SpeedSlider onSlide={interval => this.handleSpeedChange(interval)} />
                 <LengthSlider onSlide={length => this.handleGenerate(length)} />
-                <select className='menu-item' id='menu-select' >
+                <select className='menu-item' id='menu-select' onChange={() => this.handleSelect()}>
                     <option value='selection'>Selection Sort</option>
                     <option value='insertion'>Insertion Sort</option>
                     <option value='merge'>Merge Sort</option>

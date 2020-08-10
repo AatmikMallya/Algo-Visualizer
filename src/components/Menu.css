@@ -1,10 +1,10 @@
 #menu-container {
-    background-color: rgb(22, 94, 161);
+    background-color: hsl(210, 100%, 35%);
     height: 100px;
     border-radius: 35px;
     width: 98.5%;
     margin: 10px auto 20px;
-    box-shadow: -1.5px 1.5px 2.5px rgb(12, 65, 116);
+    box-shadow: -1.5px 1.5px 2.5px rgb(9, 55, 97);
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -27,11 +27,11 @@
     color: rgb(190, 190, 190);
 }
 .menu-item:active {
-    color: rgba(175, 175, 175, 0.75);
+    color: rgba(135, 135, 135, 0.8);
 }
 
 .running {
-    color: rgba(175, 175, 175, 0.75)!important;
+    color: rgba(135, 135, 135, 0.8)!important;
     cursor: auto;
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from './Menu';
+import InfoBox from './InfoBox';
 import Timer from './Timer';
 import UIfx from 'uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
@@ -52,7 +53,8 @@ export default class SortingTimeVisualizer extends React.Component {
         // 85% of the distance between array container and menu
         this.maxHeight = Math.floor(0.85 * (document.getElementById('bars-container').getBoundingClientRect().bottom -
                                             document.getElementById('menu-container').getBoundingClientRect().bottom));
-        this.selectAlgorithm('selection');
+        // initializeTheme();
+        this.selectAlgorithm('selection')
     }
     
     // True if algorithm is currently running, false otherwise
@@ -63,17 +65,6 @@ export default class SortingTimeVisualizer extends React.Component {
             document.getElementById('execute').classList.add('running');
         } else {
             document.getElementById('execute').classList.remove('running');
-
-            // Fade back menu color
-            // const menu = document.getElementById('menu-container');
-            // const oldHue = getMenuHue();
-            // if (oldHue === menuColors.blue.hue) {
-            //     return;
-            // }
-            // await wait(1000);
-            // await fade(oldHue, menuColors.blue.hue);
-            // const r = menuColors.blue.shadow.r, g = menuColors.blue.shadow.g, b = menuColors.blue.shadow.b
-            // menu.style.setProperty('box-shadow', `-1.5px 1.5px 2.5px rgb(${r},${g},${b})`);
         }            
     }
 
@@ -107,14 +98,15 @@ export default class SortingTimeVisualizer extends React.Component {
             newArray.push(Math.floor(Math.random() * this.maxHeight + 25));
         }
         //const newArray = [ 15, 200, 150, 25, 300 ];
+        const newBars = newArray.map((value, i) => <div className='array' key={i} idx={i} color={colors.green} type={undefined} style={{
+            height: value,
+            margin: margin,
+            width: width,
+            borderRadius: radius,
+        }} />);
         this.setState({
             array: newArray,
-            bars: newArray.map((value, i) => <div className='array' key={i} idx={i} color={colors.green} type={undefined} style={{
-                height: value,
-                margin: margin,
-                width: width,
-                borderRadius: radius,
-            }} />)
+            bars: newBars
         });
 
         // Deep copy to allow resetting to original state
@@ -139,7 +131,7 @@ export default class SortingTimeVisualizer extends React.Component {
 
         const oldArray = []
         for (let i = 0; i < arraySize; i++) {
-            array[i].style.height = this.cachedArray[i] + "px";
+            array[i].style.height = this.cachedArray[i] + 'px';
             array[i].type = undefined;
             oldArray.push(this.cachedArray[i]);
         }
@@ -147,7 +139,7 @@ export default class SortingTimeVisualizer extends React.Component {
         this.setState({array: oldArray});
         
         for (let i = 0; i < arraySize; i++) {
-            array[i].style.backgroundColor = "#07ad1d";
+            array[i].style.backgroundColor = '#07ad1d';
         }
         await wait(333);
         for (let i = 0; i < arraySize; i++) {
@@ -173,18 +165,15 @@ export default class SortingTimeVisualizer extends React.Component {
             console.log(arrayEquality(testArr, testArr2));
         }
         const elapsedTime = new Date() - startTime;
-        console.log("Elapsed time: ", elapsedTime, " ms");
+        console.log('Elapsed time: ', elapsedTime, ' ms');
     }
 
     // Response to selecting algorithm from dropdown
     selectAlgorithm = async selection => {
         this.setState({ algorithm: selection });
-        const menu = document.getElementById('menu-container');
         const oldHue = getMenuHue();
         const newColor = algoColors[selection];
-        const r = newColor.shadow.r, g = newColor.shadow.g, b = newColor.shadow.b;
-        menu.style.setProperty('box-shadow', `-1.5px 1.5px 2.5px rgb(${r},${g},${b})`);
-        await fade(oldHue, newColor.hue);
+        await fade(oldHue, newColor);
     }
 
     // Runs selected algorithm
@@ -214,12 +203,21 @@ export default class SortingTimeVisualizer extends React.Component {
         return (
             <div>
                 <div id='color-strip' />
-                <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} onSelect={this.selectAlgorithm}/>
-                <div id='bars-container'>
-                    {this.state.bars}
-                    {/* Used for testing algorithms */}
-                    {/* <button id='test-sort' onClick={this.testSort.bind(this, shellAlgo)}>Test Sort</button> */}
+                <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} onSelect={this.selectAlgorithm} />
+                <div id='body-container'>
+                    <div id='left-container'>
+                        {/* TODO: ALIGNMENT BUTTONS */}
+                    </div>
+                    <div id='bars-container'>
+                        {this.state.bars}
+                        {/* Used for testing algorithms */}
+                        {/* <button id='test-sort' onClick={this.testSort.bind(this, shellAlgo)}>Test Sort</button> */}
+                    </div>
+                    <div id='right-container'>
+                        <InfoBox algorithm={this.state.algorithm} />
+                    </div>
                 </div>
+                
                 <Timer status={isRunning} ref={this.timerElement}/>
             </div>
         )
@@ -245,45 +243,52 @@ const arrayEquality = (a, b) => {
 }
 
 // For menu color fading - based on average case
-const menuColors = {
-    blue:   { hue: 210, shadow: {r:9,   g:55, b:97} }, // Initial
-    red:    { hue: 5,   shadow: {r:83,  g:7,  b:7} },  // O(n^2)
-    orange: { hue: 28,  shadow: {r:83,  g:37, b:6} },  // O(nlogn)
-    yellow: { hue: 45,  shadow: {r:109, g:82, b:9} },  // O(n)
+export const menuColors = {
+    purple: 270, // Initial
+    red: 5,      // O(n^2)
+    orange: 28,  // O(nlogn)
+    yellow: 45,  // O(n)
     // Specific algorithms
-    shell:  { hue: 18,  shadow: {r:104, g:40, b:10} }  // O(n(logn)^2)
+    shell: 18,   // O(n(logn)^2)
 };
 
-const algoColors = {
-    'selection': menuColors.red,
-    'insertion': menuColors.red,
-    'merge': menuColors.orange,
-    'quick': menuColors.orange,
-    'bubble': menuColors.red,
-    'heap': menuColors.orange,
-    'counting': menuColors.yellow,
-    'shell': menuColors.shell
+export const algoColors = {
+    selection: menuColors.red,
+    insertion: menuColors.red,
+    merge: menuColors.orange,
+    quick: menuColors.orange,
+    bubble: menuColors.red,
+    heap: menuColors.orange,
+    counting: menuColors.yellow,
+    shell: menuColors.shell
 };
 
 // Linear interpolation
 const lerp = (a,b,u) => (1-u) * a + u * b;
 
+// Transition color theme
 const fade = async (start, end) => {
     const duration = 1000;
     const interval = 10;
     const step_u = interval / duration;
     const menu = document.getElementById('menu-container').style;
+    const icon = document.querySelector('.info-icon').style;
+    const infoButton = document.getElementById('info-button').style;
     for (let u = 0.0; u < 1.0; u += step_u) {
-      const hue = parseInt(lerp(start, end, u));
-      menu.setProperty('background-color', `hsl(${hue}, 95%, 35%)`);
-      await wait(interval);
+        const hue = parseInt(lerp(start, end, u));
+        menu.setProperty('background-color', `hsl(${hue}, 95%, 35%)`);
+        menu.setProperty('box-shadow', `-1.5px 1.5px 2.5px hsl(${hue}, 95%, 15%)`);
+        icon.setProperty('color',`hsl(${hue}, 95%, 20%)`)
+        infoButton.setProperty('border-color', `hsl(${hue}, 95%, 25%)`);
+        infoButton.setProperty('background-color', `hsla(${hue}, 95%, 30%, 0.1)`);
+        await wait(interval);
     }
 };
 
 const getMenuHue = () => {
     const menu = document.getElementById('menu-container');
     const currentColor = menu.style.backgroundColor.match(/\d+/g)?.map(Number);
-    if (!currentColor) return menuColors.blue.hue;
+    if (!currentColor) return menuColors.purple;
     const [r, g, b] = [currentColor[0]/255, currentColor[1]/255, currentColor[2]/255];
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
     let hue = 0;

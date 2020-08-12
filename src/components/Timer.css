@@ -1,0 +1,25 @@
+#timer-container {
+    display: inline;
+    position: absolute;
+    margin: auto;
+    text-align: center;
+    top: 93%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.timer {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.timer-icon {
+    width: 90px;
+}
+
+.timer-display {
+    display: inline-block;
+    font-size: 52px;
+    font-weight: 700;
+    vertical-align: middle;
+}

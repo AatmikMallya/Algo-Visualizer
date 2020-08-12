@@ -9,6 +9,9 @@ const useStyles = makeStyles({
     width: 220,
     color: 'rgba(100%, 100%, 100%, 82.5%)'
   },
+  slider: {
+    color: 'rgba(100%, 100%, 100%, 82.5%)'
+  }
 });
 
 // Sets the time interval between animation frames
@@ -30,7 +33,7 @@ export default function SpeedSlider(props) {
         <Grid item>
         </Grid>
         <Grid item xs>
-          <Slider value={value} onChange={handleChange} style={{color: 'rgba(100%, 100%, 100%, 82.5%)'}} aria-labelledby='continuous-slider' />
+          <Slider value={value} onChange={handleChange} className={classes.slider} aria-labelledby='continuous-slider' />
         </Grid>
         <Grid item>
         </Grid>

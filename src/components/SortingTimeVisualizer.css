@@ -1,11 +1,41 @@
 #bars-container {
     position: relative;
-    margin: 0 auto 0;
-    height:80vh;
+    height: 80vh;
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: hidden;
-    max-width: 89%;
+    max-width: 75%;
+}
+
+#body-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+#left-container {
+    width: 12.5%;
+    max-width: 12.5%;
+    min-width: 12.5%;
+}
+
+#right-container {
+    width: 12.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#info-box-container {
+    margin: auto;
+}
+
+.info-icon { 
+    color: hsl(270, 95%, 20%)
+}
+
+#info-button {
+    border-color: hsl(270, 95%, 25%);
+    background-color: hsla(270, 95%, 30%, 0.1);
 }
 
 .array {
@@ -27,50 +57,18 @@
 .array:hover {
     background-color: #2a8f38!important;
     color: black!important;
-    /* align-items: center; */
 }
-#value {
+
+/* #value {
     position: relative;
-    /* bottom: 17px; */
     left: inherit;
-    /* color: black!important; */
     align-self: center;
     z-index: 2;
-}
+} */
 
 #color-strip {
     background-color: #24682d;
     height: 6px;
-}
-
-#timer-container {
-    display: inline;
-    position: absolute;
-    /* bottom: 2.5%; */
-    margin: auto;
-    /* padding: 10px;
-    background-color: rgb(22, 94, 161);
-    border-radius: 20px; */
-    text-align: center;
-    top: 93%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.timer {
-    vertical-align: middle;
-    display: inline-block;
-}
-
-.timer-icon {
-    width: 90px;
-}
-
-.timer-display {
-    display: inline-block;
-    font-size: 52px;
-    font-weight: 700;
-    vertical-align: middle;
 }
 
 #seconds {
@@ -93,4 +91,16 @@
          -moz-user-select: none;
           -ms-user-select: none;
               user-select: none;
-  }
+}
+
+/* Info box overrides */
+.MuiBackdrop-root { opacity: 0.3!important; }
+
+.MuiDialogTitle-root { padding-bottom: 0!important; }
+
+.MuiDialogActions-root { padding-top: 0!important; }
+
+.MuiDialogContent-root {
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}

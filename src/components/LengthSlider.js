@@ -17,6 +17,9 @@ const useStyles = makeStyles({
     backgroundColor: 'rgba(100%, 100%, 100%, 20%)',
     borderRadius: '10px',
   },
+  slider: {
+    color: 'rgba(100%, 100%, 100%, 82.5%)'
+  }
 });
 
 export default function LengthSlider(props) {
@@ -58,9 +61,9 @@ export default function LengthSlider(props) {
       <Grid container spacing={2} alignItems='center'>
         <Grid item xs>
           <Slider
+            className={classes.slider}
             min={5}
             max={125}
-            style={{color: 'rgba(100%, 100%, 100%, 82.5%)'}}
             value={typeof value === 'number' ? value : 0}
             onChange={handleSliderChange}
             aria-labelledby='input-slider'

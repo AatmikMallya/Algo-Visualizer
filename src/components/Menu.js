@@ -20,14 +20,23 @@ export default class Menu extends React.Component {
                 <SpeedSlider onSlide={interval => this.handleSpeedChange(interval)} />
                 <LengthSlider onSlide={length => this.handleGenerate(length)} />
                 <select className='menu-item' id='menu-select' onChange={() => this.handleSelect()}>
-                    <option value='selection'>Selection Sort</option>
-                    <option value='insertion'>Insertion Sort</option>
-                    <option value='merge'>Merge Sort</option>
-                    <option value='quick'>Quicksort</option>
-                    <option value='heap'>Heapsort</option>
-                    <option value='bubble'>Bubble Sort</option>
-                    <option value='counting'>Counting Sort</option>
-                    <option value='shell'>Shell sort</option>
+                    <optgroup className='group' label='Simple Sorts'>
+                        <option value='selection'>Selection sort</option>
+                        <option value='insertion'>Insertion sort</option>
+                    </optgroup>
+                    <optgroup className='group' label='Efficient Sorts'>
+                        <option value='merge'>Merge sort</option>
+                        <option value='heap'>Heapsort</option>
+                        <option value='quick'>Quicksort</option>
+                        <option value='shell'>Shell sort</option>
+                    </optgroup>
+                    <optgroup className='group' label='Distribution Sorts'>
+                        <option value='counting'>Counting sort</option>
+                    </optgroup>
+                    <optgroup className='group' label='Other Sorts'>
+                        <option value='bubble'>Bubble sort</option>
+                    </optgroup>
+                    
                     {/* <option value='comb'>Comb sort</option> */}
                     {/* <option value='bucket'>Bucket sort</option> */}
                     {/* <option value='radix'>Radix sort</option> */}

@@ -58,7 +58,7 @@ function mergeAnimate(a, left, right, end, b, animations, color) {
 //     }
 //   }
 
-//   return a
+//   return a;
 // }
 
 // function merge(a, left, right, end, b) {

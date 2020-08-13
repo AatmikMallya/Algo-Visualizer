@@ -12,12 +12,13 @@ import { algoColors } from './SortingTimeVisualizer';
 import ReactHtmlParser from 'react-html-parser';
 import './SortingTimeVisualizer.css';
 
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />;
 });
 
 export default function InfoBox(props) {
+  const text = info[props.algorithm];
+  const hue = algoColors[props.algorithm];
   const styles = {
     container: {
       position: 'relative',
@@ -34,27 +35,44 @@ export default function InfoBox(props) {
       bottom: '2px'
     },
     header: {
-      color: 'black',
+      textAlign: 'center',
+      display: 'block',
+      color: `hsla(${hue}, 95%, 10%, 0.94)`,
       fontSize: 35,
       fontWeight: 800,
     },
     bold: {
+      fontSize: 16,
       fontWeight: 600,
       display: 'block',
     },
     normal: {
       fontWeight: 500
     },
+    algo: {
+      fontSize: 15,
+      fontWeight: 500,
+      fontFamily: `FiraCode`
+    },
     paper: {
-      color: 'black',
-      backgroundColor: `hsla(${algoColors[props.algorithm]}, 25%, 70%, 0.94)`
+      color: `hsla(${hue}, 95%, 5%, 0.94)`,
+      backgroundColor: `hsla(${hue}, 25%, 70%, 0.94)`,
+      maxHeight: `50vh`,
+      minWidth: `40vh`,
+      // maxWidth: `45vh`,
+      fontFamily: `Arial`
     },
     subHeader: {
       textAlign: 'center',
       display: 'block',
-      // lineHeight: 3
-      marginTop: 10,
-      marginBottom: 5
+      marginTop: 5,
+      marginBottom: 5,
+      textDecoration: `underline hsla(${hue}, 95%, 10%, 0.94)`
+    },
+    exit: {
+      fontSize: 14,
+      fontWeight: 500,
+      color: `hsla(${hue}, 95%, 10%, 0.94)`
     }
   };
 
@@ -69,7 +87,6 @@ export default function InfoBox(props) {
             <MenuBookIcon className='info-icon' style={styles.icon}/>
         </Button>
         <Dialog
-          maxWidth='md'
           PaperProps={{style: styles.paper}}
           style={styles.dialog}
           scroll='paper'
@@ -82,30 +99,34 @@ export default function InfoBox(props) {
         >
           <DialogTitle id='alert-dialog-slide-title'>
             <span id='info-header' style={styles.header}>
-              {info[props.algorithm].header}
+              {text.header}
             </span>
           </DialogTitle>
           <DialogContent>
             <DialogContentText id='alert-dialog-slide-description'>
-              <span id='info-header' style={styles.paper}>
+              <span id='info-body' style={styles.paper}>
                 <span style={styles.subHeader}>Time Complexity</span>
                 <span style={styles.bold}>Best case:
-                  <span style={styles.normal}> &Omega;({ReactHtmlParser(info[props.algorithm].best)})</span>
+                  <span style={styles.normal}> &Omega;({ReactHtmlParser(text.best)})</span>
                 </span>
                 <span style={styles.bold}>Average case:
-                  <span style={styles.normal}> &Theta;({ReactHtmlParser(info[props.algorithm].avg)})</span>
+                  <span style={styles.normal}> &Theta;({ReactHtmlParser(text.avg)})</span>
                 </span>
                 <span style={styles.bold}>Worst case:
-                  <span style={styles.normal}> O({ReactHtmlParser(info[props.algorithm].worst)})</span>
+                  <span style={styles.normal}> O({ReactHtmlParser(text.worst)})</span>
                 </span>
                 <span style={styles.bold}>Space complexity:
-                  <span style={styles.normal}> O({ReactHtmlParser(info[props.algorithm].space)})</span>
+                  <span style={styles.normal}> O({ReactHtmlParser(text.space)})<br/><br/></span>
+                </span>
+                <span style={styles.subHeader}>Algorithm (JavaScript)</span>
+                <span style={styles.bold}> 
+                  <span style={styles.algo}> {ReactHtmlParser(text.algo)}</span>
                 </span>
               </span>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color='primary'>
+            <Button onClick={handleClose} style={styles.exit}>
               X
             </Button>
           </DialogActions>

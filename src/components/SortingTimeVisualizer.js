@@ -16,13 +16,13 @@ import animateHeapSort from '../animations/HeapAnimation';
 import animateCountingSort from '../animations/CountingAnimation';
 import animateShellSort from '../animations/ShellAnimation';
 
-// import { shellAlgo } from '../algorithms/Shell';
+// import { mergeAlgo } from '../algorithms/Merge';
 
 // Not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
 export let isRunning = false;
 export let animationInterval = 0;
 export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60, volume: 0.7 });
-export const cardFlip2= new UIfx(cardFlip2Mp3,{ throttleMs: 120,volume: 0.6 });
+export const cardFlip2= new UIfx(cardFlip2Mp3,{ throttleMs: 140,volume: 0.6 });
 export const colors = {
     purple: '#8a2be2',
     red: '#dc143c',
@@ -157,9 +157,8 @@ export default class SortingTimeVisualizer extends React.Component {
                 testArr.push(Math.floor(Math.random()*501));
             }
             const testArr2 = [...testArr];
-    
-            mySort(testArr, 0, testArr.length - 1);
-            // correctSort(testArr2);
+
+            mySort(testArr);
             testArr2.sort((a, b) => a - b);
     
             console.log(arrayEquality(testArr, testArr2));
@@ -184,14 +183,14 @@ export default class SortingTimeVisualizer extends React.Component {
 
         const array = this.state.array;
         switch (this.state.algorithm) {
-            case 'shell': await animateSelectionSort(array); break;
+            case 'selection': await animateSelectionSort(array); break;
             case 'insertion': await animateInsertionSort(array); break;
             case 'merge': await animateMergeSort(array); break;
             case 'quick': await animateQuickSort(array); break;
             case 'bubble': await animateBubbleSort(array); break;
             case 'heap': await animateHeapSort(array); break;
             case 'counting': await animateCountingSort(array); break;
-            case 'selection': await animateShellSort(array); break;
+            case 'shell': await animateShellSort(array); break;
             default: await animateSelectionSort(array);
         }
 
@@ -211,7 +210,7 @@ export default class SortingTimeVisualizer extends React.Component {
                     <div id='bars-container'>
                         {this.state.bars}
                         {/* Used for testing algorithms */}
-                        {/* <button id='test-sort' onClick={this.testSort.bind(this, shellAlgo)}>Test Sort</button> */}
+                        {/* <button id='test-sort' onClick={this.testSort.bind(this, mergeAlgo)}>Test Sort</button> */}
                     </div>
                     <div id='right-container'>
                         <InfoBox algorithm={this.state.algorithm} />

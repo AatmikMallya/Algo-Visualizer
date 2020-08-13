@@ -31,6 +31,13 @@ export default function getCountingAnimations(arr) {
     return animations;
 }
 
+// Maps a value to the 0-240 range on the hue wheel based on value range
+function mapToHue(value) {
+    // a1,a2 --> min,max
+    // b1,b2 --> 0, 240
+    return 240 * (value - min) / (max - min);
+}
+
 
 // Original counting sort algorithm
 // export function countingAlgo(arr) {
@@ -57,10 +64,3 @@ export default function getCountingAnimations(arr) {
 
 //     return arr;
 // }
-
-// Maps a value to the 0-240 range on the hue wheel based on value range
-function mapToHue(value) {
-    // a1,a2 --> min,max
-    // b1,b2 --> 0, 240
-    return 240 * (value - min) / (max - min);
-}

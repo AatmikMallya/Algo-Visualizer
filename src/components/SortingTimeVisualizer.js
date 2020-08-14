@@ -19,7 +19,7 @@ import animateBucketSort from '../animations/BucketAnimation';
 import animateBubbleSort from '../animations/BubbleAnimation';
 import animateCombSort from '../animations/CombAnimation';
 
-// import { mergeAlgo } from '../algorithms/Merge';
+import { bucketAlgo } from '../algorithms/Bucket';
 
 // These are passed to animation/algorithm scripts that execute the sort
 export let isRunning = false;
@@ -56,7 +56,6 @@ export default class SortingTimeVisualizer extends React.Component {
         // 85% of the distance between array container and menu
         this.maxHeight = Math.floor(0.85 * (document.getElementById('bars-container').getBoundingClientRect().bottom -
                                             document.getElementById('menu-container').getBoundingClientRect().bottom));
-        // initializeTheme();
         this.selectAlgorithm('selection')
     }
     
@@ -154,16 +153,15 @@ export default class SortingTimeVisualizer extends React.Component {
     testSort = mySort => {
         const startTime = new Date();
         for (let i = 0; i < 100; i++) {
-            const testArr = [];
-            const length = Math.floor(Math.random()*1001);
+            let testArr = [];
+            const length = Math.floor(Math.random()*1001 + 5);
             for (let j = 0; j < length; j++) {
                 testArr.push(Math.floor(Math.random()*501));
             }
             const testArr2 = [...testArr];
 
-            mySort(testArr);
+            testArr = mySort(testArr);  
             testArr2.sort((a, b) => a - b);
-    
             console.log(arrayEquality(testArr, testArr2));
         }
         const elapsedTime = new Date() - startTime;
@@ -186,7 +184,7 @@ export default class SortingTimeVisualizer extends React.Component {
 
         const array = this.state.array;
         switch (this.state.algorithm) {
-            case 'selection': await animateSelectionSort(array); break;
+            case 'bucket': await animateSelectionSort(array); break;
             case 'insertion': await animateInsertionSort(array); break;
             case 'merge': await animateMergeSort(array); break;
             case 'quick': await animateQuickSort(array); break;
@@ -194,12 +192,13 @@ export default class SortingTimeVisualizer extends React.Component {
             case 'shell': await animateShellSort(array); break;
             case 'counting': await animateCountingSort(array); break;
             case 'radix': await animateRadixSort(array); break;
-            case 'bucket': await animateBucketSort(array); break;
+            case 'selection': await animateBucketSort(array); break;
             case 'bubble': await animateBubbleSort(array); break;
             case 'comb': await animateCombSort(array); break;
             default: await animateSelectionSort(array);
         }
-
+        // Ensure that the state array is sorted
+        array.sort((a, b) => a - b);
         this.setRunning(false);
     }
 
@@ -216,13 +215,12 @@ export default class SortingTimeVisualizer extends React.Component {
                     <div id='bars-container'>
                         {this.state.bars}
                         {/* Used for testing algorithms */}
-                        {/* <button id='test-sort' onClick={this.testSort.bind(this, mergeAlgo)}>Test Sort</button> */}
+                        <button id='test-sort' onClick={this.testSort.bind(this, bucketAlgo)}>Test Sort</button>
                     </div>
                     <div id='right-container'>
                         <InfoBox algorithm={this.state.algorithm} />
                     </div>
                 </div>
-                
                 <Timer status={isRunning} ref={this.timerElement}/>
             </div>
         )

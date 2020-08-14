@@ -30,10 +30,8 @@ export default function getCountingAnimations(arr) {
     return animations;
 }
 
-// Maps a value to the 0-240 range on the hue wheel based on value range
+// Maps a value to the 0-240 range on the hue wheel
 function mapToHue(value, min, max) {
-    // a1,a2 --> min,max
-    // b1,b2 --> 0, 240
     return 240 * (value - min) / (max - min);
 }
 

@@ -6,7 +6,9 @@ export default async function animateBucketSort(stateArray) {
     const animations = getBucketAnimations(stateArray);
     const arr = document.getElementsByClassName('array');
 
-    console.log("TODO: Bucket sort")
+    for (let i = 0; i < animations.length; i++) {
+        if (!isRunning) return;
+    }
     
     await wait(500);
     for (let i = 0; i < arr.length / 2; i++) {

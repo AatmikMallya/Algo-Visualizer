@@ -22,29 +22,16 @@ export default function getInsertionAnimations(arr) {
 
 
 
-// Original insertion algo w/ more swapping for better visual
-// export function insertionAlgo(arr) {
-//     for (let i = 1; i < arr.length; i++) {
-//         let j = i - 1;
-//         const temp = arr[i];
-//         while (j >= 0 && arr[j] > temp) {
-//             [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-//             j--;
-//         }
-//     }
-//     return arr;
-// }
-
-// More efficient version - less swapping
-// export function insertionAlgo2(arr) {
-//     for (let i = 1; i < arr.length; i++) {
-//         let j = i - 1;
-//         const temp = arr[i];
-//         while (j >= 0 && arr[j] > temp) {
-//             arr[j+1] = arr[j];
-//             j--;
-//         }
-//         arr[j+1] = temp;
-//     }
-//     return arr;
-// }
+// Original insertion algo
+export function insertionAlgo(arr) {
+    for (let i = 1; i < arr.length; i++) {
+        let j = i - 1;
+        const temp = arr[i];
+        while (j >= 0 && arr[j] > temp) {
+            arr[j+1] = arr[j];
+            j--;
+        }
+        arr[j+1] = temp;
+    }
+    return arr;
+}

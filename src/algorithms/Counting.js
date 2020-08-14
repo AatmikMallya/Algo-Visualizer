@@ -1,10 +1,9 @@
-let min, max;
-
 // Executes sorting algorithm and determines the sequence of animations
 export default function getCountingAnimations(arr) {
     const animations = [];
-    max = Math.max(...arr);
-    min = Math.min(...arr);
+    const max = Math.max(...arr);
+    const min = Math.min(...arr);
+
     let i = min;
     let j = 0;
     let count = [];
@@ -14,14 +13,14 @@ export default function getCountingAnimations(arr) {
     }
     for (i = 0; i < arr.length; i++) {
         count[arr[i]]++;
-        const hue = mapToHue(arr[i]);
+        const hue = mapToHue(arr[i], min, max);
         animations.push([i, hue]);
     }
 
     for (i = min; i <= max; i++) {
         while (count[i] > 0) {
             arr[j] = i;
-            const hue = mapToHue(i);
+            const hue = mapToHue(i, min, max);
             animations.push([j, i, hue]);
             j++;
             count[i]--;
@@ -32,7 +31,7 @@ export default function getCountingAnimations(arr) {
 }
 
 // Maps a value to the 0-240 range on the hue wheel based on value range
-function mapToHue(value) {
+function mapToHue(value, min, max) {
     // a1,a2 --> min,max
     // b1,b2 --> 0, 240
     return 240 * (value - min) / (max - min);

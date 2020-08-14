@@ -111,24 +111,6 @@ const info = {
         ${t}return i;<br/>
         }`
     },
-    bubble: {
-        header: `Bubble Sort`,
-        best: `n`,
-        avg: `n${sq}`,
-        worst: `n${sq}`,
-        space: `1`,
-        algo: `
-        function bubbleSort(arr) {<br/>
-        ${t}for (let i = 0; i < arr.length; i++) {<br/>
-        ${t}${t}for (let j = 0; j < arr.length; j++) {<br/>
-        ${t}${t}${t}if (arr[j] > arr[j+1]) {<br/>
-        ${t}${t}${t}${t}[arr[j], arr[j+1]] = [arr[j+1], arr[j]];<br/>
-        ${t}${t}${t}}<br/>
-        ${t}${t}}<br/>
-        ${t}}<br/>
-        ${t}return arr;<br/>
-        }`
-    },
     heap: {
         header: `Heapsort`,
         best: `n log(n)`,
@@ -173,6 +155,31 @@ const info = {
         ${t}}<br/>
         }`
     },
+    shell: {
+        header: `Shell Sort`,
+        best: `n log(n)`,
+        avg: `n log(n)${sq}`,
+        worst: `n log(n)${sq}`,
+        space: `1`,
+        algo: `
+        function shellSort(arr) {<br/>
+        ${t}const len = arr.length;<br/>
+        ${t}let gap = Math.floor(len / 2);<br/>
+        ${t}while (gap > 0) {<br/>
+        ${t}${t}for (let i = gap; i < len; i++) {<br/>
+        ${t}${t}${t}const temp = arr[i];<br/>
+        ${t}${t}${t}let j = i;<br/>
+        ${t}${t}${t}while (j >= gap && arr[j-gap] > temp) {<br/>
+        ${t}${t}${t}${t}arr[j] = arr[j-gap];<br/>
+        ${t}${t}${t}${t}j -= gap;<br/>
+        ${t}${t}${t}}<br/>
+        ${t}${t}${t}arr[j] = temp;<br/>
+        ${t}${t}}<br/>
+        ${t}${t}gap = Math.floor(gap / 2);<br/>
+        ${t}}<br/>
+        ${t}return arr;<br/>
+        }`
+    },
     counting: {
         header: `Counting Sort`,
         best: `n+k`,
@@ -205,30 +212,47 @@ const info = {
         ${t}return arr;<br/>
         }`
     },
-    shell: {
-        header: `Shell Sort`,
-        best: `n log(n)`,
-        avg: `n log(n)${sq}`,
-        worst: `n log(n)${sq}`,
+    radix: {
+        header: ``,
+        best: ``,
+        avg: ``,
+        worst: ``,
+        space: ``,
+        algo: ``
+    },
+    bucket: {
+        header: ``,
+        best: ``,
+        avg: ``,
+        worst: ``,
+        space: ``,
+        algo: ``
+    },
+    bubble: {
+        header: `Bubble Sort`,
+        best: `n`,
+        avg: `n${sq}`,
+        worst: `n${sq}`,
         space: `1`,
         algo: `
-        function shellSort(arr) {<br/>
-        ${t}const len = arr.length;<br/>
-        ${t}let gap = Math.floor(len / 2);<br/>
-        ${t}while (gap > 0) {<br/>
-        ${t}${t}for (let i = gap; i < len; i++) {<br/>
-        ${t}${t}${t}const temp = arr[i];<br/>
-        ${t}${t}${t}let j = i;<br/>
-        ${t}${t}${t}while (j >= gap && arr[j-gap] > temp) {<br/>
-        ${t}${t}${t}${t}arr[j] = arr[j-gap];<br/>
-        ${t}${t}${t}${t}j -= gap;<br/>
+        function bubbleSort(arr) {<br/>
+        ${t}for (let i = 0; i < arr.length; i++) {<br/>
+        ${t}${t}for (let j = 0; j < arr.length; j++) {<br/>
+        ${t}${t}${t}if (arr[j] > arr[j+1]) {<br/>
+        ${t}${t}${t}${t}[arr[j], arr[j+1]] = [arr[j+1], arr[j]];<br/>
         ${t}${t}${t}}<br/>
-        ${t}${t}${t}arr[j] = temp;<br/>
         ${t}${t}}<br/>
-        ${t}${t}gap = Math.floor(gap / 2);<br/>
         ${t}}<br/>
         ${t}return arr;<br/>
         }`
+    },
+    comb: {
+        header: ``,
+        best: ``,
+        avg: ``,
+        worst: ``,
+        space: ``,
+        algo: ``
     }
 };
 export default info;

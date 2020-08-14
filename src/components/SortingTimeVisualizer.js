@@ -7,18 +7,21 @@ import cardFlipMp3 from '../resources/card-flip.mp3';
 import cardFlip2Mp3 from '../resources/card-flip-2.mp3';
 import './SortingTimeVisualizer.css';
 
+import animateSelectionSort from '../animations/SelectionAnimation';
 import animateInsertionSort from '../animations/InsertionAnimation';
 import animateMergeSort from '../animations/MergeAnimation';
 import animateQuickSort from '../animations/QuickAnimation';
-import animateSelectionSort from '../animations/SelectionAnimation';
-import animateBubbleSort from '../animations/BubbleAnimation';
 import animateHeapSort from '../animations/HeapAnimation';
-import animateCountingSort from '../animations/CountingAnimation';
 import animateShellSort from '../animations/ShellAnimation';
+import animateCountingSort from '../animations/CountingAnimation';
+import animateRadixSort from '../animations/RadixAnimation';
+import animateBucketSort from '../animations/BucketAnimation';
+import animateBubbleSort from '../animations/BubbleAnimation';
+import animateCombSort from '../animations/CombAnimation';
 
 // import { mergeAlgo } from '../algorithms/Merge';
 
-// Not very React-y, but these are only passed to animation/algorithm scripts that execute the sort
+// These are passed to animation/algorithm scripts that execute the sort
 export let isRunning = false;
 export let animationInterval = 0;
 export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60, volume: 0.7 });
@@ -187,10 +190,13 @@ export default class SortingTimeVisualizer extends React.Component {
             case 'insertion': await animateInsertionSort(array); break;
             case 'merge': await animateMergeSort(array); break;
             case 'quick': await animateQuickSort(array); break;
-            case 'bubble': await animateBubbleSort(array); break;
             case 'heap': await animateHeapSort(array); break;
-            case 'counting': await animateCountingSort(array); break;
             case 'shell': await animateShellSort(array); break;
+            case 'counting': await animateCountingSort(array); break;
+            case 'radix': await animateRadixSort(array); break;
+            case 'bucket': await animateBucketSort(array); break;
+            case 'bubble': await animateBubbleSort(array); break;
+            case 'comb': await animateCombSort(array); break;
             default: await animateSelectionSort(array);
         }
 
@@ -226,7 +232,9 @@ export default class SortingTimeVisualizer extends React.Component {
 
 //* Helpers *//
 // Effectively a synchronous sleep function
-export const wait = ms => new Promise(res => setTimeout(res, ms));
+export const wait = ms => {
+    return new Promise(res => setTimeout(res, ms));
+}
 
 // For testing purposes
 const arrayEquality = (a, b) => {
@@ -243,12 +251,11 @@ const arrayEquality = (a, b) => {
 
 // For menu color fading - based on average case
 export const menuColors = {
-    purple: 270, // Initial
-    red: 5,      // O(n^2)
-    orange: 28,  // O(nlogn)
-    yellow: 45,  // O(n)
-    // Specific algorithms
-    shell: 18,   // O(n(logn)^2)
+    purple: 270,   // Initial
+    red: 5,        // O(n^2)
+    redOrange: 18, // In between
+    orange: 28,    // O(nlogn)
+    yellow: 45,    // O(n) possibly
 };
 
 export const algoColors = {
@@ -256,14 +263,19 @@ export const algoColors = {
     insertion: menuColors.red,
     merge: menuColors.orange,
     quick: menuColors.orange,
-    bubble: menuColors.red,
     heap: menuColors.orange,
+    shell: menuColors.redOrange,
     counting: menuColors.yellow,
-    shell: menuColors.shell
+    radix: menuColors.yellow,
+    bucket: menuColors.yellow,
+    bubble: menuColors.red,
+    comb: menuColors.redOrange
 };
 
 // Linear interpolation
-const lerp = (a,b,u) => (1-u) * a + u * b;
+const lerp = (a,b,u) => {
+    return (1-u) * a + u * b;
+}
 
 // Transition color theme
 const fade = async (start, end) => {

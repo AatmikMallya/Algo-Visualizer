@@ -19,7 +19,7 @@ import animateBucketSort from '../animations/BucketAnimation';
 import animateBubbleSort from '../animations/BubbleAnimation';
 import animateCombSort from '../animations/CombAnimation';
 
-import { bucketAlgo } from '../algorithms/Bucket';
+// import { combAlgo } from '../algorithms/Comb';
 
 // These are passed to animation/algorithm scripts that execute the sort
 export let isRunning = false;
@@ -184,7 +184,7 @@ export default class SortingTimeVisualizer extends React.Component {
 
         const array = this.state.array;
         switch (this.state.algorithm) {
-            case 'selection': await animateSelectionSort(array); break;
+            case 'comb': await animateSelectionSort(array); break;
             case 'insertion': await animateInsertionSort(array); break;
             case 'merge': await animateMergeSort(array); break;
             case 'quick': await animateQuickSort(array); break;
@@ -194,7 +194,7 @@ export default class SortingTimeVisualizer extends React.Component {
             case 'radix': await animateRadixSort(array); break;
             case 'bucket': await animateBucketSort(array); break;
             case 'bubble': await animateBubbleSort(array); break;
-            case 'comb': await animateCombSort(array); break;
+            case 'selection': await animateCombSort(array); break;
             default: await animateSelectionSort(array);
         }
         // Ensure that the state array is sorted
@@ -215,7 +215,7 @@ export default class SortingTimeVisualizer extends React.Component {
                     <div id='bars-container'>
                         {this.state.bars}
                         {/* Used for testing algorithms */}
-                        <button id='test-sort' onClick={this.testSort.bind(this, bucketAlgo)}>Test Sort</button>
+                        {/* <button id='test-sort' onClick={this.testSort.bind(this, combAlgo)}>Test Sort</button> */}
                     </div>
                     <div id='right-container'>
                         <InfoBox algorithm={this.state.algorithm} />

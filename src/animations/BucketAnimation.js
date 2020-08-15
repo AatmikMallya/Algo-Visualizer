@@ -17,19 +17,13 @@ export default async function animateBucketSort(stateArray) {
         }
         arr[idx].style.backgroundColor = `hsl(${hue}, 100%, 45%)`;
 
-        await wait(animationInterval + 10);
+        await wait(animationInterval + 5);
     }
 
     const newArr = []
     for (let i = 0; i < arr.length; i++) {
         newArr.push(parseInt(arr[i].style.height.slice(0, -2)));
     }
-    await animateInsertionSort(newArr);
     
-    await wait(500);
-    for (let i = 0; i < arr.length / 2; i++) {
-        arr[i].style.backgroundColor = colors.green;
-        arr[arr.length - i - 1].style.backgroundColor = colors.green;
-        await wait(1000 / arr.length);
-    }
+    await animateInsertionSort(newArr);
 }

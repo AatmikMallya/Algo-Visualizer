@@ -18,18 +18,18 @@ export default function getRadixAnimations(arr) {
     return animations;
 }
 
-// Maps a value to the 0-240 range on the hue wheel
+// Maps a value to the 0-270 range on the hue wheel
 const valueToHue = {
     0: 0, 
-    1: 27, 
-    2: 53, 
-    3: 80, 
-    4: 107, 
-    5: 133, 
-    6: 160, 
-    7: 187, 
-    8: 213, 
-    9: 240
+    1: 30, 
+    2: 60, 
+    3: 90, 
+    4: 120, 
+    5: 150, 
+    6: 180, 
+    7: 210, 
+    8: 240, 
+    9: 270
 }
 
 

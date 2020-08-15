@@ -17,6 +17,7 @@ export default function getInsertionAnimations(arr) {
         }
     }
 
+    console.log('get',animations)
     return animations;
 }
 

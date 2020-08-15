@@ -3,8 +3,12 @@ import getInsertionAnimations from '../algorithms/Insertion';
 
 // Render insertion sort animations
 export default async function animateInsertionSort(stateArray) {
+    console.log('hi')
     const animations = getInsertionAnimations(stateArray);
+    console.log('bye')
     const arr = document.getElementsByClassName('array');
+
+    console.log(animations)
 
     // First bar will be purple (current min)
     arr[0].style.backgroundColor = colors.purple;

@@ -184,7 +184,7 @@ export default class SortingTimeVisualizer extends React.Component {
 
         const array = this.state.array;
         switch (this.state.algorithm) {
-            case 'bucket': await animateSelectionSort(array); break;
+            case 'selection': await animateSelectionSort(array); break;
             case 'insertion': await animateInsertionSort(array); break;
             case 'merge': await animateMergeSort(array); break;
             case 'quick': await animateQuickSort(array); break;
@@ -192,7 +192,7 @@ export default class SortingTimeVisualizer extends React.Component {
             case 'shell': await animateShellSort(array); break;
             case 'counting': await animateCountingSort(array); break;
             case 'radix': await animateRadixSort(array); break;
-            case 'selection': await animateBucketSort(array); break;
+            case 'bucket': await animateBucketSort(array); break;
             case 'bubble': await animateBubbleSort(array); break;
             case 'comb': await animateCombSort(array); break;
             default: await animateSelectionSort(array);

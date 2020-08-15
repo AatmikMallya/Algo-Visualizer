@@ -8,9 +8,13 @@ export default async function animateShellSort(stateArray) {
 
     for (let i = 0; i < animations.length; i++) {
         if (!isRunning) break;
-        // Swap two elements
-        if (animations[i].length > 1) {
+        // New iteration
+        if (animations[i] === null) {
             cardFlip.play();
+        }
+        // Swap two elements
+        else if (animations[i].length > 1) {
+            // cardFlip.play();
             const [idx1, idx2] = animations[i];
             arr[idx1].style.backgroundColor = colors.yellow;
             arr[idx2].style.backgroundColor = colors.yellow;

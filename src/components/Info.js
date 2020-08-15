@@ -80,10 +80,10 @@ const info = {
         ${t}if (arr.length > 1) {<br/>
         ${t}${t}index = partition(arr, left, right);<br/>
         ${t}${t}if (left < index-1) {<br/>
-        ${t}${t}${t}quickAlgo(arr, left, index-1);<br/>
+        ${t}${t}${t}quicksort(arr, left, index-1);<br/>
         ${t}${t}}<br/>
         ${t}${t}if (index < right) {<br/>
-        ${t}${t}${t}quickAlgo(arr, index, right);<br/>
+        ${t}${t}${t}quicksort(arr, index, right);<br/>
         ${t}${t}}<br/>
         ${t}}<br/>
         ${t}return arr;<br/>
@@ -213,20 +213,56 @@ const info = {
         }`
     },
     radix: {
-        header: ``,
-        best: ``,
-        avg: ``,
-        worst: ``,
-        space: ``,
-        algo: ``
+        header: `Radix Sort`,
+        best: `nk`,
+        avg: `nk`,
+        worst: `nk`,
+        space: `n+k`,
+        algo: `
+        function radixSort(arr) {<br/>
+        ${t}const digits = Math.max(...arr).toString().length;<br/>
+        ${t}for (let i = 0; i < digits; i++) {<br/>
+        ${t}${t}const buckets = Array.from({length: 10}, () => []);<br/>
+        ${t}${t}for (let j = 0; j < arr.length; j++) {<br/>
+        ${t}${t}${t}buckets[getDigit(arr[j], i)].push(arr[j]);<br/>
+        ${t}${t}}<br/>
+        ${t}${t}arr = buckets.flat()<br/>
+        ${t}}<br/>
+        ${t}return arr;<br/>
+        }<br/>
+        <br/>
+        function getDigit(num, place) {<br/>
+        ${t}return Math.floor(num / Math.pow(10, place)) % 10;<br/>
+        }`
     },
     bucket: {
-        header: ``,
-        best: ``,
-        avg: ``,
-        worst: ``,
-        space: ``,
-        algo: ``
+        header: `Bucket Sort`,
+        best: `n+k`,
+        avg: `n+k`,
+        worst: `n${sq}`,
+        space: `n`,
+        algo: `
+        function bucketSort(arr) {<br/>
+        ${t}const size = 10;<br/>
+        ${t}let min = Math.min(...arr);<br/>
+        ${t}let max = Math.max(...arr);<br/>
+        <br/>
+        ${t}const len = Math.floor((max - min) / size) + 1;<br/>
+        ${t}const buckets = [...new Array(len)].map(() => []);<br/>
+        <br/>
+        ${t}for (let i = 0; i < arr.length; i++) {<br/>
+        ${t}${t}const bucket = Math.floor((arr[i]-min) / size);<br/>
+        ${t}${t}buckets[bucket].push(arr[i]);<br/>
+        ${t}}<br/>
+        <br/>
+        ${t}arr.length = [];<br/>
+        ${t}buckets.forEach(bucket => {<br/>
+        ${t}${t}insertionSort(bucket);<br/>
+        ${t}${t}bucket.forEach(element => arr.push(element));<br/>
+        ${t}});<br/>
+        <br/>
+        ${t}return arr;<br/>
+        }`
     },
     bubble: {
         header: `Bubble Sort`,
@@ -247,12 +283,37 @@ const info = {
         }`
     },
     comb: {
-        header: ``,
-        best: ``,
-        avg: ``,
-        worst: ``,
-        space: ``,
-        algo: ``
+        header: `Comb Sort`,
+        best: `n`,
+        avg: `n log(n)`,
+        worst: `n${sq}`,
+        space: `1`,
+        algo: `
+        function combSort(arr) {<br/>
+        ${t}const interval = 1.3;<br/>
+        ${t}let iteration = 0;<br/>
+        ${t}let gap = arr.length - 2;<br/>
+        <br/>
+        ${t}while (!isSorted(arr)) {<br/>
+        ${t}${t}if (iteration) {<br/>
+        ${t}${t}${t}if (gap !== 1) {<br/>
+        ${t}${t}${t}${t}gap = Math.floor(gap / interval);<br/>
+        ${t}${t}${t}}<br/>
+        ${t}${t}}<br/>
+        <br/>
+        ${t}${t}let front = 0;<br/>
+        ${t}${t}for (let back = gap; back < arr.length-2; back++) {<br/>
+        ${t}${t}${t}if (arr[front] > arr[back]) {<br/>
+        ${t}${t}${t}${t}const temp = arr[front];<br/>
+        ${t}${t}${t}${t}arr[front] = arr[back];<br/>
+        ${t}${t}${t}${t}arr[back] = temp;<br/>
+        ${t}${t}${t}}<br/>
+        ${t}${t}${t}front++;<br/>
+        ${t}${t}}<br/>
+        ${t}${t}iteration++;<br/>
+        ${t}}<br/>
+        ${t}return arr;<br/>
+        }`
     }
 };
 export default info;

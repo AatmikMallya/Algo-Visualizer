@@ -56,7 +56,8 @@ export function bucketAlgo(arr) {
     const buckets = [...new Array(len)].map(() => []);
 
     for (let i = 0; i < arr.length; i++) {
-        buckets[Math.floor((arr[i] - min) / size)].push(arr[i]);
+        const bucket = Math.floor((arr[i] - min) / size);
+        buckets[bucket].push(arr[i]);
     }
 
     arr.length = [];

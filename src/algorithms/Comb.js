@@ -6,10 +6,12 @@ export default function getCombAnimations(arr) {
     let gap = arr.length - 2;
    
     while (!isSorted(arr)) {
+        // Plays card flip
+        animations.push(null);
         if (iteration) {
            gap = gap === 1 ? gap : Math.floor(gap / interval);
         }
-   
+
         let front = 0;
         for (let back = gap; back <= arr.length - 1; back++) {
             if (arr[front] > arr[back]) {
@@ -20,35 +22,9 @@ export default function getCombAnimations(arr) {
             front++;
         }
         iteration++;
-        animations.push(null)
     }
 
     return animations;
-}
-
-
-
-// Original comb sort algorithm
-export function combAlgo(arr) {
-    const interval = 1.3;
-    let iteration = 0;
-    let gap = arr.length - 2;
-   
-    while (!isSorted(arr)) {
-        if (iteration) {
-           gap = gap === 1 ? gap : Math.floor(gap / interval);
-        }
-   
-        let front = 0;
-        for (let back = gap; back <= arr.length - 1; back++) {
-            if (arr[front] > arr[back]) {
-                [arr[front], arr[back]] = [arr[back], arr[front]];
-            }
-            front++;
-        }
-        iteration++;
-    }
-    return arr;
 }
 
 function isSorted(arr) {
@@ -59,3 +35,27 @@ function isSorted(arr) {
     }
     return true;
 }
+
+
+// Original comb sort algorithm
+// export function combAlgo(arr) {
+//     const interval = 1.3;
+//     let iteration = 0;
+//     let gap = arr.length - 2;
+   
+//     while (!isSorted(arr)) {
+//         if (iteration) {
+//            gap = gap === 1 ? gap : Math.floor(gap / interval);
+//         }
+   
+//         let front = 0;
+//         for (let back = gap; back <= arr.length - 1; back++) {
+//             if (arr[front] > arr[back]) {
+//                 [arr[front], arr[back]] = [arr[back], arr[front]];
+//             }
+//             front++;
+//         }
+//         iteration++;
+//     }
+//     return arr;
+// }

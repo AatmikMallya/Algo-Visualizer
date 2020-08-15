@@ -1,6 +1,5 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
 import getCombAnimations from '../algorithms/Comb';
-import animateInsertionSort from './InsertionAnimation';
 
 // Render comb sort animations - very similar to bubble sort
 export default async function animateCombSort(stateArray) {
@@ -11,7 +10,7 @@ export default async function animateCombSort(stateArray) {
         if (!isRunning) break;
         // New iteration
         if (animations[i] === null) {
-            cardFlip.play()
+            cardFlip.play();
         }
         // Swapping two elements
         else {
@@ -26,13 +25,7 @@ export default async function animateCombSort(stateArray) {
             const value1 = parseInt(arr[idx1].style.height.slice(0, -2));
             const value2 = parseInt(arr[idx2].style.height.slice(0, -2));
             arr[idx1].style.backgroundColor = value1 === stateArray[idx1] ? colors.purple : colors.green;
-            if (value2 === stateArray[idx2]) {
-                // cardFlip.play();
-                arr[idx2].style.backgroundColor = colors.purple;
-            }
-            else {
-                arr[idx2].style.backgroundColor = colors.green;
-            }
+            arr[idx2].style.backgroundColor = value2 === stateArray[idx2] ? colors.purple : colors.green;
         }   
         await wait(animationInterval + 10);
     }

@@ -4,7 +4,8 @@ export default function getShellAnimations(arr) {
 
     const len = arr.length;
     for (let gap = Math.floor(len / 2); gap > 0; gap = Math.floor(gap / 2)) {
-        // New shell iteration
+        // Play card flip
+        animations.push(null);
         for (let i = gap; i < len; i++) {
             const temp = arr[i];
             // arr[i] = purple

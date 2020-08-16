@@ -20,10 +20,6 @@ export default function InfoBox(props) {
   const text = info[props.algorithm];
   const hue = algoColors[props.algorithm];
   const styles = {
-    container: {
-      position: 'relative',
-      bottom: '5%',
-    },
     button: {
       margin: 'auto',
       borderRadius: '10%',

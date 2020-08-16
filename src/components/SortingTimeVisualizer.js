@@ -54,8 +54,12 @@ export default class SortingTimeVisualizer extends React.Component {
 
     componentDidMount = () => {
         // 85% of the distance between array container and menu
-        this.maxHeight = Math.floor(0.85 * (document.getElementById('bars-container').getBoundingClientRect().bottom -
-                                            document.getElementById('menu-container').getBoundingClientRect().bottom));
+        // this.maxHeight = Math.floor(0.85 * (document.getElementById('bars-container').getBoundingClientRect().bottom -
+        //                                     document.getElementById('menu-container').getBoundingClientRect().bottom));
+        this.maxHeight = Math.floor(0.9 * document.getElementById('bars-container').clientHeight);
+        document.getElementById('body-container').style.height = (document.body.clientHeight - document.getElementById('menu-container').getBoundingClientRect().bottom) + 'px';
+        console.log("SortingTimeVisualizer -> componentDidMount -> document.getElementById('body-container').style.height", document.getElementById('body-container').style.height)
+        console.log("SortingTimeVisualizer -> componentDidMount -> document.getElementById('menu-container').getBoundingClientRect().bottom", document.getElementById('menu-container').getBoundingClientRect().bottom)
         this.selectAlgorithm('selection')
     }
     
@@ -102,7 +106,8 @@ export default class SortingTimeVisualizer extends React.Component {
         //const newArray = [ 15, 200, 150, 25, 300 ];
         const newBars = newArray.map((value, i) => <div className='array' key={i} idx={i} color={colors.green} type={undefined} style={{
             height: value,
-            margin: margin,
+            marginLeft: margin,
+            marginRight: margin,
             width: width,
             borderRadius: radius,
         }} />);
@@ -205,23 +210,30 @@ export default class SortingTimeVisualizer extends React.Component {
     // Everything on screen is rendered here
     render = () => {
         return (
-            <div>
+            <div id='body'>
                 <div id='color-strip' />
                 <Menu onGenerate={this.generateArray} onReset={this.resetArray} onSpeedChange={this.speedChange} onExecute={this.handleExecute} onSelect={this.selectAlgorithm} />
                 <div id='body-container'>
-                    <div id='left-container'>
-                        {/* TODO: ALIGNMENT BUTTONS */}
+                    <div id='horizontal-container'>
+                        <div id='left-container'>
+                            {/* TODO: ALIGNMENT BUTTONS */}
+                        </div>
+                        
+                        <div id='bars-container'>
+                            <div id='bars-cell'>
+                                {this.state.bars}
+                                {/* Used for testing algorithms */}
+                                {/* <button id='test-sort' onClick={this.testSort.bind(this, combAlgo)}>Test Sort</button> */}
+                            </div>
+                        </div>
+                        <div id='right-container'>
+                            <InfoBox algorithm={this.state.algorithm} />
+                        </div>
                     </div>
-                    <div id='bars-container'>
-                        {this.state.bars}
-                        {/* Used for testing algorithms */}
-                        {/* <button id='test-sort' onClick={this.testSort.bind(this, combAlgo)}>Test Sort</button> */}
-                    </div>
-                    <div id='right-container'>
-                        <InfoBox algorithm={this.state.algorithm} />
+                    <div id='bottom-container'>
+                        <Timer status={isRunning} ref={this.timerElement}/>
                     </div>
                 </div>
-                <Timer status={isRunning} ref={this.timerElement}/>
             </div>
         )
     }

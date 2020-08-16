@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a5334d1d2c45174518ec3a282a7935be",
+    "revision": "c54176060329f582b02dd2e9cb895ead",
     "url": "/Sorting-Time-Visualizer/index.html"
   },
   {
-    "revision": "b5563117a0809200903d",
+    "revision": "f8cb54ecdb95f3bdbca1",
     "url": "/Sorting-Time-Visualizer/static/css/main.cfe16943.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Sorting-Time-Visualizer/static/js/2.28da5457.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "b5563117a0809200903d",
-    "url": "/Sorting-Time-Visualizer/static/js/main.32e6c92e.chunk.js"
+    "revision": "f8cb54ecdb95f3bdbca1",
+    "url": "/Sorting-Time-Visualizer/static/js/main.9175ae83.chunk.js"
   },
   {
     "revision": "922ea9d18f6a6f827534",
@@ -28,8 +28,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Sorting-Time-Visualizer/static/media/FiraCode-Regular.dc34dd99.ttf"
   },
   {
-    "revision": "4f42bc57d46c12b9dcd034d9aa9d0168",
-    "url": "/Sorting-Time-Visualizer/static/media/card-flip-2.4f42bc57.mp3"
+    "revision": "c509c85a5dfa7fe50d4d5e2e2e0b2f46",
+    "url": "/Sorting-Time-Visualizer/static/media/card-flip-2.c509c85a.mp3"
   },
   {
     "revision": "2317ec81f5d78361f3afabdeb67a0196",

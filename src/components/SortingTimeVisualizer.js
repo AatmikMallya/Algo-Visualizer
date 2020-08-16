@@ -25,7 +25,7 @@ import animateCombSort from '../animations/CombAnimation';
 export let isRunning = false;
 export let animationInterval = 0;
 export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60, volume: 0.7 });
-export const cardFlip2= new UIfx(cardFlip2Mp3,{ throttleMs: 70,volume: 0.6 });
+export const cardFlip2= new UIfx(cardFlip2Mp3,{ throttleMs: 80,volume: 0.6 });
 export const colors = {
     purple: '#8a2be2',
     red: '#dc143c',
@@ -97,16 +97,16 @@ export default class SortingTimeVisualizer extends React.Component {
         
         const newArray = [];
         for (let i = 0; i < arraySize; i++) {
-            newArray.push(Math.floor(Math.random() * this.maxHeight + 25));
+            newArray.push(Math.floor(Math.random() * this.maxHeight + 50));
         }
-        //const newArray = [ 15, 200, 150, 25, 300 ];
         const newBars = newArray.map((value, i) => <div className='array' key={i} idx={i} color={colors.green} type={undefined} style={{
             height: value,
             marginLeft: margin,
             marginRight: margin,
             width: width,
             borderRadius: radius,
-        }} />);
+            fontSize: width/2.5
+        }} >{value}</div>);
         this.setState({
             array: newArray,
             bars: newBars
@@ -118,10 +118,21 @@ export default class SortingTimeVisualizer extends React.Component {
             this.cachedArray.push(newArray[i]);
         }
 
-        // In case we are currently in execution
-        for (let i = 0; i < array.length; i++) {
-            array[i].style.backgroundColor = colors.green;
-        }
+        setTimeout(() => {
+            if (length > 50) {
+                console.log(array)
+                for (let i = 0; i < array.length; i++) {
+                    array[i].style.backgroundColor = colors.green;
+                    array[i].style.color = 'rgba(0,0,0,0)';
+                }
+            }
+            else {
+                for (let i = 0; i < array.length; i++) {
+                    array[i].style.backgroundColor = colors.green;
+                    array[i].style.color = 'black';
+                }
+            }
+        }, 0)
     }
 
     // Return bar heights and colors to pre-sorted state
@@ -135,6 +146,7 @@ export default class SortingTimeVisualizer extends React.Component {
         const oldArray = []
         for (let i = 0; i < arraySize; i++) {
             array[i].style.height = this.cachedArray[i] + 'px';
+            array[i].innerHTML = array[i].style.height.slice(0, -2);
             array[i].type = undefined;
             oldArray.push(this.cachedArray[i]);
         }

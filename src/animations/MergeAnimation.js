@@ -22,8 +22,10 @@ export default async function animateMergeSort(stateArray) {
             const temp = arr[idx2].style.height;
             for (let i = idx2; i > idx1; i--) {
                 arr[i].style.height = arr[i - 1].style.height;
+                arr[i].innerHTML = arr[i].style.height.slice(0, -2);
             }
             arr[idx1].style.height = temp;
+            arr[idx1].innerHTML = arr[idx1].style.height.slice(0, -2);
             arr[idx1].style.backgroundColor = colors.yellow;
             arr[idx2].style.backgroundColor = color;
             await wait(animationInterval);

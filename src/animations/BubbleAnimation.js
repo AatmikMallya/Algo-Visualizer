@@ -15,10 +15,12 @@ export default async function animateBubbleSort(stateArray) {
         await wait(animationInterval);
 
         [arr[idx1].style.height, arr[idx2].style.height] = [arr[idx2].style.height, arr[idx1].style.height];
+        arr[idx1].innerHTML = arr[idx1].style.height.slice(0, -2);
+        arr[idx2].innerHTML = arr[idx2].style.height.slice(0, -2);
         await wait(animationInterval);
         
-        const value1 = parseInt(arr[idx1].style.height.slice(0, -2));
-        const value2 = parseInt(arr[idx2].style.height.slice(0, -2));
+        const value1 = parseInt(arr[idx1].innerHTML);
+        const value2 = parseInt(arr[idx2].innerHTML);
         arr[idx1].style.backgroundColor = value1 === stateArray[idx1] ? colors.purple : colors.green;
         if (value2 === stateArray[idx2]) {
             cardFlip.play();

@@ -24,6 +24,8 @@ export default async function animateSelectionSort(stateArray) {
             await wait(animationInterval);
 
             [arr[idx1].style.height, arr[idx2].style.height] = [arr[idx2].style.height, arr[idx1].style.height];
+            arr[idx1].innerHTML = arr[idx1].style.height.slice(0, -2);
+            arr[idx2].innerHTML = arr[idx2].style.height.slice(0, -2);
             await wait(animationInterval);
 
             arr[idx1].style.backgroundColor = colors.purple;

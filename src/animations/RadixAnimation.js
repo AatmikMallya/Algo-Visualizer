@@ -12,6 +12,7 @@ export default async function animateRadixSort(stateArray) {
         if (arr[idx].style.height !== height + 'px') {
             cardFlip.play();
             arr[idx].style.height = height + 'px';
+            arr[idx].innerHTML = arr[idx].style.height.slice(0, -2);
         }
         arr[idx].style.backgroundColor = `hsl(${hue}, 100%, 45%)`;
 

@@ -1,4 +1,4 @@
-import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
+import { cardFlip, wait, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
 import getBucketAnimations from '../algorithms/Bucket';
 import animateInsertionSort from '../animations/InsertionAnimation';
 

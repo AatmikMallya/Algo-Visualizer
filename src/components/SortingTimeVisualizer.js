@@ -25,7 +25,7 @@ import animateCombSort from '../animations/CombAnimation';
 export let isRunning = false;
 export let animationInterval = 0;
 export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60, volume: 0.7 });
-export const cardFlip2= new UIfx(cardFlip2Mp3,{ throttleMs: 140,volume: 0.6 });
+export const cardFlip2= new UIfx(cardFlip2Mp3,{ throttleMs: 70,volume: 0.6 });
 export const colors = {
     purple: '#8a2be2',
     red: '#dc143c',
@@ -52,14 +52,10 @@ export default class SortingTimeVisualizer extends React.Component {
         this.timerElement = React.createRef();
     }
 
+    // Set heights
     componentDidMount = () => {
-        // 85% of the distance between array container and menu
-        // this.maxHeight = Math.floor(0.85 * (document.getElementById('bars-container').getBoundingClientRect().bottom -
-        //                                     document.getElementById('menu-container').getBoundingClientRect().bottom));
         this.maxHeight = Math.floor(0.9 * document.getElementById('bars-container').clientHeight);
         document.getElementById('body-container').style.height = (document.body.clientHeight - document.getElementById('menu-container').getBoundingClientRect().bottom) + 'px';
-        console.log("SortingTimeVisualizer -> componentDidMount -> document.getElementById('body-container').style.height", document.getElementById('body-container').style.height)
-        console.log("SortingTimeVisualizer -> componentDidMount -> document.getElementById('menu-container').getBoundingClientRect().bottom", document.getElementById('menu-container').getBoundingClientRect().bottom)
         this.selectAlgorithm('selection')
     }
     
@@ -324,23 +320,3 @@ const getMenuHue = () => {
     }
     return hue * 60;
 };
-
-// RGB Version
-// const fade = async (element, property, start, end, duration) => {
-//   const interval = 10;
-//   const step_u = interval / duration;
-//   console.log(step_u)
-//   for (let u = 0.0; u < 1.0; u += step_u) {
-//     const r = parseInt(lerp(start.r, end.r, u));
-//     const g = parseInt(lerp(start.g, end.g, u));
-//     const b = parseInt(lerp(start.b, end.b, u));
-//     element.style.setProperty(property, `rgb(${r},${g},${b})`);
-//     await wait(interval);
-//   }
-// };
-// const menuColors = {
-//     blue: { r:22, g:94, b:161, shadow:{r:12, g:65, b:116} },
-//     red: { r:170, g:8, b:8, shadow:{r:80, g:0, b:0} },
-//     orange: {r:194, g:108, b:11, shadow:{r:97, g:63, b:0} },
-//     yellow: {r:202, g:165, b:0, shadow:{r:73, g:66, b:0} }
-// };

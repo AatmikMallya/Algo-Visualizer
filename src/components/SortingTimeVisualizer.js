@@ -184,7 +184,7 @@ export default class SortingTimeVisualizer extends React.Component {
         const arr = document.getElementsByClassName('array');
         for (let i = 0; i < array.length; i++) {
             arr[i].style.height = array[i] + 'px';
-            arr[i].style.backgroundColor = colors.purple;
+            arr[i].style.backgroundColor = colors.purple; 
         }
         this.setRunning(false);
         await help.barFade();

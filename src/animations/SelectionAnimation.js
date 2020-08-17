@@ -1,5 +1,4 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
-import { barFade } from '../components/SortingHelpers';
 import getSelectionAnimations from '../algorithms/Selection';
 
 // Render selection sort animations
@@ -55,5 +54,4 @@ export default async function animateSelectionSort(stateArray) {
     }
     
     arr[arr.length - 1].style.backgroundColor = colors.purple;
-    // await barFade();
 }

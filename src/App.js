@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './App.css';
+import './css/App.css';
 import SortingTimeVisualizer from './components/SortingTimeVisualizer';
 import ReactGA from 'react-ga'; // https://github.com/react-ga/react-ga
 

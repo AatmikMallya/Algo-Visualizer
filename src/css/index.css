@@ -15,5 +15,5 @@ code {
 
 @font-face {
   font-family: 'FiraCode';
-  src: local('FiraCode'), url(./resources/fonts/FiraCode-Regular.ttf) format('truetype');
+  src: local('FiraCode'), url(../resources/fonts/FiraCode-Regular.ttf) format('truetype');
 }

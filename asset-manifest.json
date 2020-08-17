@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/Sorting-Time-Visualizer/static/css/main.395806e5.chunk.css",
-    "main.js": "/Sorting-Time-Visualizer/static/js/main.6cc24857.chunk.js",
-    "main.js.map": "/Sorting-Time-Visualizer/static/js/main.6cc24857.chunk.js.map",
+    "main.css": "/Sorting-Time-Visualizer/static/css/main.dd348c7d.chunk.css",
+    "main.js": "/Sorting-Time-Visualizer/static/js/main.97a1e198.chunk.js",
+    "main.js.map": "/Sorting-Time-Visualizer/static/js/main.97a1e198.chunk.js.map",
     "runtime-main.js": "/Sorting-Time-Visualizer/static/js/runtime-main.fa383a73.js",
     "runtime-main.js.map": "/Sorting-Time-Visualizer/static/js/runtime-main.fa383a73.js.map",
-    "static/js/2.28da5457.chunk.js": "/Sorting-Time-Visualizer/static/js/2.28da5457.chunk.js",
-    "static/js/2.28da5457.chunk.js.map": "/Sorting-Time-Visualizer/static/js/2.28da5457.chunk.js.map",
+    "static/js/2.768853a4.chunk.js": "/Sorting-Time-Visualizer/static/js/2.768853a4.chunk.js",
+    "static/js/2.768853a4.chunk.js.map": "/Sorting-Time-Visualizer/static/js/2.768853a4.chunk.js.map",
     "index.html": "/Sorting-Time-Visualizer/index.html",
-    "precache-manifest.0d23207321c5a535f8a922f0e5c3d6e5.js": "/Sorting-Time-Visualizer/precache-manifest.0d23207321c5a535f8a922f0e5c3d6e5.js",
+    "precache-manifest.02149a5e0b8f5a667dde45a3d46aae5d.js": "/Sorting-Time-Visualizer/precache-manifest.02149a5e0b8f5a667dde45a3d46aae5d.js",
     "service-worker.js": "/Sorting-Time-Visualizer/service-worker.js",
-    "static/css/main.395806e5.chunk.css.map": "/Sorting-Time-Visualizer/static/css/main.395806e5.chunk.css.map",
-    "static/js/2.28da5457.chunk.js.LICENSE.txt": "/Sorting-Time-Visualizer/static/js/2.28da5457.chunk.js.LICENSE.txt",
+    "static/css/main.dd348c7d.chunk.css.map": "/Sorting-Time-Visualizer/static/css/main.dd348c7d.chunk.css.map",
+    "static/js/2.768853a4.chunk.js.LICENSE.txt": "/Sorting-Time-Visualizer/static/js/2.768853a4.chunk.js.LICENSE.txt",
     "static/media/FiraCode-Regular.ttf": "/Sorting-Time-Visualizer/static/media/FiraCode-Regular.dc34dd99.ttf",
     "static/media/card-flip-2.mp3": "/Sorting-Time-Visualizer/static/media/card-flip-2.c509c85a.mp3",
     "static/media/card-flip.mp3": "/Sorting-Time-Visualizer/static/media/card-flip.2317ec81.mp3"
   },
   "entrypoints": [
     "static/js/runtime-main.fa383a73.js",
-    "static/js/2.28da5457.chunk.js",
-    "static/css/main.395806e5.chunk.css",
-    "static/js/main.6cc24857.chunk.js"
+    "static/js/2.768853a4.chunk.js",
+    "static/css/main.dd348c7d.chunk.css",
+    "static/js/main.97a1e198.chunk.js"
   ]
 }

@@ -72,7 +72,7 @@ export default class SortingTimeVisualizer extends React.Component {
 
     // Compute reciprocal of interval to make the slider feel linear
     speedChange = interval => {
-        animationInterval = interval < 5 ? 300 : 1500/interval - 15;
+        animationInterval = interval < 3 ? 500 : 1500/interval - 15;
     }
 
     // Display a new randomized array, possibly with a new length
@@ -156,7 +156,7 @@ export default class SortingTimeVisualizer extends React.Component {
         for (let i = 0; i < arraySize; i++) {
             array[i].style.backgroundColor = '#07ad1d';
         }
-        await wait(333);
+        await wait(350);
         for (let i = 0; i < arraySize; i++) {
             array[i].style.backgroundColor = colors.green;
         }
@@ -186,7 +186,7 @@ export default class SortingTimeVisualizer extends React.Component {
         this.setState({ algorithm: selection });
         const oldHue = getMenuHue();
         const newColor = algoColors[selection];
-        await fade(oldHue, newColor);
+        await themeFade(oldHue, newColor);
     }
 
     // Runs selected algorithm
@@ -213,6 +213,8 @@ export default class SortingTimeVisualizer extends React.Component {
         // Ensure that the state array is sorted
         array.sort((a, b) => a - b);
         this.setRunning(false);
+        await wait(500);
+        await barFade();
     }
 
     // Everything on screen is rendered here
@@ -296,15 +298,15 @@ const lerp = (a,b,u) => {
 }
 
 // Transition color theme
-const fade = async (start, end) => {
-    const duration = 1000;
+const themeFade = async (start, end) => {
+    const duration = 1500;
     const interval = 10;
     const step_u = interval / duration;
     const menu = document.getElementById('menu-container').style;
     const icon = document.querySelector('.info-icon').style;
     const infoButton = document.getElementById('info-button').style;
     for (let u = 0.0; u < 1.0; u += step_u) {
-        const hue = parseInt(lerp(start, end, u));
+        const hue = lerp(start, end, u);
         menu.setProperty('background-color', `hsl(${hue}, 95%, 35%)`);
         menu.setProperty('box-shadow', `-1.5px 1.5px 2.5px hsl(${hue}, 95%, 15%)`);
         icon.setProperty('color',`hsl(${hue}, 95%, 20%)`)
@@ -314,11 +316,12 @@ const fade = async (start, end) => {
     }
 };
 
+// Change array color to green
 const getMenuHue = () => {
     const menu = document.getElementById('menu-container');
-    const currentColor = menu.style.backgroundColor.match(/\d+/g)?.map(Number);
-    if (!currentColor) return menuColors.purple;
-    const [r, g, b] = [currentColor[0]/255, currentColor[1]/255, currentColor[2]/255];
+    const color = menu.style.backgroundColor.match(/\d+/g)?.map(Number);
+    if (!color) return menuColors.purple;
+    const [r, g, b] = [color[0]/255, color[1]/255, color[2]/255];
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
     let hue = 0;
     if (max !== min) {
@@ -332,3 +335,32 @@ const getMenuHue = () => {
     }
     return hue * 60;
 };
+
+const barFade = async () => {
+    const arr = document.getElementsByClassName('array');
+    const duration = 1000;
+    const interval = 10;
+    const start = hexToRgb(colors.purple);
+    const end = hexToRgb(colors.green);
+    const step_u = interval / duration;
+
+    for (let u = 0.0; u < 1.0; u += step_u) {
+        const r = lerp(start.r, end.r, u);
+        const g = lerp(start.g, end.g, u);
+        const b = lerp(start.b, end.b, u);
+        for (let i = 0; i < arr.length; i++) {
+            arr[i].style.setProperty('background-color', `rgb(${r},${g},${b})`);
+        }
+        // element.style.setProperty('background-color', `rgb(${r},${g},${b})`);
+        await wait(interval);
+    }
+};
+
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}

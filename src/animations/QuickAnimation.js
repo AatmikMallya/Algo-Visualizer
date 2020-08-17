@@ -37,11 +37,4 @@ export default async function animateQuickSort(stateArray) {
             await wait(animationInterval + 10);
         }
     }
-    
-    await wait(500);
-    for (let i = 0; i < arr.length / 2; i++) {
-        arr[i].style.backgroundColor = colors.green;
-        arr[arr.length - i - 1].style.backgroundColor = colors.green;
-        await wait(1000 / arr.length);
-    }
 }

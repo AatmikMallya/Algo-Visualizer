@@ -52,7 +52,7 @@ export default function InfoBox(props) {
     },
     paper: {
       color: `hsla(${hue}, 95%, 5%, 0.94)`,
-      backgroundColor: `hsla(${hue}, 25%, 70%, 0.94)`,
+      backgroundColor: `hsla(${hue}, 25%, 63%, 0.96)`,
       maxHeight: `50vh`,
       minWidth: `40vh`,
       // maxWidth: `45vh`,

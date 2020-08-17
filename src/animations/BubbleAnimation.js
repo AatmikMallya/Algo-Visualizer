@@ -32,12 +32,5 @@ export default async function animateBubbleSort(stateArray) {
         
         await wait(animationInterval);
     }
-
-    await wait(500);    
-    for (let i = 0; i < arr.length / 2; i++) {
-        arr[i].style.backgroundColor = colors.green;
-        arr[arr.length - i - 1].style.backgroundColor = colors.green;
-        await wait(1000 / arr.length);
-    }
 }
 

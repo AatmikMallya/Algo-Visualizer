@@ -10,6 +10,7 @@ import * as help from './SortingHelpers';
 
 // These are passed to animation/algorithm scripts that execute the sort
 export let isRunning = false;
+export let isReset = false;
 export let animationInterval = 0;
 export const cardFlip = new UIfx(cardFlipMp3, { throttleMs: 60, volume: 0.7 });
 export const cardFlip2= new UIfx(cardFlip2Mp3,{ throttleMs: 80,volume: 0.6 });
@@ -53,6 +54,7 @@ export default class SortingTimeVisualizer extends React.Component {
         isRunning = bool;
         this.timerElement.current.setStatus(bool);
         if (bool) {
+            isReset = false;
             document.getElementById('execute').classList.add('running');
         } else {
             document.getElementById('execute').classList.remove('running');
@@ -68,6 +70,7 @@ export default class SortingTimeVisualizer extends React.Component {
     generateArray = length => {
         const array = document.getElementsByClassName('array');
         isRunning && this.setRunning(false);
+        isReset = true;
         let arraySize;
         if (length) {
             arraySize = length;
@@ -86,7 +89,7 @@ export default class SortingTimeVisualizer extends React.Component {
         for (let i = 0; i < arraySize; i++) {
             newArray.push(Math.floor(Math.random() * this.maxHeight + 50));
         }
-        const newBars = newArray.map((value, i) => <div className='array' key={i} idx={i} color={colors.green} type={undefined} style={{
+        const newBars = newArray.map((value, i) => <div className='array noselect' key={i} idx={i} color={colors.green} type={undefined} style={{
             height: value,
             marginLeft: margin,
             marginRight: margin,
@@ -125,6 +128,7 @@ export default class SortingTimeVisualizer extends React.Component {
         const arraySize = array.length;
 
         this.setRunning(false);
+        isReset = true;
 
         const oldArray = []
         for (let i = 0; i < arraySize; i++) {

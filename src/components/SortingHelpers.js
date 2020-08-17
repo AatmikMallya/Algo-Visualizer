@@ -1,4 +1,4 @@
-import { colors, wait, isRunning } from './SortingTimeVisualizer';
+import { colors, wait, isReset } from './SortingTimeVisualizer';
 export {default as selection} from '../animations/SelectionAnimation';
 export {default as insertion} from '../animations/InsertionAnimation';
 export {default as merge} from '../animations/MergeAnimation';
@@ -113,6 +113,7 @@ export const getMenuHue = () => {
 
 export const barFade = async () => {
     await wait(500);
+    if (isReset) return;
     const arr = document.getElementsByClassName('array');
     const duration = 1000;
     const interval = 10;
@@ -121,13 +122,13 @@ export const barFade = async () => {
     const step_u = interval / duration;
 
     for (let u = 0.0; u < 1.0; u += step_u) {
+        if (isReset) return;
         const r = lerp(start.r, end.r, u);
         const g = lerp(start.g, end.g, u);
         const b = lerp(start.b, end.b, u);
         for (let i = 0; i < arr.length; i++) {
             arr[i].style.setProperty('background-color', `rgb(${r},${g},${b})`);
         }
-        // element.style.setProperty('background-color', `rgb(${r},${g},${b})`);
         await wait(interval);
     }
 };

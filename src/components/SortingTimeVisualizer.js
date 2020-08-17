@@ -181,6 +181,11 @@ export default class SortingTimeVisualizer extends React.Component {
 
         // Sort the state array to match the bars
         array.sort((a, b) => a - b);
+        const arr = document.getElementsByClassName('array');
+        for (let i = 0; i < array.length; i++) {
+            arr[i].style.height = array[i] + 'px';
+            arr[i].style.backgroundColor = colors.purple;
+        }
         this.setRunning(false);
         await help.barFade();
     }

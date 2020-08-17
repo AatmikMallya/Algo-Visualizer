@@ -5,7 +5,7 @@ import Timer from './Timer';
 import UIfx from 'uifx';
 import cardFlipMp3 from '../resources/card-flip.mp3';
 import cardFlip2Mp3 from '../resources/card-flip-2.mp3';
-import './SortingTimeVisualizer.css';
+import '../css/SortingTimeVisualizer.css';
 import * as help from './SortingHelpers';
 
 // These are passed to animation/algorithm scripts that execute the sort

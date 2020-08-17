@@ -1,11 +1,7 @@
 #timer-container {
     display: inline;
-    /* position: absolute; */
     margin: auto;
     text-align: center;
-    /* top: 93%;
-    left: 50%; */
-    /* transform: translate(-50%, -50%); */
 }
 
 .timer {
@@ -22,4 +18,17 @@
     font-size: 52px;
     font-weight: 700;
     vertical-align: middle;
+}
+
+#seconds {
+    display: inline-block;
+    min-width: 153px;
+}
+
+#centiseconds {
+    display: inline-block;
+    vertical-align: super;
+    font-size: 26px;
+    font-weight: 600;
+    min-width: 34px;
 }

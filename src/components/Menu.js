@@ -1,7 +1,7 @@
 import React from 'react';
 import LengthSlider from './LengthSlider';
 import SpeedSlider from './SpeedSlider';
-import './Menu.css';
+import '../css/Menu.css';
 
 export default class Menu extends React.Component {
     // Event handlers for menu items

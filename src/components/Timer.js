@@ -1,5 +1,5 @@
 import React from 'react';
-import './Timer.css';
+import '../css/Timer.css';
 // https://github.com/peterdurham/timers-demo
 
 export default class Timer extends React.Component {

@@ -10,7 +10,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import info from './Info';
 import { algoColors } from './SortingHelpers';
 import ReactHtmlParser from 'react-html-parser';
-import './SortingTimeVisualizer.css';
+import '../css/SortingTimeVisualizer.css';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />;

@@ -1,5 +1,4 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
-import { barFade } from '../components/SortingHelpers';
 import getQuickAnimations from '../algorithms/Quick';
 
 // Render quick sort animations
@@ -40,5 +39,4 @@ export default async function animateQuickSort(stateArray) {
     }
 
     arr[arr.length - 1].style.backgroundColor = colors.purple;
-    await barFade();
 }

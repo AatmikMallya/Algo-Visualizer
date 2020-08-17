@@ -39,6 +39,5 @@ export default async function animateCountingSort(stateArray) {
         arr[i].style.backgroundColor = colors.purple;
         await wait(500 / arr.length);
     }
-    if (!isRunning) return;
-    await barFade();
+    // await barFade();
 }

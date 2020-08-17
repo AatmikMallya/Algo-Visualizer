@@ -55,5 +55,5 @@ export default async function animateSelectionSort(stateArray) {
     }
     
     arr[arr.length - 1].style.backgroundColor = colors.purple;
-    await barFade();
+    // await barFade();
 }

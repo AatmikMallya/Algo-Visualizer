@@ -56,7 +56,7 @@ export default class SortingTimeVisualizer extends React.Component {
             document.getElementById('execute').classList.add('running');
         } else {
             document.getElementById('execute').classList.remove('running');
-        }            
+        }
     }
 
     // Compute reciprocal of interval to make the slider feel linear
@@ -175,9 +175,10 @@ export default class SortingTimeVisualizer extends React.Component {
             default: await help.selection(array);
         }
 
-        // Ensure that the state array is sorted
+        // Sort the state array to match the bars
         array.sort((a, b) => a - b);
         this.setRunning(false);
+        await help.barFade();
     }
 
     // Everything on screen is rendered here

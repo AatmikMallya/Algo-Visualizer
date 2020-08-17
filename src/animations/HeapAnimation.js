@@ -1,5 +1,4 @@
 import { cardFlip, cardFlip2, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
-import { barFade } from '../components/SortingHelpers';
 import getHeapAnimations from '../algorithms/Heap';
 
 // Render heap sort animations
@@ -36,5 +35,4 @@ export default async function animateHeapSort(stateArray) {
         }
         await wait(animationInterval);
     }
-    await barFade();
 }

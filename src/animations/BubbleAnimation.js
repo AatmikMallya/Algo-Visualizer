@@ -1,5 +1,4 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
-import { barFade } from '../components/SortingHelpers';
 import getBubbleAnimations from '../algorithms/Bubble';
 
 // Render bubble sort animations
@@ -33,6 +32,5 @@ export default async function animateBubbleSort(stateArray) {
         
         await wait(animationInterval);
     }
-    await barFade();
 }
 

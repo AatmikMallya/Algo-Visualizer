@@ -1,5 +1,4 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
-import { barFade } from '../components/SortingHelpers';
 import getCombAnimations from '../algorithms/Comb';
 
 // Render comb sort animations - very similar to bubble sort
@@ -32,5 +31,4 @@ export default async function animateCombSort(stateArray) {
         }   
         await wait(animationInterval + 10);
     }
-    await barFade();
 }

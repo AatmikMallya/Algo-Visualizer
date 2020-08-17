@@ -113,7 +113,6 @@ export const getMenuHue = () => {
 
 export const barFade = async () => {
     await wait(500);
-    if (!isRunning) return;
     const arr = document.getElementsByClassName('array');
     const duration = 1000;
     const interval = 10;

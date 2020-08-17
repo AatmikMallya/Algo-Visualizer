@@ -1,5 +1,4 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
-import { barFade } from '../components/SortingHelpers';
 import getShellAnimations from '../algorithms/Shell';
 
 // Render shell sort animations
@@ -42,5 +41,4 @@ export default async function animateShellSort(stateArray) {
             await wait(animationInterval);
         }
     }
-    await barFade();
 }

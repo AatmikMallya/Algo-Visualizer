@@ -1,4 +1,5 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
+import { barFade } from '../components/SortingHelpers';
 import getMergeAnimations from '../algorithms/Merge';
 
 // Render merge sort animations
@@ -43,4 +44,5 @@ export default async function animateMergeSort(stateArray) {
             await wait(animationInterval);
         }
     }
+    await barFade();
 }

@@ -1,4 +1,5 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
+import { barFade } from '../components/SortingHelpers';
 import getInsertionAnimations from '../algorithms/Insertion';
 
 // Render insertion sort animations
@@ -45,4 +46,5 @@ export default async function animateInsertionSort(stateArray) {
             await wait(animationInterval);
         }
     }
+    await barFade();
 }

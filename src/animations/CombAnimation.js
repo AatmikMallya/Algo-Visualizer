@@ -1,4 +1,5 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
+import { barFade } from '../components/SortingHelpers';
 import getCombAnimations from '../algorithms/Comb';
 
 // Render comb sort animations - very similar to bubble sort
@@ -7,7 +8,7 @@ export default async function animateCombSort(stateArray) {
     const arr = document.getElementsByClassName('array');
 
     for (let i = 0; i < animations.length; i++) {
-        if (!isRunning) break;
+        if (!isRunning) return;
         // New iteration
         if (animations[i] === null) {
             cardFlip.play();
@@ -31,4 +32,5 @@ export default async function animateCombSort(stateArray) {
         }   
         await wait(animationInterval + 10);
     }
+    await barFade();
 }

@@ -1,4 +1,5 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
+import { barFade } from '../components/SortingHelpers';
 import getRadixAnimations from '../algorithms/Radix';
 
 // Render heap sort animations
@@ -30,4 +31,5 @@ export default async function animateRadixSort(stateArray) {
         arr[i].style.backgroundColor = colors.purple;
         await wait(500 / arr.length);
     }
+    await barFade();
 }

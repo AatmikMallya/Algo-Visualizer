@@ -1,4 +1,5 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
+import { barFade } from '../components/SortingHelpers';
 import getCountingAnimations from '../algorithms/Counting';
 
 // Render heap sort animations
@@ -10,7 +11,7 @@ export default async function animateCountingSort(stateArray) {
     // Color array elements according to their value
     let i = 0;
     for (i; i < animations.length / 2; i++) {
-        if (!isRunning) break;
+        if (!isRunning) return;
 
         const [idx, hue] = animations[i];
         arr[idx].style.backgroundColor = `hsl(${hue}, 100%, 45%)`;
@@ -20,7 +21,7 @@ export default async function animateCountingSort(stateArray) {
 
     // Sorting step
     for (i; i < animations.length; i++) {
-        if (!isRunning) break;
+        if (!isRunning) return;
         const [idx, height, hue] = animations[i];
         if (arr[idx].style.height !== height + 'px') {
             cardFlip.play();
@@ -31,9 +32,13 @@ export default async function animateCountingSort(stateArray) {
 
         await wait(animationInterval + 10);
     }
+    if (!isRunning) return;
     await wait(500);
     for (let i = 0; i < arr.length; i++) {
+        if (!isRunning) return;
         arr[i].style.backgroundColor = colors.purple;
         await wait(500 / arr.length);
     }
+    if (!isRunning) return;
+    await barFade();
 }

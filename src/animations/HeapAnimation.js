@@ -1,4 +1,5 @@
 import { cardFlip, cardFlip2, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
+import { barFade } from '../components/SortingHelpers';
 import getHeapAnimations from '../algorithms/Heap';
 
 // Render heap sort animations
@@ -8,7 +9,7 @@ export default async function animateHeapSort(stateArray) {
 
     let playCount = 0;
     for (let i = 0; i < animations.length; i++) {
-        if (!isRunning) break;
+        if (!isRunning) return;
         // Only procedure is swapping
         const [idx1, idx2, isGreen] = animations[i];
         arr[idx1].style.backgroundColor = colors.yellow;
@@ -35,4 +36,5 @@ export default async function animateHeapSort(stateArray) {
         }
         await wait(animationInterval);
     }
+    await barFade();
 }

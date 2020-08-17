@@ -1,4 +1,5 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
+import { barFade } from '../components/SortingHelpers';
 import getBubbleAnimations from '../algorithms/Bubble';
 
 // Render bubble sort animations
@@ -7,7 +8,7 @@ export default async function animateBubbleSort(stateArray) {
     const arr = document.getElementsByClassName('array');
 
     for (let i = 0; i < animations.length; i++) {
-        if (!isRunning) break;
+        if (!isRunning) return;
         // Only operation is swapping
         const [idx1, idx2] = animations[i];
         arr[idx1].style.backgroundColor = colors.yellow;
@@ -32,5 +33,6 @@ export default async function animateBubbleSort(stateArray) {
         
         await wait(animationInterval);
     }
+    await barFade();
 }
 

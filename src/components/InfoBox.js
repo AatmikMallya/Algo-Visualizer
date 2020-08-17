@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import info from './Info';
-import { algoColors } from './SortingTimeVisualizer';
+import { algoColors } from './SortingHelpers';
 import ReactHtmlParser from 'react-html-parser';
 import './SortingTimeVisualizer.css';
 

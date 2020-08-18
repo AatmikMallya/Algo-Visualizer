@@ -10,7 +10,7 @@ export default async function animateSelectionSort(stateArray) {
     arr[0].style.backgroundColor = colors.purple;
     await wait(animationInterval);
     
-    for (let i = 1; i < animations.length - 50; i++) {
+    for (let i = 1; i < animations.length; i++) {
         if (!isRunning) return;
         // Swap two elements
         if (typeof animations[i][1] === 'number') {

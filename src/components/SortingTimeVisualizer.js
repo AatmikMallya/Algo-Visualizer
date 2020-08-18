@@ -63,7 +63,9 @@ export default class SortingTimeVisualizer extends React.Component {
 
     // Compute reciprocal of interval to make the slider feel linear
     speedChange = interval => {
-        animationInterval = interval < 3 ? 500 : 1500/interval - 15;
+        // animationInterval = interval < 3 ? 450 : 1500/interval - 15;
+        animationInterval = 0.04 * (interval - 100)**2;
+        console.log(animationInterval)
     }
 
     // Display a new randomized array, possibly with a new length
@@ -182,11 +184,13 @@ export default class SortingTimeVisualizer extends React.Component {
         // Sort the state array to match the bars
         array.sort((a, b) => a - b);
         const arr = document.getElementsByClassName('array');
-        for (let i = 0; i < array.length; i++) {
-            arr[i].style.height = array[i] + 'px';
-            arr[i].style.backgroundColor = colors.purple; 
+        if (isRunning) {
+            for (let i = 0; i < array.length; i++) {
+                arr[i].style.height = array[i] + 'px';
+                arr[i].style.backgroundColor = colors.purple; 
+            }
+            this.setRunning(false);
         }
-        this.setRunning(false);
         await help.barFade();
     }
 

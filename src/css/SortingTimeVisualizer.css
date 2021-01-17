@@ -21,6 +21,8 @@
 }
 
 
+
+
 #left-container {
     width: 12.5%;
 }
@@ -43,10 +45,10 @@
 }
 
 #bars-cell {
-    white-space: nowrap;
+    margin-top: 12px;
     overflow-x: scroll;
     overflow-y: scroll;
-    display: table-cell;
+    display: table;
     vertical-align: middle;
 }
 

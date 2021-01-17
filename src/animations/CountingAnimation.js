@@ -1,5 +1,5 @@
 import { cardFlip, wait, colors, isRunning, animationInterval } from '../components/SortingTimeVisualizer';
-import { barFade } from '../components/SortingHelpers';
+// import { barFade } from '../components/SortingHelpers';
 import getCountingAnimations from '../algorithms/Counting';
 
 // Render heap sort animations

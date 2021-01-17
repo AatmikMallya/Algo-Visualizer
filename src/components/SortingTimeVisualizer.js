@@ -61,11 +61,9 @@ export default class SortingTimeVisualizer extends React.Component {
         }
     }
 
-    // Compute reciprocal of interval to make the slider feel linear
-    speedChange = interval => {
-        // animationInterval = interval < 3 ? 450 : 1500/interval - 15;
-        animationInterval = 0.04 * (interval - 100)**2;
-        console.log(animationInterval)
+    // compute animation interval from slider position (0-100)
+    speedChange = position => {
+        animationInterval = 0.04 * (position - 100)**2;
     }
 
     // Display a new randomized array, possibly with a new length
@@ -189,8 +187,8 @@ export default class SortingTimeVisualizer extends React.Component {
                 arr[i].style.height = array[i] + 'px';
                 arr[i].style.backgroundColor = colors.purple; 
             }
-            this.setRunning(false);
         }
+        this.setRunning(false);
         await help.barFade();
     }
 
